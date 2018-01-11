@@ -10,6 +10,7 @@ package bookstar;
  * @author 348676487
  */
 public class Student {
+
     String firstName;
     String lastName;
     int studentNumber;
