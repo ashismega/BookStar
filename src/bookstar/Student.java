@@ -14,6 +14,12 @@ public class Student {
     String firstName;
     String lastName;
     int studentNumber;
+    String password;
+
+    @Override
+    public String toString() {
+        return firstName + "," + lastName + "," + studentNumber + "," + password;
+    }
     
     public Student (){
         
