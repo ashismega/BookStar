@@ -11,16 +11,11 @@ package bookstar;
  */
 public class Student {
 
-    String firstName;
-    String lastName;
-    int studentNumber;
-    String password;
+    private String firstName;
+    private String lastName;
+    private int studentNumber;
+    private String password;
 
-    @Override
-    public String toString() {
-        return firstName + "," + lastName + "," + studentNumber + "," + password;
-    }
-    
     public Student (){
         
     }
@@ -31,5 +26,9 @@ public class Student {
         password = pass;
     }
     
-
+    @Override
+    public String toString() {
+        return firstName + "," + lastName + "," + studentNumber + "," + password;
+    }
+    
 }
