@@ -15,10 +15,10 @@ public class Student {
     String lastName;
     int studentNumber;
     String password;
+    String [][] ratings;
 
     @Override
     public String toString() {
         return firstName + "," + lastName + "," + studentNumber + "," + password;
     }
-
 }
