@@ -7,16 +7,11 @@ package bookstar;
 
 /**
  *
- * @author 073903999
+ * @author 348676487
  */
-public class BookStar {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        
-    }
+public class Student {
+    String firstName;
+    String lastName;
+    int studentNumber;
     
 }
