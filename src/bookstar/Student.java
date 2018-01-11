@@ -11,10 +11,11 @@ package bookstar;
  */
 public class Student {
 
-    private String firstName;
-    private String lastName;
-    private int studentNumber;
-    private String password;
+    String firstName;
+    String lastName;
+    int studentNumber;
+    String password;
+    String [][] ratings;
 
     public Student (){
         
