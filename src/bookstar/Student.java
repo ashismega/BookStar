@@ -21,4 +21,16 @@ public class Student {
     public String toString() {
         return firstName + "," + lastName + "," + studentNumber + "," + password;
     }
+    
+    public Student (){
+        
+    }
+    public Student (String fName, String lName, int sNumber, String pass){
+        firstName = fName;
+        lastName = lName;
+        studentNumber = sNumber;
+        password = pass;
+    }
+    
+
 }
