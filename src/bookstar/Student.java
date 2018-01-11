@@ -13,13 +13,13 @@ public class Student {
 
     private String firstName;
     private String lastName;
-    private int studentNumber;
+    private String studentNumber;
     private String password;
 
     public Student (){
         
     }
-    public Student (String fName, String lName, int sNumber, String pass){
+    public Student (String fName, String lName, String sNumber, String pass){
         firstName = fName;
         lastName = lName;
         studentNumber = sNumber;
@@ -62,14 +62,14 @@ public class Student {
     /**
      * @return the studentNumber
      */
-    public int getStudentNumber() {
+    public String getStudentNumber() {
         return studentNumber;
     }
 
     /**
      * @param studentNumber the studentNumber to set
      */
-    public void setStudentNumber(int studentNumber) {
+    public void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
     }
 
