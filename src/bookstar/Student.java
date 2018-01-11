@@ -14,4 +14,15 @@ public class Student {
     String lastName;
     int studentNumber;
     
+    public Student (){
+        
+    }
+    public Student (String fName, String lName, int sNumber, String pass){
+        firstName = fName;
+        lastName = lName;
+        studentNumber = sNumber;
+        password = pass;
+    }
+    
+
 }
