@@ -248,6 +248,7 @@ public class MainFrame extends javax.swing.JFrame {
             String[] studentInfo = info.split(",");
             if (jTextField4.getText().equals(studentInfo[0]) && encrypt(jTextField6.getText()).equals(studentInfo[1])) {
                 System.out.println("Hello " + jTextField4.getText() + " Welcome Back");
+                //Do I need to create a new Object?
                 Student newUser = new Student(jTextField4.getText(), jTextField6.getText(), studentInfo[2], studentInfo[3]);
                 break;
             }
@@ -256,6 +257,8 @@ public class MainFrame extends javax.swing.JFrame {
         if (s != null) {
             s.close();
         }
+        this.setVisible(false);
+        new UserPageScreen().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
@@ -285,6 +288,9 @@ public class MainFrame extends javax.swing.JFrame {
         if (checkPass(jTextField2.getText()) == false) {
             return;
         }
+        if (checkSNumber(jTextField1.getText()) == false){
+            return;
+        }
         //Try to create a PrintWriter
         try {
             pw = new PrintWriter(new FileWriter(students, true));
@@ -300,9 +306,11 @@ public class MainFrame extends javax.swing.JFrame {
         //Create a new instance of the user class
         Student newUser = new Student(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField5.getText());
         //Writes to the file the information associated with the newUser
-        pw.println(newUser.studentNumber + delimiter + encrypt(newUser.password) + delimiter + newUser.firstName + delimiter + newUser.lastName);
+        pw.println(newUser.getStudentNumber() + delimiter + encrypt(newUser.getPassword()) + delimiter + newUser.getFirstName() + delimiter + newUser.getLastName());
         //Closes PrintWriter
         pw.close();
+        System.out.println("You have Successfully created your Account!");
+        
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -357,7 +365,7 @@ public class MainFrame extends javax.swing.JFrame {
         //Initializes a scanner to scan users, if file is missing return false and a message
         Scanner s = null;
         try {
-            s = new Scanner(users);
+            s = new Scanner(students);
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
             return false;
@@ -413,6 +421,14 @@ public class MainFrame extends javax.swing.JFrame {
         return true;
     }
 
+    public boolean checkSNumber(String sNumber) {
+        if (sNumber.length()!= 9 || sNumber.length()!= 10){
+            JOptionPane.showMessageDialog(this, "INVALID STUDENT NUMBER ID", "Student ID Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+        }
+        return true;
+    }
+    
     /**
      * Encrypts a password(String) using the SHA-256 algorithm (one way
      * encryption). Returns the newly encrypted password. Used for password
