@@ -59,7 +59,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField3.setText("field 3");
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -70,14 +69,12 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setText("    GAME REGISTRATION ");
         jLabel1.setToolTipText("");
 
-        jTextField5.setText("field 5");
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
             }
         });
 
-        jTextField1.setText("field 1");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -88,7 +85,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel3.setText("PASSWORD");
 
-        jTextField2.setText("field 2");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -111,7 +107,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel7.setText("STUDENT NUMBER");
 
-        jTextField4.setText("field 4");
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField4ActionPerformed(evt);
@@ -120,7 +115,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel8.setText("PASSWORD");
 
-        jTextField6.setText("field 6");
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField6ActionPerformed(evt);
