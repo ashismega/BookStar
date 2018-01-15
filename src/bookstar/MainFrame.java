@@ -59,7 +59,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField3.setText("field 3");
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -70,14 +69,12 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setText("    GAME REGISTRATION ");
         jLabel1.setToolTipText("");
 
-        jTextField5.setText("field 5");
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
             }
         });
 
-        jTextField1.setText("field 1");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -88,7 +85,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel3.setText("PASSWORD");
 
-        jTextField2.setText("field 2");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -111,7 +107,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel7.setText("STUDENT NUMBER");
 
-        jTextField4.setText("field 4");
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField4ActionPerformed(evt);
@@ -120,7 +115,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel8.setText("PASSWORD");
 
-        jTextField6.setText("field 6");
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField6ActionPerformed(evt);
@@ -176,7 +170,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(69, 69, 69)
                                 .addComponent(jLabel6)))
-                        .addContainerGap(50, Short.MAX_VALUE))
+                        .addContainerGap(48, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,7 +239,7 @@ public class MainFrame extends javax.swing.JFrame {
         //a match there will be a login message and a new instance of user is created
         while (s.hasNextLine()) {
             String info = s.nextLine();
-            String[] studentInfo = info.split(",");
+            String[] studentInfo = info.split("~");
             if (jTextField4.getText().equals(studentInfo[0]) && encrypt(jTextField6.getText()).equals(studentInfo[1])) {
                 System.out.println("Hello " + jTextField4.getText() + " Welcome Back");
                 //Do I need to create a new Object?
@@ -273,7 +267,7 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Check if any credentials are missing(CHECK), if there are any duplicate accounts(CHECK) and if the passwords contains bad words(CHECK)
         //Initializes delimiter
-        String delimiter = ",";
+        String delimiter = "~";
         //Initializes PrintWriter
         PrintWriter pw = null;
         //Checks if any credentials are missing, if any are missing exit method and ask to fill out all credentials

@@ -15,6 +15,7 @@ public class Student {
     private String lastName;
     private String studentNumber;
     private String password;
+    private String reviews [][];
 
     public Student (){
         
@@ -24,7 +25,9 @@ public class Student {
         lastName = lName;
         studentNumber = sNumber;
         password = pass;
+        reviews = null;
     }
+    
     
     @Override
     public String toString() {
