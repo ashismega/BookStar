@@ -170,7 +170,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(69, 69, 69)
                                 .addComponent(jLabel6)))
-                        .addContainerGap(50, Short.MAX_VALUE))
+                        .addContainerGap(48, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,7 +239,7 @@ public class MainFrame extends javax.swing.JFrame {
         //a match there will be a login message and a new instance of user is created
         while (s.hasNextLine()) {
             String info = s.nextLine();
-            String[] studentInfo = info.split(",");
+            String[] studentInfo = info.split("~");
             if (jTextField4.getText().equals(studentInfo[0]) && encrypt(jTextField6.getText()).equals(studentInfo[1])) {
                 System.out.println("Hello " + jTextField4.getText() + " Welcome Back");
                 //Do I need to create a new Object?
@@ -267,7 +267,7 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Check if any credentials are missing(CHECK), if there are any duplicate accounts(CHECK) and if the passwords contains bad words(CHECK)
         //Initializes delimiter
-        String delimiter = ",";
+        String delimiter = "~";
         //Initializes PrintWriter
         PrintWriter pw = null;
         //Checks if any credentials are missing, if any are missing exit method and ask to fill out all credentials
