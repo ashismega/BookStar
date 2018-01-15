@@ -16,7 +16,7 @@ public class Student {
     private String studentNumber;
     private String password;
     private String reviews [][];
-
+    
     public Student (){
         
     }
@@ -89,5 +89,6 @@ public class Student {
     public void setPassword(String password) {
         this.password = password;
     }
+    
     
 }
