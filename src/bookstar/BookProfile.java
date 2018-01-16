@@ -170,7 +170,8 @@ public class BookProfile extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        this.setVisible(false);
+        new UserPageScreen().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 //rating number
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
