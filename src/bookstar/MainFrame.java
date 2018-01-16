@@ -278,7 +278,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (checkDupAccount(jTextField1.getText()) == false) {
             return;
         }
-        //Checks is a passwird is valid, if invalid exit method and ask to use a valid password
+        //Checks is a password is valid, if invalid exit method and ask to use a valid password
         if (checkPass(jTextField2.getText()) == false) {
             return;
         }
