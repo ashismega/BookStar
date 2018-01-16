@@ -244,15 +244,16 @@ public class MainFrame extends javax.swing.JFrame {
                 System.out.println("Hello " + jTextField4.getText() + " Welcome Back");
                 //Do I need to create a new Object?
                 Student newUser = new Student(jTextField4.getText(), jTextField6.getText(), studentInfo[2], studentInfo[3]);
+                        this.setVisible(false);
+                        new UserPageScreen().setVisible(true);
                 break;
             }
         }
+        JOptionPane.showMessageDialog(this, "INVALID PASSWORD/USERNAME", "Login Error", JOptionPane.ERROR_MESSAGE);
         //Close scanner if not null
         if (s != null) {
             s.close();
         }
-        this.setVisible(false);
-        new UserPageScreen().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
@@ -414,9 +415,9 @@ public class MainFrame extends javax.swing.JFrame {
         //Return true if the created password is valid
         return true;
     }
-
+    
     public boolean checkSNumber(String sNumber) {
-        if (sNumber.length()!= 9 || sNumber.length()!= 10){
+        if (sNumber.length()!= 9 && sNumber.length()!= 10){
             JOptionPane.showMessageDialog(this, "INVALID STUDENT NUMBER ID", "Student ID Error", JOptionPane.ERROR_MESSAGE);
         return false;
         }
