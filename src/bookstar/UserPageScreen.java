@@ -103,7 +103,12 @@ public class UserPageScreen extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
         //For the Barcode
+        try{
+            new BookProfile(Integer.parseInt(this.jTextField1.getText())).setVisible(true);
+        }
+        catch(NumberFormatException ex){
         
+        }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
