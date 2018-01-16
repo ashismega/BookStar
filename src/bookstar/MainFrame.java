@@ -416,7 +416,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public boolean checkSNumber(String sNumber) {
-        if (sNumber.length()!= 9 || sNumber.length()!= 10){
+        if (sNumber.length()!= 9 && sNumber.length()!= 10){
             JOptionPane.showMessageDialog(this, "INVALID STUDENT NUMBER ID", "Student ID Error", JOptionPane.ERROR_MESSAGE);
         return false;
         }
