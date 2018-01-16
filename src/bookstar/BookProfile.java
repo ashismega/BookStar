@@ -175,6 +175,8 @@ public class BookProfile extends javax.swing.JFrame {
 //rating number
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_jTextField2ActionPerformed
 //review box
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
