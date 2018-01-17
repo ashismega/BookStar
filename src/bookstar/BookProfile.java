@@ -64,6 +64,7 @@ public class BookProfile extends javax.swing.JFrame {
 
         jLabel2.setText("What people are saying");
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
@@ -191,6 +192,7 @@ public class BookProfile extends javax.swing.JFrame {
             //bookid,date,studentID,rating,review
             p.println(bookID+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
             p.close();
+            jTextArea1.append(bookID+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
         } catch (IOException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
         }
