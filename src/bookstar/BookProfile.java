@@ -7,6 +7,8 @@ package bookstar;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -181,14 +183,16 @@ public class BookProfile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 //submit review button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        PrintWriter p;
+        PrintWriter p = null;
+        String delimiter = "~";
         try {
-            p = new PrintWriter(ratingReview);
+            p = new PrintWriter(new FileWriter(ratingReview,true));
             //add student id below
             //bookid,date,studentID,rating,review
-            p.println(bookID+","+dtf.format(now)+","+jTextField2.getText()+","+jTextField3.getText());
-        } catch (FileNotFoundException ex) {
-            System.out.println("broken, fix please");
+            p.println(bookID+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
+            p.close();
+        } catch (IOException ex) {
+            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
