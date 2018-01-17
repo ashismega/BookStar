@@ -185,7 +185,8 @@ public class BookProfile extends javax.swing.JFrame {
         try {
             p = new PrintWriter(ratingReview);
             //add student id below
-            p.println(bookID+","+dtf.format(now)+jTextField2.getText()+jTextField3.getText());
+            //bookid,date,studentID,rating,review
+            p.println(bookID+","+dtf.format(now)+","+jTextField2.getText()+","+jTextField3.getText());
         } catch (FileNotFoundException ex) {
             System.out.println("broken, fix please");
         }
