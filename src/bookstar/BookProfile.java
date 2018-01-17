@@ -33,6 +33,7 @@ public class BookProfile extends javax.swing.JFrame {
         this.bookID = bookID;
         this.user = user;
         initComponents();
+        textAreaUpdate();
     }
 
     /**
@@ -192,7 +193,6 @@ public class BookProfile extends javax.swing.JFrame {
             //bookid,date,studentID,rating,review
             p.println(bookID+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
             p.close();
-            jTextArea1.append(bookID+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
         } catch (IOException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -212,7 +212,15 @@ public class BookProfile extends javax.swing.JFrame {
         this.setVisible(false);
         new UserPageScreen(this.user).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    private void textAreaUpdate(){
+        Scanner s;
+        try{
+            s = new Scanner(ratingReview).useDelimiter("~");
+            while(s.hasNext()){
+                
+            }
+        }catch(FileNotFoundException ex){}
+    }
     /**
      * @param args the command line arguments
      */
@@ -244,6 +252,7 @@ public class BookProfile extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new BookProfile(bookID, user).setVisible(true);
+                
             }
         });
     }
