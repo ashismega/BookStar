@@ -15,6 +15,7 @@ public class UserPageScreen extends javax.swing.JFrame {
      * Creates new form UserPageScreen
      */
     public UserPageScreen(Student s) {
+        this.s = s;
         initComponents();
     }
 
@@ -104,7 +105,7 @@ public class UserPageScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         //For the Barcode
         try{
-            new BookProfile(Integer.parseInt(this.jTextField1.getText())).setVisible(true);
+            new BookProfile(Integer.parseInt(this.jTextField1.getText()), s).setVisible(true);
         }
         catch(NumberFormatException ex){
         

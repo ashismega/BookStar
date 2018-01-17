@@ -23,10 +23,13 @@ public class BookProfile extends javax.swing.JFrame {
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
     private static int bookID;
+    private static Student user;
     /**
      * Creates new form BookProfile
      */
-    public BookProfile(int bookID) {
+    public BookProfile(int bookID, Student user) {
+        this.bookID = bookID;
+        this.user = user;
         initComponents();
     }
 
@@ -200,7 +203,7 @@ public class BookProfile extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        new UserPageScreen().setVisible(true);
+        new UserPageScreen(this.user).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -233,7 +236,7 @@ public class BookProfile extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BookProfile(bookID).setVisible(true);
+                new BookProfile(bookID, user).setVisible(true);
             }
         });
     }

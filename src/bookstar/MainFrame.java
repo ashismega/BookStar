@@ -262,7 +262,7 @@ public class MainFrame extends javax.swing.JFrame {
                 //Do I need to create a new Object?
                 Student newUser = new Student(jTextField4.getText(), jTextField6.getText(), studentInfo[2], studentInfo[3]);
                 this.setVisible(false);
-                new UserPageScreen().setVisible(true);
+                new UserPageScreen(newUser).setVisible(true);
                 //Close scanner if not null
                 if (s != null) {
                     s.close();
