@@ -20,10 +20,13 @@ import javax.swing.JOptionPane;
  * @author 072660210
  */
 public class MainFrame extends javax.swing.JFrame {
+
     //users file is initialized and holds all user accounts in the system
+
     File students = new File("Students.txt");
     //badWords file is initialized to check for invalid passwords
     File badWords = new File("dictbadpass.txt");
+
     /**
      * Creates new instance of MainFrame
      */
@@ -257,17 +260,17 @@ public class MainFrame extends javax.swing.JFrame {
             if (jTextField4.getText().equals(studentInfo[0]) && encrypt(jPasswordField1.getText()).equals(studentInfo[1])) {
                 System.out.println("Hello " + jTextField4.getText() + " Welcome Back");
                 //Do I need to create a new Object?
-                Student newUser = new Student(jTextField4.getText(), jPasswordField1.getText(), studentInfo[2], studentInfo[3]);
-                        this.setVisible(false);
-                        new UserPageScreen(newUser).setVisible(true);
-                break;
+                Student newUser = new Student(jTextField4.getText(), jTextField6.getText(), studentInfo[2], studentInfo[3]);
+                this.setVisible(false);
+                new UserPageScreen().setVisible(true);
+                //Close scanner if not null
+                if (s != null) {
+                    s.close();
+                }
+                return;
             }
         }
         JOptionPane.showMessageDialog(this, "INVALID PASSWORD/USERNAME", "Login Error", JOptionPane.ERROR_MESSAGE);
-        //Close scanner if not null
-        if (s != null) {
-            s.close();
-        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
@@ -297,7 +300,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (checkPass(jTextField2.getText()) == false) {
             return;
         }
-        if (checkSNumber(jTextField1.getText()) == false){
+        if (checkSNumber(jTextField1.getText()) == false) {
             return;
         }
         //Try to create a PrintWriter
@@ -319,7 +322,7 @@ public class MainFrame extends javax.swing.JFrame {
         //Closes PrintWriter
         pw.close();
         System.out.println("You have Successfully created your Account!");
-        
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -354,8 +357,8 @@ public class MainFrame extends javax.swing.JFrame {
      * @param password The password of the account
      * @param Fname The first name of the account
      * @param Lname The last name of the account
-     * @return         true if account credentials are filled in
-                   false if at least one credential is not properly filled in
+     * @return true if account credentials are filled in false if at least one
+     * credential is not properly filled in
      */
     public boolean checkCredentials(String username, String password, String Fname, String Lname) {
         //If credentials are missing, return false, if all are filled out then return true
@@ -367,12 +370,13 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     /**
-     * Checks if an account username is taken in a User file. Returns true if the 
-     * username is not taken. If a username is already taken, return false. 
+     * Checks if an account username is taken in a User file. Returns true if
+     * the username is not taken. If a username is already taken, return false.
      * Method is used to check if any duplicate accounts are in a file.
+     *
      * @param username The username for checking if taken or not
-     * @return         true if password is valid 
-                   false if password is invalid (contains invalid words)
+     * @return true if password is valid false if password is invalid (contains
+     * invalid words)
      */
     public boolean checkDupAccount(String username) {
         //Initializes a scanner to scan users, if file is missing return false and a message
@@ -399,14 +403,15 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     /**
-     * Checks if a password is valid according to a file with a list of "invalid" words and
-     * checking if the password contains any such invalid words. Returns true
-     * if the password does not contains any invalid words or false if the
-     * password does contain invalid words. Method is used to check if a
-     * password is valid.
+     * Checks if a password is valid according to a file with a list of
+     * "invalid" words and checking if the password contains any such invalid
+     * words. Returns true if the password does not contains any invalid words
+     * or false if the password does contain invalid words. Method is used to
+     * check if a password is valid.
+     *
      * @param passWord The password for checking if valid or not
-     * @return         true if password is valid 
-                false if password is invalid (contains invalid words)
+     * @return true if password is valid false if password is invalid (contains
+     * invalid words)
      */
     public boolean checkPass(String passWord) {
         //Initializes a scanner to scan badWords, if file is missing return false and a message
@@ -433,15 +438,15 @@ public class MainFrame extends javax.swing.JFrame {
         //Return true if the created password is valid
         return true;
     }
-    
+
     public boolean checkSNumber(String sNumber) {
-        if (sNumber.length()!= 9 && sNumber.length()!= 10){
+        if (sNumber.length() != 9 && sNumber.length() != 10) {
             JOptionPane.showMessageDialog(this, "INVALID STUDENT NUMBER ID", "Student ID Error", JOptionPane.ERROR_MESSAGE);
-        return false;
+            return false;
         }
         return true;
     }
-    
+
     /**
      * Encrypts a password(String) using the SHA-256 algorithm (one way
      * encryption). Returns the newly encrypted password. Used for password
