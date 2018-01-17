@@ -5,6 +5,8 @@
  */
 package bookstar;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 072660210
@@ -104,11 +106,14 @@ public class UserPageScreen extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
         //For the Barcode
+        
+        // CHANGE LATER
         try{
-            new BookProfile(Integer.parseInt(this.jTextField1.getText()), s).setVisible(true);
+            new BookProfile(this.jTextField1.getText(), s).setVisible(true);
+            this.setVisible(false);
         }
         catch(NumberFormatException ex){
-        
+            JOptionPane.showMessageDialog(this, "NOT A BARCODE", "Barcode error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
