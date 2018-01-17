@@ -168,7 +168,7 @@ public class BookProfile extends javax.swing.JFrame {
             p = new PrintWriter(ratingReview);
             p.println(bookID);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("broken, fix please");
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
