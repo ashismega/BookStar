@@ -33,7 +33,7 @@ public class BookProfile extends javax.swing.JFrame {
         this.bookID = bookID;
         this.user = user;
         initComponents();
-        textAreaUpdate();
+//        textAreaUpdate();
     }
 
     /**
@@ -215,9 +215,15 @@ public class BookProfile extends javax.swing.JFrame {
     private void textAreaUpdate(){
         Scanner s;
         try{
-            s = new Scanner(ratingReview).useDelimiter("~");
+            System.out.println("Scanning"); 
+            s = new Scanner(ratingReview);
             while(s.hasNext()){
-                
+                String line = s.nextLine();
+                String[] lineArr = line.split("~");
+                if(lineArr[0].equals(bookID)){
+//                    jTextArea1.append("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]);
+                    System.out.println("EQUALS");
+                }
             }
         }catch(FileNotFoundException ex){}
     }
