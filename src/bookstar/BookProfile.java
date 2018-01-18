@@ -33,7 +33,7 @@ public class BookProfile extends javax.swing.JFrame {
         this.bookID = bookID;
         this.user = user;
         initComponents();
-//        textAreaUpdate();
+        textAreaUpdate();
     }
 
     /**
