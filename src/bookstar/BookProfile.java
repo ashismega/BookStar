@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +27,7 @@ public class BookProfile extends javax.swing.JFrame {
     LocalDateTime now = LocalDateTime.now();
     private static String bookID;
     private static Student user;
+    
     /**
      * Creates new form BookProfile
      */
@@ -186,6 +188,7 @@ public class BookProfile extends javax.swing.JFrame {
 //submit review button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         PrintWriter p = null;
+        textAreaUpdate();
         String delimiter = "~";
         try {
             p = new PrintWriter(new FileWriter(ratingReview,true));
@@ -212,21 +215,27 @@ public class BookProfile extends javax.swing.JFrame {
         this.setVisible(false);
         new UserPageScreen(this.user).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
     private void textAreaUpdate(){
-        Scanner s;
+        Scanner s = null;
+        String total="";
         try{
-            System.out.println("Scanning"); 
             s = new Scanner(ratingReview);
             while(s.hasNext()){
                 String line = s.nextLine();
                 String[] lineArr = line.split("~");
                 if(lineArr[0].equals(bookID)){
-                    jTextArea1.append("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]);
-                    System.out.println("EQUALS");
+                    System.out.println("HI");
+                    total +=("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]+"\n");
                 }
             }
         }catch(FileNotFoundException ex){}
+        if (s != null) {
+            s.close();
+        }
+        jTextArea1.setText(total);
     }
+    
     /**
      * @param args the command line arguments
      */
@@ -253,12 +262,11 @@ public class BookProfile extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(BookProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new BookProfile(bookID, user).setVisible(true);
-                
             }
         });
     }
