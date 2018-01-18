@@ -23,11 +23,11 @@ public class OnlineBookInfo {
   
     public String createLink(){
         String[] words =search.split(" ");
-        String term=null;
+        String term="";
         for (int i = 0; i < words.length; i++) {
-            term+=words[i];
+            term+=words[i]+"+";
         }
-        return "https://www.googleapis.com/books/v1/volumes?q="+term;
+        return "https://www.googleapis.com/books/v1/volumes?q="+term.substring(0,term.length()-1);
     }
 
     public String html(String link) {
@@ -57,14 +57,17 @@ public class OnlineBookInfo {
     }
 
     public String extractContent(String text) {
+        
+        //Get the title
         String[] starting = text.split("\"title\": \"");
         String[] ending = null;
-        String returnStr = "";
-
         if (starting.length > 1) {
             ending = starting[1].split("\",");
             System.out.println(ending[0]);
         }
+        
+        
+        
 
         return ending[0];
     }
