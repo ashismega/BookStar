@@ -25,17 +25,18 @@ public class BookProfile extends javax.swing.JFrame {
     File ratingReview = new File("rateReview.txt");
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
-    private static String bookID;
+    private static String bookInfo;
     private static Student user;
     
     /**
      * Creates new form BookProfile
      */
-    public BookProfile(String bookID, Student user) {
-        this.bookID = bookID;
+    public BookProfile(String bookInfo, Student user) {
+        this.bookInfo=bookInfo;
         this.user = user;
         initComponents();
         textAreaUpdate();
+        jLabel7.setText("Name"+ bookInfo);
     }
 
     /**
@@ -194,7 +195,7 @@ public class BookProfile extends javax.swing.JFrame {
             p = new PrintWriter(new FileWriter(ratingReview,true));
             //add student id below
             //bookid,date,studentID,rating,review
-            p.println(bookID+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
+            p.println(bookInfo+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
             p.close();
         } catch (IOException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
@@ -224,7 +225,7 @@ public class BookProfile extends javax.swing.JFrame {
             while(s.hasNext()){
                 String line = s.nextLine();
                 String[] lineArr = line.split("~");
-                if(lineArr[0].equals(bookID)){
+                if(lineArr[0].equals(bookInfo)){
                     System.out.println("HI");
                     total +=("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]+"\n");
                 }
@@ -266,7 +267,7 @@ public class BookProfile extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BookProfile(bookID, user).setVisible(true);
+                new BookProfile(bookInfo, user).setVisible(true);
             }
         });
     }

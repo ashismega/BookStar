@@ -109,10 +109,18 @@ public class UserPageScreen extends javax.swing.JFrame {
         
         // CHANGE LATER
         try{
-            new BookProfile(this.jTextField1.getText(), s).setVisible(true);
+            OnlineBookInfo o = new OnlineBookInfo();
+            o.search=jTextField1.getText();
+            
+            
+            
+            
+            new BookProfile(o.extractContent(o.html(o.createLink())), s).setVisible(true);
             this.setVisible(false);
+            
+
         }
-        catch(NumberFormatException ex){
+        catch(NullPointerException ex){
             JOptionPane.showMessageDialog(this, "NOT A BARCODE", "Barcode error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
