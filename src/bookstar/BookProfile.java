@@ -228,6 +228,8 @@ public class BookProfile extends javax.swing.JFrame {
                 if(lineArr[0].equals(bookInfo)){
                     System.out.println("HI");
                     total +=("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]+"\n");
+                    jTextArea1.append("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]);
+                    System.out.println("EQUALS");
                 }
             }
         }catch(FileNotFoundException ex){}
