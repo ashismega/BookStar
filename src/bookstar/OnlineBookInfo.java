@@ -12,27 +12,20 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Scanner;
 
 /**
  *
  * @author 348676487
  */
 public class OnlineBookInfo {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-
-        String fullHTML = html("https://www.googleapis.com/books/v1/volumes?q=isbn:9780385660075");
-        System.out.println(fullHTML);
-        System.out.println("??????????????????????????????????????????????????????????????????????????");
-        extractContent(fullHTML);
+    
+    String search;    
+  
+    public String createLink(){
+        return "https://www.googleapis.com/books/v1/volumes?q="+search;
     }
 
-    public static String html(String link) {
+    public String html(String link) {
         URL url;
         InputStream is = null;
         BufferedReader br;
@@ -58,7 +51,7 @@ public class OnlineBookInfo {
         return fullcontent;
     }
 
-    public static String extractContent(String text) {
+    public String extractContent(String text) {
         String[] starting = text.split("\"title\": \"");
         String[] ending = null;
         String returnStr = "";

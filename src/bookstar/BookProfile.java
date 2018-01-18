@@ -24,12 +24,12 @@ public class BookProfile extends javax.swing.JFrame {
     File ratingReview = new File("rateReview.txt");
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
-    private static String[] bookInfo;
+    private static String bookInfo;
     private static Student user;
     /**
      * Creates new form BookProfile
      */
-    public BookProfile(String[] bookInfo, Student user) {
+    public BookProfile(String bookInfo, Student user) {
         this.bookInfo=bookInfo;
         this.user = user;
         initComponents();
