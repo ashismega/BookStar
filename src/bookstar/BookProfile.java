@@ -34,6 +34,7 @@ public class BookProfile extends javax.swing.JFrame {
         this.user = user;
         initComponents();
         textAreaUpdate();
+        jLabel7.setText("Name"+ bookInfo);
     }
 
     /**
@@ -220,7 +221,7 @@ public class BookProfile extends javax.swing.JFrame {
             while(s.hasNext()){
                 String line = s.nextLine();
                 String[] lineArr = line.split("~");
-                if(lineArr[0].equals(bookID)){
+                if(lineArr[0].equals(bookInfo)){
                     jTextArea1.append("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]);
                     System.out.println("EQUALS");
                 }

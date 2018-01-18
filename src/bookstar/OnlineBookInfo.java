@@ -22,7 +22,12 @@ public class OnlineBookInfo {
     String search;    
   
     public String createLink(){
-        return "https://www.googleapis.com/books/v1/volumes?q="+search;
+        String[] words =search.split(" ");
+        String term=null;
+        for (int i = 0; i < words.length; i++) {
+            term+=words[i];
+        }
+        return "https://www.googleapis.com/books/v1/volumes?q="+term;
     }
 
     public String html(String link) {
