@@ -221,7 +221,7 @@ public class BookProfile extends javax.swing.JFrame {
                 String line = s.nextLine();
                 String[] lineArr = line.split("~");
                 if(lineArr[0].equals(bookID)){
-//                    jTextArea1.append("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]);
+                    jTextArea1.append("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]);
                     System.out.println("EQUALS");
                 }
             }
