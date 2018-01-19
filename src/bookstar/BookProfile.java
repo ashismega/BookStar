@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +27,7 @@ public class BookProfile extends javax.swing.JFrame {
     LocalDateTime now = LocalDateTime.now();
     private static String bookInfo;
     private static Student user;
+    
     /**
      * Creates new form BookProfile
      */
@@ -86,14 +88,12 @@ public class BookProfile extends javax.swing.JFrame {
 
         jLabel6.setText("Review:");
 
-        jTextField2.setText("jTextField2");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
             }
         });
 
-        jTextField3.setText("jTextField3");
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -111,7 +111,7 @@ public class BookProfile extends javax.swing.JFrame {
 
         jLabel8.setText("Author:");
 
-        jButton2.setText("BACKTOMAINMENU");
+        jButton2.setText("BACK TO MAIN MENU");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -144,7 +144,27 @@ public class BookProfile extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(35, 35, 35))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(45, 45, 45))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -252,6 +272,7 @@ public class BookProfile extends javax.swing.JFrame {
 //submit review button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         PrintWriter p = null;
+        textAreaUpdate();
         String delimiter = "~";
         try {
             p = new PrintWriter(new FileWriter(ratingReview,true));
@@ -262,7 +283,7 @@ public class BookProfile extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        textAreaUpdate();
     }//GEN-LAST:event_jButton1ActionPerformed
 //rating number
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -278,21 +299,28 @@ public class BookProfile extends javax.swing.JFrame {
         this.setVisible(false);
         new UserPageScreen(this.user).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
     private void textAreaUpdate(){
-        Scanner s;
+        Scanner s = null;
+        String total="";
         try{
-            System.out.println("Scanning"); 
             s = new Scanner(ratingReview);
             while(s.hasNext()){
                 String line = s.nextLine();
                 String[] lineArr = line.split("~");
                 if(lineArr[0].equals(bookInfo)){
-                    jTextArea1.append("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]);
-                    System.out.println("EQUALS");
+                    System.out.println("HI");
+                    total +=("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]+"\n");
+                    
                 }
             }
         }catch(FileNotFoundException ex){}
+        if (s != null) {
+            s.close();
+        }
+        jTextArea1.setText(total);
     }
+    
     /**
      * @param args the command line arguments
      */
@@ -319,12 +347,11 @@ public class BookProfile extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(BookProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new BookProfile(bookInfo, user).setVisible(true);
-                
             }
         });
     }
