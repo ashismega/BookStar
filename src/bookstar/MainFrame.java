@@ -57,7 +57,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jPasswordField1 = new javax.swing.JPasswordField();
 
@@ -70,7 +69,8 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("    GAME REGISTRATION ");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("REGISTRATION ");
         jLabel1.setToolTipText("");
 
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
@@ -118,12 +118,6 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         jLabel8.setText("PASSWORD");
-
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
-            }
-        });
 
         jButton2.setText("LOGIN");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -190,11 +184,7 @@ public class MainFrame extends javax.swing.JFrame {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jTextField4)
                                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(48, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addContainerGap(48, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,9 +222,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
+                .addGap(33, 33, 33)
                 .addComponent(jButton1)
                 .addContainerGap(23, Short.MAX_VALUE))
         );
@@ -260,7 +248,7 @@ public class MainFrame extends javax.swing.JFrame {
             if (jTextField4.getText().equals(studentInfo[0]) && encrypt(jPasswordField1.getText()).equals(studentInfo[1])) {
                 System.out.println("Hello " + jTextField4.getText() + " Welcome Back");
                 //Do I need to create a new Object?
-                Student newUser = new Student(jTextField4.getText(), jTextField6.getText(), studentInfo[2], studentInfo[3]);
+                Student newUser = new Student(jTextField4.getText(), jPasswordField1.getText(), studentInfo[2], studentInfo[3]);
                 this.setVisible(false);
                 new UserPageScreen(newUser).setVisible(true);
                 //Close scanner if not null
@@ -272,10 +260,6 @@ public class MainFrame extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(this, "INVALID PASSWORD/USERNAME", "Login Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
@@ -526,6 +510,5 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }
