@@ -115,7 +115,7 @@ public class UserPageScreen extends javax.swing.JFrame {
             
             
             
-            new BookProfile(o.extractContent(o.html(o.createLink())), s).setVisible(true);
+            new BookProfile(o.bookInformation(o.bookHTML(o.pageHTML(o.createLink()))), s).setVisible(true);
             this.setVisible(false);
             
 

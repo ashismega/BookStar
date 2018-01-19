@@ -10,8 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+/////////////////import java.time.LocalDateTime;
+///////////////////////import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -23,20 +23,36 @@ import java.util.logging.Logger;
  */
 public class BookProfile extends javax.swing.JFrame {
     File ratingReview = new File("rateReview.txt");
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    LocalDateTime now = LocalDateTime.now();
-    private static String bookInfo;
+    //////////////////////////DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    ///////////////////////////LocalDateTime now = LocalDateTime.now();
+    private static String[] bookInfo;
     private static Student user;
     
     /**
      * Creates new form BookProfile
+     * @param bookInfo
+     * @param user
      */
-    public BookProfile(String bookInfo, Student user) {
+    public BookProfile(String[] bookInfo, Student user) {
         this.bookInfo=bookInfo;
         this.user = user;
         initComponents();
         textAreaUpdate();
-        jLabel7.setText("Name"+ bookInfo);
+      
+        
+        
+    jLabel7.setText("Title: "+ bookInfo[0]);
+    jLabel11.setText("Subtitle: "+ bookInfo[1]);
+    jLabel8.setText("Authors: "+ bookInfo[2]);
+    jLabel4.setText("Publisher: "+ bookInfo[3]);
+    jLabel9.setText("Published Date: "+ bookInfo[4]);
+    jLabel10.setText("Description: "+ bookInfo[5]);
+    jLabel15.setText("ISBN_13: "+ bookInfo[6]);
+    jLabel16.setText("ISBN_10: "+ bookInfo[7]);
+    jLabel12.setText("Page Count: "+ bookInfo[8]);
+    jLabel13.setText("Categories: "+ bookInfo[9]);
+    jLabel14.setText("Image: "+ bookInfo[10]);
+    jLabel17.setText("Google Books Rating: "+ bookInfo[11]);
     }
 
     /**
@@ -70,6 +86,7 @@ public class BookProfile extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -136,6 +153,8 @@ public class BookProfile extends javax.swing.JFrame {
 
         jLabel16.setText("ISBN_10:");
 
+        jLabel17.setText("Google Books Rating:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,30 +189,16 @@ public class BookProfile extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton2)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jLabel13))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel15)
+                                .addComponent(jLabel17)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)
-                                .addGap(25, 25, 25)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel13)))
+                            .addComponent(jLabel15))
                         .addGap(35, 35, 35))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel8)
                             .addComponent(jLabel4)
                             .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -243,7 +248,8 @@ public class BookProfile extends javax.swing.JFrame {
                         .addGap(73, 73, 73)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField3))
                     .addGroup(layout.createSequentialGroup()
@@ -278,7 +284,7 @@ public class BookProfile extends javax.swing.JFrame {
             p = new PrintWriter(new FileWriter(ratingReview,true));
             //add student id below
             //bookid,date,studentID,rating,review
-            p.println(bookInfo+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
+            //////////////////////////p.println(bookInfo+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
             p.close();
         } catch (IOException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
@@ -367,6 +373,7 @@ public class BookProfile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
