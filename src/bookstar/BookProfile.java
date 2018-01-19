@@ -7,6 +7,7 @@ package bookstar;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -196,6 +197,18 @@ public class BookProfile extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
+        String s = "q";
+         byte[] bytes = s.getBytes();
+        try {
+            FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir"));
+            fos.write(bytes);
+            fos.close();
+        } catch (IOException ex) {
+            System.out.println("fuck");
+        }
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 //rating number

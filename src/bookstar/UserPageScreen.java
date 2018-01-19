@@ -107,7 +107,7 @@ public class UserPageScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         //For the Barcode
         
-        // CHANGE LATER
+        
         try{
             new BookProfile(this.jTextField1.getText(), s).setVisible(true);
             this.setVisible(false);
