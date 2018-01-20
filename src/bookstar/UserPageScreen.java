@@ -12,7 +12,9 @@ import javax.swing.JOptionPane;
  * @author 072660210
  */
 public class UserPageScreen extends javax.swing.JFrame {
+
     private static Student s;
+
     /**
      * Creates new form UserPageScreen
      */
@@ -37,6 +39,7 @@ public class UserPageScreen extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Search");
 
@@ -106,21 +109,14 @@ public class UserPageScreen extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
         //For the Barcode
-        
+
         // CHANGE LATER
-        try{
+        try {
             OnlineBookInfo o = new OnlineBookInfo();
-            o.search=jTextField1.getText();
-            
-            
-            
-            
+            o.search = jTextField1.getText();
             new BookProfile(o.bookInformation(o.bookHTML(o.pageHTML(o.createLink()))), s).setVisible(true);
             this.setVisible(false);
-            
-
-        }
-        catch(NullPointerException ex){
+        } catch (NullPointerException ex) {
             JOptionPane.showMessageDialog(this, "NOT A BARCODE", "Barcode error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jTextField1ActionPerformed

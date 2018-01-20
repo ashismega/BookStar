@@ -127,7 +127,11 @@ public class OnlineBookInfo {
         bookInfo[10]=fieldHTML(book, "\"thumbnail\": \"", "\"\n" +
 "    },");
         //Add the google average rating
+        try{
         bookInfo[11]=fieldHTML(book, "averageRating\": ", ",");
+        }catch(NullPointerException e){
+            bookInfo[11]="N/A";
+        }
         
         //Return the information of the first book found
         return bookInfo;
