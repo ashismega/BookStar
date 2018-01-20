@@ -18,21 +18,22 @@ import java.net.URLConnection;
  * @author 348676487
  */
 public class OnlineBookInfo {
-    
-    String search;    
-  
-    public String createLink(){
-        String[] words =search.split(" ");
-        String term="";
+
+    String search;
+
+    public String createLink() {
+        String[] words = search.split(" ");
+        String term = "";
         for (int i = 0; i < words.length; i++) {
-            term+=words[i]+"+";
+            term += words[i] + "+";
         }
-        return "https://www.googleapis.com/books/v1/volumes?q="+term.substring(0,term.length()-1);
+        return "https://www.googleapis.com/books/v1/volumes?q=" + term.substring(0, term.length() - 1);
     }
 
- /**
-     * Using a given google books link, return the page's HTML content (has multiple books).
-     * 
+    /**
+     * Using a given google books link, return the page's HTML content (has
+     * multiple books).
+     *
      * @param link The google link to obtain the book's information from
      * @return page The page's HTML content
      */
@@ -69,14 +70,14 @@ public class OnlineBookInfo {
         //Return the page's HTML content
         return page;
     }
-    
+
     /**
      * Given the HTML content of a google book's page, extract the first book.
-     * 
+     *
      * @param page HTML content of a google book's page
      * @return The first book from the search
      */
-    public String bookHTML(String page){
+    public String bookHTML(String page) {
         //Seperate the books on the html page  
         String[] book = page.split("\"kind\": \"");
         //Return the first book
@@ -84,62 +85,55 @@ public class OnlineBookInfo {
     }
 
     /**
-     *  Given a book's HTML content, extract the title, subtitle, authors, publisher, published date, description, ISBN-13, ISBN-10, page count, categories, thumbnail, and average rating.
-     * 
+     * Given a book's HTML content, extract the title, subtitle, authors,
+     * publisher, published date, description, ISBN-13, ISBN-10, page count,
+     * categories, thumbnail, and average rating.
+     *
      * @param book A book's HTML content
      * @return bookInfo Book information of the given book
      */
     public String[] bookInformation(String book) {
-        
+
         //Store the first book's information
         String[] bookInfo = new String[12];
 
         //Add the title
-        bookInfo[0]=fieldHTML(book, "\"title\": \"", "\",");
+        bookInfo[0] = fieldHTML(book, "\"title\": \"", "\",");
 
         //Add the subtitle
-        bookInfo[1]=fieldHTML(book, "\"subtitle\": \"", "\",");
+        bookInfo[1] = fieldHTML(book, "\"subtitle\": \"", "\",");
         //Add the author
-        bookInfo[2]=fieldHTML(book, "\"authors\": \\[\n" +
-"     \"", "\"\n" +
-"    ],");
+        bookInfo[2] = fieldHTML(book, "\"authors\": \\[\n" + "     \"", "\"\n"
+                + "    ],");
         //Add the publisher
-        bookInfo[3]=fieldHTML(book, "\"publisher\": \"", "\",");
+        bookInfo[3] = fieldHTML(book, "\"publisher\": \"", "\",");
         //Add the published date
-        bookInfo[4]=fieldHTML(book, "\"publishedDate\": \"", "\",");
+        bookInfo[4] = fieldHTML(book, "\"publishedDate\": \"", "\",");
         //Add the description
-        bookInfo[5]=fieldHTML(book, "\"description\": \"", "\",");
+        bookInfo[5] = fieldHTML(book, "\"description\": \"", "\",");
         //Add the isbn_13
-        bookInfo[6]=fieldHTML(book, "\"type\": \"ISBN_13\",\n" +
-"      \"identifier\": \"", "\"\n" +
-"     },");
+        bookInfo[6] = fieldHTML(book, "\"type\": \"ISBN_13\",\n" + "      \"identifier\": \"", "\"\n" + "     },");
         //Add the isbn_10
-        bookInfo[7]=fieldHTML(book, "\"type\": \"ISBN_10\",\n" +
-"      \"identifier\": \"", "\"\n" +
-"     }");
+        bookInfo[7] = fieldHTML(book, "\"type\": \"ISBN_10\",\n" + "      \"identifier\": \"", "\"\n"
+                + "     }");
         //Add the page count
-        bookInfo[8]=fieldHTML(book, "\"pageCount\": ", ",");
+        bookInfo[8] = fieldHTML(book, "\"pageCount\": ", ",");
 
         //Add the categories
-        bookInfo[9]=fieldHTML(book, "\"categories\": \\[\n" +
-"     \"", "\"");
+        bookInfo[9] = fieldHTML(book, "\"categories\": \\[\n" + "     \"", "\"");
         //Add the image
-        bookInfo[10]=fieldHTML(book, "\"thumbnail\": \"", "\"\n" +
-"    },");
+        bookInfo[10] = fieldHTML(book, "\"thumbnail\": \"", "\"\n" + "    },");
         //Add the google average rating
-        try{
-        bookInfo[11]=fieldHTML(book, "averageRating\": ", ",");
-        }catch(NullPointerException e){
-            bookInfo[11]="N/A";
-        }
-        
+        bookInfo[11] = fieldHTML(book, "averageRating\": ", ",");
+
         //Return the information of the first book found
         return bookInfo;
     }
 
     /**
-     * Given a books HTML content and the starting/ending information surrounding the needed text, extract a specfic piece of information.
-     * 
+     * Given a books HTML content and the starting/ending information
+     * surrounding the needed text, extract a specfic piece of information.
+     *
      * @param book The HTML content of the book
      * @param start The information before the required text
      * @param end The information after the required test
@@ -147,20 +141,19 @@ public class OnlineBookInfo {
      */
     public String fieldHTML(String book, String start, String end) {
         //Split the html based on the first part surrounding the required text
-        String[] starting = book.split(start);
+        String[] starting;
+        starting = book.split(start);
         String[] ending = null;
-        
-        
+
         if (starting.length > 1) {
             //Split the html based on the last part surrounding therequired text
             ending = starting[1].split(end);
         }
         //Store the extracted information
         String information = ending[0];
-        
+
         //Return the extracted information
         return information;
     }
 
 }
-
