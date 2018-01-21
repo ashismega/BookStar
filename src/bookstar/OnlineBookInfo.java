@@ -78,10 +78,16 @@ public class OnlineBookInfo {
      * @return The first book from the search
      */
     public String bookHTML(String page) {
-        //Seperate the books on the html page  
-        String[] book = page.split("\"kind\": \"");
-        //Return the first book
-        return book[2];
+        //Book not found
+        if (fieldHTML(page, "\"totalItems\": ", "\n" + "}").equals("0")) {
+            throw new NullPointerException();
+        } //Book found
+        else {
+            //Seperate the books on the html page  
+            String[] book = page.split("\"kind\": \"");
+            //Return the first book
+            return book[2];
+        }
     }
 
     /**
@@ -103,8 +109,7 @@ public class OnlineBookInfo {
         //Add the subtitle
         bookInfo[1] = fieldHTML(book, "\"subtitle\": \"", "\",");
         //Add the author
-        bookInfo[2] = fieldHTML(book, "\"authors\": \\[\n" + "     \"", "\"\n"
-                + "    ],");
+        bookInfo[2] = fieldHTML(book, "\"authors\": \\[\n" + "     \"", "\"\n" + "    ]");
         //Add the publisher
         bookInfo[3] = fieldHTML(book, "\"publisher\": \"", "\",");
         //Add the published date
@@ -112,17 +117,16 @@ public class OnlineBookInfo {
         //Add the description
         bookInfo[5] = fieldHTML(book, "\"description\": \"", "\",");
         //Add the isbn_13
-        bookInfo[6] = fieldHTML(book, "\"type\": \"ISBN_13\",\n" + "      \"identifier\": \"", "\"\n" + "     },");
+        bookInfo[6] = fieldHTML(book, "\"type\": \"ISBN_13\",\n" + "      \"identifier\": \"", "\"\n" + "     }");
         //Add the isbn_10
-        bookInfo[7] = fieldHTML(book, "\"type\": \"ISBN_10\",\n" + "      \"identifier\": \"", "\"\n"
-                + "     }");
+        bookInfo[7] = fieldHTML(book, "\"type\": \"ISBN_10\",\n" + "      \"identifier\": \"", "\"\n" + "     }");
         //Add the page count
         bookInfo[8] = fieldHTML(book, "\"pageCount\": ", ",");
 
         //Add the categories
-        bookInfo[9] = fieldHTML(book, "\"categories\": \\[\n" + "     \"", "\"");
+        bookInfo[9] = fieldHTML(book, "\"categories\": \\[\n" + "     \"", "\"\n" + "    ]");
         //Add the image
-        bookInfo[10] = fieldHTML(book, "\"thumbnail\": \"", "\"\n" + "    },");
+        bookInfo[10] = fieldHTML(book, "\"thumbnail\": \"", "\"\n" + "    }");
         //Add the google average rating
         bookInfo[11] = fieldHTML(book, "averageRating\": ", ",");
 
@@ -145,9 +149,13 @@ public class OnlineBookInfo {
         starting = book.split(start);
         String[] ending = null;
 
+        //Field exists
         if (starting.length > 1) {
             //Split the html based on the last part surrounding therequired text
             ending = starting[1].split(end);
+        } //Field does not exists
+        else {
+            return "N/A";
         }
         //Store the extracted information
         String information = ending[0];
