@@ -22,40 +22,78 @@ public class UserPageScreen extends javax.swing.JFrame {
 
     /**
      * Creates new form UserPageScreen
+     *
+     * @param s Student logged in
      */
     public UserPageScreen(Student s) {
         this.s = s;
         initComponents();
-        fileToArray();
-
+        String a[][] = fileToArray();
+        System.out.println("hi");
     }
 
+    /**
+     * Read and file and create an array where each line in the file is an
+     * element in the array.
+     *
+     * @return The array with each line the file being an element in the array.
+     */
     public String[][] fileToArray() {
-        File ratingReview = new File("rateReview.txt");
-        Scanner sc = null;
-        
-        String [][] storedBooks = null;
-
+        //Temporary arraylist for holding the book title and rating
         ArrayList<ArrayList<String>> temp = new ArrayList();
+        //File with the review's of the books
+        File ratingReview = new File("rateReview.txt");
+
+        Scanner sc = null;
         //Name of Book
         temp.add(new ArrayList<String>());
         //Rating of Book
         temp.add(new ArrayList<String>());
 
         try {
+            //Scanner for reading the file
             sc = new Scanner(ratingReview);
+            //Add each line to the arraylist
             while (sc.hasNextLine()) {
                 String info = sc.nextLine();
                 String[] reviewInfo = info.split("~");
                 temp.get(0).add(reviewInfo[0]);
-                temp.get(1).add(reviewInfo[1]);
+                temp.get(1).add(reviewInfo[3]);
             }
             sc.close();
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
         }
-        return storedBooks = temp.toArray(new String[temp.size()][temp.size()]);
+        System.out.println(temp.get(1).size());
+        return arraylistToArray(temp);
+    }
+
+    public void duplicates(ArrayList<ArrayList<String>> temp) {
+
+        String[][] ratingAverages = new String[2][temp.get(1).size()];
+
+        for (int i = 0; i < temp.get(0).size(); i++) {
+
+            int numDuplicates = 1;
+            if (temp.get(0).get(i).equals(temp.get(0).get(i + 1))) {
+                numDuplicates++;
+                //int average = temp.get(1).get(i)+temp.get(1).get(i + 1));
+            }
+        }
+
+    }
+
+    public String[][] arraylistToArray(ArrayList<ArrayList<String>> temp) {
+        /////CHANGE THE NAME OF THE LETTER A
+        String[][] a = new String[2][temp.get(1).size()];
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < temp.get(1).size(); j++) {
+                a[i][j] = temp.get(i).get(j);
+            }
+        }
+        return a;
     }
 
     /**
