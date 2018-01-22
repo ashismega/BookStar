@@ -26,25 +26,36 @@ public class UserPageScreen extends javax.swing.JFrame {
     public UserPageScreen(Student s) {
         this.s = s;
         initComponents();
-        File ratingReview  = new File ("rateReview.txt");
+        fileToArray();
+
+    }
+
+    public void fileToArray() {
+        File ratingReview = new File("rateReview.txt");
         Scanner sc = null;
+
+        ArrayList<ArrayList<String>> titles = new ArrayList();
+        //Name of Book
+        titles.add(new ArrayList<String>());
+        //Rating of Book
+        titles.add(new ArrayList<String>());
+
         try {
             sc = new Scanner(ratingReview);
+            while (sc.hasNextLine()) {
+                String info = sc.nextLine();
+                String[] reviewInfo = info.split("~");
+                titles.get(0).add(reviewInfo[0]);
+                titles.get(1).add(reviewInfo[1]);
+            }
+            sc.close();
+
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        ArrayList <ArrayList<String>> Titles = new ArrayList();
-        while (sc.hasNextLine()) {
-            String info = sc.nextLine();
-            String[] reviewInfo = info.split("~");
-            if (title is unique){
-                Titles.add(reviewInfo[0]); //Then add the rating
-            }
-        }
-            sc.close();
+
         
-            jLabel4.setText();
     }
 
     /**
