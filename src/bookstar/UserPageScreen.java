@@ -26,25 +26,36 @@ public class UserPageScreen extends javax.swing.JFrame {
     public UserPageScreen(Student s) {
         this.s = s;
         initComponents();
-//        File ratingReview  = new File ("rateReview.txt");
-//        Scanner sc = null;
-//        try {
-//            sc = new Scanner(ratingReview);
-//        } catch (IOException e) {
-//            JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        ArrayList <ArrayList<String>> Titles = new ArrayList();
-//        while (sc.hasNextLine()) {
-//            String info = sc.nextLine();
-//            String[] reviewInfo = info.split("~");
-//            if (title is unique){
-//                Titles.add(reviewInfo[0]); //Then add the rating
-//            }
-//        }
-//            sc.close();
-//        
-//            jLabel4.setText();
+        fileToArray();
+
+    }
+
+    public String[][] fileToArray() {
+        File ratingReview = new File("rateReview.txt");
+        Scanner sc = null;
+        
+        String [][] storedBooks = null;
+
+        ArrayList<ArrayList<String>> temp = new ArrayList();
+        //Name of Book
+        temp.add(new ArrayList<String>());
+        //Rating of Book
+        temp.add(new ArrayList<String>());
+
+        try {
+            sc = new Scanner(ratingReview);
+            while (sc.hasNextLine()) {
+                String info = sc.nextLine();
+                String[] reviewInfo = info.split("~");
+                temp.get(0).add(reviewInfo[0]);
+                temp.get(1).add(reviewInfo[1]);
+            }
+            sc.close();
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return storedBooks = temp.toArray(new String[temp.size()][temp.size()]);
     }
 
     /**
