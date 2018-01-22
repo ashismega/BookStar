@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 /////////////////import java.time.LocalDateTime;
 ///////////////////////import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,8 +25,8 @@ import java.util.logging.Logger;
  */
 public class BookProfile extends javax.swing.JFrame {
     File ratingReview = new File("rateReview.txt");
-    //////////////////////////////////////////////////DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    ////////////////////////////////////////////////////////////LocalDateTime now = LocalDateTime.now();
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    LocalDateTime now = LocalDateTime.now();
     private static String[] bookInfo;
     private static Student user;
     
@@ -320,7 +322,7 @@ public class BookProfile extends javax.swing.JFrame {
             p = new PrintWriter(new FileWriter(ratingReview,true));
             //add student id below
             //bookid,date,studentID,rating,review
-            //////////////////////////////////////////////p.println(bookInfo+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
+            p.println(bookInfo[0]+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
             p.close();
         } catch (IOException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
@@ -350,7 +352,7 @@ public class BookProfile extends javax.swing.JFrame {
             while(s.hasNext()){
                 String line = s.nextLine();
                 String[] lineArr = line.split("~");
-                if(lineArr[0].equals(bookInfo)){
+                if(lineArr[0].equals(bookInfo[0])){
                     System.out.println("HI");
                     total +=("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]+"\n");
                     
