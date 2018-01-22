@@ -30,7 +30,7 @@ public class UserPageScreen extends javax.swing.JFrame {
 
     }
 
-    public void fileToArray() {
+    public String[][] fileToArray() {
         File ratingReview = new File("rateReview.txt");
         Scanner sc = null;
 
@@ -52,10 +52,8 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
-            return;
         }
 
-        
     }
 
     /**
