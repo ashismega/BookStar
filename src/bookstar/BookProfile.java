@@ -24,35 +24,37 @@ import java.util.logging.Logger;
  * @author 072671415
  */
 public class BookProfile extends javax.swing.JFrame {
+
     File ratingReview = new File("rateReview.txt");
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
     private static String[] bookInfo;
     private static Student user;
-    
+
     /**
      * Creates new form BookProfile
+     *
      * @param bookInfo
      * @param user
      */
     public BookProfile(String[] bookInfo, Student user) {
-        this.bookInfo=bookInfo;
+        this.bookInfo = bookInfo;
         this.user = user;
         initComponents();
-        textAreaUpdate();            
-        
-    jLabel7.setText(bookInfo[0]);
-    jLabel11.setText("Subtitle: "+ bookInfo[1]);
-    jLabel8.setText("Authors: "+ bookInfo[2]);
-    jLabel4.setText("Publisher: "+ bookInfo[3]);
-    jLabel9.setText("Published Date: "+ bookInfo[4]);
-    jLabel10.setText("Description: "+ bookInfo[5]);
-    jLabel15.setText("ISBN_13: "+ bookInfo[6]);
-    jLabel16.setText("ISBN_10: "+ bookInfo[7]);
-    jLabel12.setText("Page Count: "+ bookInfo[8]);
-    jLabel13.setText("Categories: "+ bookInfo[9]);
-    jLabel14.setText("Image: "+ bookInfo[10]);
-    jLabel17.setText("Google Books Rating: "+ bookInfo[11]);
+        textAreaUpdate();
+
+        jLabel7.setText(bookInfo[0]);
+        jLabel11.setText("Subtitle: " + bookInfo[1]);
+        jLabel8.setText("Authors: " + bookInfo[2]);
+        jLabel4.setText("Publisher: " + bookInfo[3]);
+        jLabel9.setText("Published Date: " + bookInfo[4]);
+        jLabel10.setText("Description: " + bookInfo[5]);
+        jLabel15.setText("ISBN_13: " + bookInfo[6]);
+        jLabel16.setText("ISBN_10: " + bookInfo[7]);
+        jLabel12.setText("Page Count: " + bookInfo[8]);
+        jLabel13.setText("Categories: " + bookInfo[9]);
+        jLabel14.setText("Image: " + bookInfo[10]);
+        jLabel17.setText("Google Books Rating: " + bookInfo[11]);
     }
 
     /**
@@ -319,10 +321,10 @@ public class BookProfile extends javax.swing.JFrame {
         textAreaUpdate();
         String delimiter = "~";
         try {
-            p = new PrintWriter(new FileWriter(ratingReview,true));
+            p = new PrintWriter(new FileWriter(ratingReview, true));
             //add student id below
             //bookid,date,studentID,rating,review
-            p.println(bookInfo+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
+            p.println(jLabel7.getText() + delimiter + dtf.format(now) + delimiter + user.getStudentNumber() + delimiter + jTextField2.getText() + delimiter + jTextField3.getText());
             p.close();
         } catch (IOException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
@@ -344,27 +346,28 @@ public class BookProfile extends javax.swing.JFrame {
         new UserPageScreen(this.user).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void textAreaUpdate(){
+    private void textAreaUpdate() {
         Scanner s = null;
-        String total="";
-        try{
+        String total = "";
+        try {
             s = new Scanner(ratingReview);
-            while(s.hasNext()){
+            while (s.hasNext()) {
                 String line = s.nextLine();
                 String[] lineArr = line.split("~");
-                if(lineArr[0].equals(bookInfo)){
+                if (lineArr[0].equals(bookInfo)) {
                     System.out.println("HI");
-                    total +=("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]+"\n");
-                    
+                    total += ("User: " + lineArr[2] + ", Star Rating: " + lineArr[3] + ", Review:" + lineArr[4] + "\n");
+
                 }
             }
-        }catch(FileNotFoundException ex){}
+        } catch (FileNotFoundException ex) {
+        }
         if (s != null) {
             s.close();
         }
         jTextArea1.setText(total);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -391,7 +394,7 @@ public class BookProfile extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(BookProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-       
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
