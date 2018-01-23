@@ -30,13 +30,16 @@ public class UserPageScreen extends javax.swing.JFrame {
     public UserPageScreen(Student s) {
         this.s = s;
         initComponents();
-        String fileData[][] = fileToArray("rateReview.txt");
 
-        String unsortedaverages[][] = highestRated(fileData);
-        System.out.println(Arrays.deepToString(unsortedaverages));
+        ArrayList<ArrayList<String>> full = fileToArrayList("rateReview.txt");
+        System.out.println(Arrays.deepToString(arraylistToArray(full)));
 
-        String sortedaverages[][] = sortbyRating(unsortedaverages);
-        System.out.println(Arrays.deepToString(sortedaverages));
+        ArrayList<ArrayList<String>> unsortedAverage = averageData(full);
+        System.out.println(Arrays.deepToString(arraylistToArray(unsortedAverage)));
+
+        String sortedAverage[][] = sortbyRating(arraylistToArray(unsortedAverage));
+        System.out.println(Arrays.deepToString(sortedAverage));
+
     }
 
     /**
@@ -45,8 +48,8 @@ public class UserPageScreen extends javax.swing.JFrame {
      *
      * @return The array with each line the file being an element in the array.
      */
-    public String[][] fileToArray(String fileName) {
-        //Temporary arraylist for holding the book title and rating
+    public ArrayList<ArrayList<String>> fileToArrayList(String fileName) {
+        //Arraylist for holding the book title and rating
         ArrayList<ArrayList<String>> temp = new ArrayList();
         //File with the review's of the books
         File ratingReview = new File(fileName);
@@ -72,67 +75,71 @@ public class UserPageScreen extends javax.swing.JFrame {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
         }
-        return arraylistToArray(temp);
+        return temp;
     }
 
     public String[][] arraylistToArray(ArrayList<ArrayList<String>> temp) {
         /////CHANGE THE NAME OF THE LETTER A
-        String[][] a = new String[2][temp.get(1).size()];
+        String[][] a = new String[temp.get(1).size()][2];
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < temp.get(1).size(); j++) {
-                a[i][j] = temp.get(i).get(j);
+                a[j][i] = temp.get(i).get(j);
             }
         }
         return a;
     }
 
-    public String[][] highestRated(String[][] data) {
+    public ArrayList<ArrayList<String>> averageData(ArrayList<ArrayList<String>> allData) {
 
-        ArrayList<ArrayList<String>> temp = new ArrayList();
+        ArrayList<ArrayList<String>> unsortedAveraged = new ArrayList();
 
         //Name of Book
-        temp.add(new ArrayList<String>());
+        unsortedAveraged.add(new ArrayList<String>());
         //Average Rating of Book
-        temp.add(new ArrayList<String>());
+        unsortedAveraged.add(new ArrayList<String>());
 
-        for (int i = 0; i < data[0].length; i++) {
-            if (!(temp.get(0).contains(data[0][i]))) {
-                temp.get(0).add(data[0][i]);
-                temp.get(1).add(Double.toString(averageBookRating(data, data[0][i])));
+        for (int i = 0; i < allData.get(0).size(); i++) {
+            if (!(unsortedAveraged.get(0).contains(allData.get(0).get(i)))) {
+                //Add title
+                unsortedAveraged.get(0).add(allData.get(0).get(i));
+                //add the rating
+                unsortedAveraged.get(1).add(Double.toString(averageBookRating(allData, allData.get(0).get(i))));
             }
         }
-        return arraylistToArray(temp);
+
+        return unsortedAveraged;
     }
 
     /**
      * Given the file data and the title of a book, determine the average rating
      * of that book.
      *
-     * @param data
+     * @param unsortedAveraged
      * @param title
      * @return
      */
-    public double averageBookRating(String[][] data, String title) {
-        int numRating = 0;
-        int totalRating = 0;
-        for (int i = 0; i < data[0].length; i++) {
-            if (data[0][i].equals(title)) {
+    public double averageBookRating(ArrayList<ArrayList<String>> unsortedAveraged, String title) {
+        double numRating = 0;
+        double totalRating = 0;
+        for (int i = 0; i < unsortedAveraged.get(0).size(); i++) {
+            if (unsortedAveraged.get(0).get(i).equals(title)) {
                 numRating++;
-                totalRating += Integer.parseInt(data[1][i]);
+                totalRating += Integer.parseInt(unsortedAveraged.get(1).get(i));
             }
         }
+
         return totalRating / numRating;
     }
 
-    public String[][] sortbyRating (String[][] unsorted){
+    public String[][] sortbyRating(String[][] unsorted) {
         Arrays.sort(unsorted, new Comparator<String[]>() {
             @Override
             public int compare(final String[] first, final String[] second) {
                 return Double.valueOf(second[1]).compareTo(Double.valueOf(first[1]));
             }
         });
-        String[][]sorted = Arrays.copyOf(unsorted, unsorted.length);
+        String[][] sorted = Arrays.copyOf(unsorted, unsorted.length);
         return sorted;
     }
 
