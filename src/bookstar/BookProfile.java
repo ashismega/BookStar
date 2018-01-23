@@ -31,54 +31,56 @@ import javax.swing.SwingConstants;
  * @author 072671415
  */
 public class BookProfile extends javax.swing.JFrame {
+
     File ratingReview = new File("rateReview.txt");
     /////////////////////////DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     /////////////////////////LocalDateTime now = LocalDateTime.now();
     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
     private static String[] bookInfo;
     private static Student user;
-    
+
     /**
      * Creates new form BookProfile
+     *
      * @param bookInfo
      * @param user
      */
     public BookProfile(String[] bookInfo, Student user) {
-        this.bookInfo=bookInfo;
+        this.bookInfo = bookInfo;
         this.user = user;
         initComponents();
-        textAreaUpdate();            
-        
-    jLabel7.setText(bookInfo[0]);
-    //jLabel11.setText("Subtitle: "+ bookInfo[1]);
-    jLabel8.setText("Authors: "+ bookInfo[2]);
-    jLabel4.setText("Publisher: "+ bookInfo[3]);
-    jLabel9.setText("Published Date: "+ bookInfo[4]);
-    jLabel10.setText("Description: "+ bookInfo[5]);
-    jLabel15.setText("ISBN_13: "+ bookInfo[6]);
-    jLabel16.setText("ISBN_10: "+ bookInfo[7]);
-    jLabel12.setText("Page Count: "+ bookInfo[8]);
-    jLabel13.setText("Categories: "+ bookInfo[9]);
-    jLabel14.setText("Image: "+ bookInfo[10]);
-    jLabel17.setText("Google Books Rating: "+ bookInfo[11]);
-    
-   jTextField1.setText(bookInfo[10]);
-jTextArea1.setCaretPosition(0);
+        textAreaUpdate();
 
-     URL url;
+        jLabel7.setText(bookInfo[0]);
+        //jLabel11.setText("Subtitle: "+ bookInfo[1]);
+        jLabel8.setText("Authors: " + bookInfo[2]);
+        jLabel4.setText("Publisher: " + bookInfo[3]);
+        jLabel9.setText("Published Date: " + bookInfo[4]);
+        jLabel10.setText("Description: " + bookInfo[5]);
+        jLabel15.setText("ISBN_13: " + bookInfo[6]);
+        jLabel16.setText("ISBN_10: " + bookInfo[7]);
+        jLabel12.setText("Page Count: " + bookInfo[8]);
+        jLabel13.setText("Categories: " + bookInfo[9]);
+        //jLabel14.setText("Image: " + bookInfo[10]);
+        jLabel17.setText("Google Books Rating: " + bookInfo[11]);
+
+        jTextField1.setText(bookInfo[10]);
+        jTextArea1.setCaretPosition(0);
+        addImage(bookInfo[10]);
+
+    }
+
+    public void addImage(String imageLink) {
+        URL url;
         try {
-            url = new URL("http://i.imgur.com/xiVXrCD.jpg");
-            
-            Image image = ImageIO.read(url);
+            url = new URL(imageLink);
+            Image image = ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
             jLabel14.setIcon(new ImageIcon(image));
         } catch (MalformedURLException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
         }
- 
- 
-
     }
 
     /**
@@ -133,31 +135,33 @@ jTextArea1.setCaretPosition(0);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("What people are saying");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, -1, -1));
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(318, 80, 270, 170));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 270, 170));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Add your own review");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, -1, -1));
 
         jLabel5.setText("Rating:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 310, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, -1, -1));
 
         jLabel6.setText("Review:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 350, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 370, -1, -1));
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 348, 220, 120));
+        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, 220, 170));
 
         jButton1.setText("Submit");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -165,7 +169,7 @@ jTextArea1.setCaretPosition(0);
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 470, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 550, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -173,7 +177,7 @@ jTextArea1.setCaretPosition(0);
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 270, 40));
 
         jLabel8.setText("Author:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 50, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 50, -1));
 
         jButton2.setText("BACK TO MAIN MENU");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -181,76 +185,74 @@ jTextArea1.setCaretPosition(0);
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 15, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         jLabel4.setText("Publisher:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 60, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 60, -1));
 
         jLabel9.setText("Published Date:");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 90, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 90, -1));
 
         jLabel11.setText("Subtitle:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 70, -1));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 70, -1));
 
         jLabel10.setText("Description:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 70, 20));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, 70, 20));
 
         jLabel12.setText("Page Count:");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 80, -1));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 80, -1));
 
         jLabel13.setText("Categories:");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 70, -1));
-
-        jLabel14.setText("Image:");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 180, 70));
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 70, -1));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 180, 180));
 
         jLabel15.setText("ISBN_13:");
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 60, -1));
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 60, -1));
 
         jLabel16.setText("ISBN_10:");
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 60, -1));
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 60, -1));
 
         jLabel17.setText("Google Books Rating:");
-        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 110, -1));
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 110, -1));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 58, 12, 430));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 58, 12, 520));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 580, 10));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 307, -1, -1));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 330, -1, -1));
 
         jTextField1.setEditable(false);
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextField1.setToolTipText("");
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 220, -1));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 220, -1));
 
         jTextField2.setEditable(false);
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 220, -1));
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 220, -1));
 
         jTextField4.setEditable(false);
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 220, -1));
+        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, 220, -1));
 
         jTextField5.setEditable(false);
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 190, -1));
+        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 380, 190, -1));
 
         jTextField6.setEditable(false);
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 220, -1));
+        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 410, 220, -1));
 
         jTextField7.setEditable(false);
-        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 220, -1));
+        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, 220, -1));
 
         jTextField8.setEditable(false);
-        getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 210, -1));
+        getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 470, 210, -1));
 
         jTextField9.setEditable(false);
-        getContentPane().add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, 200, -1));
+        getContentPane().add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 500, 200, -1));
 
         jTextField10.setEditable(false);
-        getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 430, 160, -1));
+        getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 530, 160, -1));
 
         jTextField11.setEditable(false);
-        getContentPane().add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 460, 210, -1));
+        getContentPane().add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 560, 210, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -260,10 +262,10 @@ jTextArea1.setCaretPosition(0);
         textAreaUpdate();
         String delimiter = "~";
         try {
-            p = new PrintWriter(new FileWriter(ratingReview,true));
+            p = new PrintWriter(new FileWriter(ratingReview, true));
             //add student id below
             //bookid,date,studentID,rating,review
-            p.println(bookInfo[0]+delimiter+timeStamp+delimiter+user.getStudentNumber()+delimiter+jComboBox1.getSelectedItem()+delimiter+jTextField3.getText());
+            p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
             p.close();
         } catch (IOException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
@@ -282,26 +284,27 @@ jTextArea1.setCaretPosition(0);
         new UserPageScreen(this.user).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void textAreaUpdate(){
+    private void textAreaUpdate() {
         Scanner s = null;
-        String total="";
-        try{
+        String total = "";
+        try {
             s = new Scanner(ratingReview);
-            while(s.hasNext()){
+            while (s.hasNext()) {
                 String line = s.nextLine();
                 String[] lineArr = line.split("~");
-                if(lineArr[0].equals(bookInfo[0])){
-                    total +=("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]+"\n");
-                    
+                if (lineArr[0].equals(bookInfo[0])) {
+                    total += ("User: " + lineArr[2] + ", Star Rating: " + lineArr[3] + ", Review:" + lineArr[4] + "\n");
+
                 }
             }
-        }catch(FileNotFoundException ex){}
+        } catch (FileNotFoundException ex) {
+        }
         if (s != null) {
             s.close();
         }
         jTextArea1.setText(total);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -328,7 +331,7 @@ jTextArea1.setCaretPosition(0);
             java.util.logging.Logger.getLogger(BookProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-       
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
