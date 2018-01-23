@@ -7,6 +7,7 @@
 package bookstar;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class UserPageScreen extends javax.swing.JFrame {
 
     //Sorted Ratings
     String sortedAverage[][] = sortbyRating(arraylistToArray(averageData(fileToArrayList("rateReview.txt"))));
-
+    File ratingReview = new File("rateReview.txt");
     /**
      * Creates new form UserPageScreen
      *
@@ -33,16 +34,10 @@ public class UserPageScreen extends javax.swing.JFrame {
     public UserPageScreen(Student s) {
         this.s = s;
         initComponents();
-        try{
-            jLabel4.setText(sortedAverage[0][0]);
-            jLabel5.setText(sortedAverage[1][0]);
-            jLabel6.setText(sortedAverage[2][0]);
-        }
-        catch(ArrayIndexOutOfBoundsException ex){
-            jLabel4.setText("NO BOOKS RATED");
-            jLabel5.setText("NO BOOKS RATED");
-            jLabel6.setText("NO BOOKS RATED");
-        }
+
+        jLabel4.setText(sortedAverage[0][0]);
+        jLabel5.setText(sortedAverage[1][0]);
+        jLabel6.setText(sortedAverage[2][0]);
 
     }
 
@@ -158,8 +153,27 @@ public class UserPageScreen extends javax.swing.JFrame {
         }
     }
     
-   
-
+    public String[] searchUserRatings(){
+        Scanner scan = null;
+        ArrayList userRatings = new ArrayList();
+        try {
+            scan = new Scanner(ratingReview);
+            while (scan.hasNext()) {
+                String line = scan.nextLine();
+                String[] lineArr = line.split("~");
+                if(lineArr[2].equals(s.getStudentNumber())){
+                    String bookRate = (lineArr[0]+"~"+lineArr[3]);
+                    userRatings.add(bookRate);
+                }
+            }
+        } catch (FileNotFoundException ex) {
+        }
+        if (scan != null) {
+            scan.close();
+        }
+        String[] array = (String[])userRatings.toArray();
+        return array;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -347,33 +361,17 @@ public class UserPageScreen extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        try{
-            searchBook(sortedAverage[1][0]);
-        }
-        catch(ArrayIndexOutOfBoundsException ex){
-            JOptionPane.showMessageDialog(this, "NO BOOKS RATED", "Book Rating", JOptionPane.ERROR_MESSAGE);
-        }
-        
+        searchBook(sortedAverage[1][0]);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-          try{
-            searchBook(sortedAverage[0][0]);
-        }
-        catch(ArrayIndexOutOfBoundsException ex){
-            JOptionPane.showMessageDialog(this, "NO BOOKS RATED", "Book Rating", JOptionPane.ERROR_MESSAGE);
-        }
+        searchBook(sortedAverage[0][0]);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-          try{
-            searchBook(sortedAverage[3][0]);
-        }
-        catch(ArrayIndexOutOfBoundsException ex){
-            JOptionPane.showMessageDialog(this, "NO BOOKS RATED", "Book Rating", JOptionPane.ERROR_MESSAGE);
-        }
+        searchBook(sortedAverage[3][0]);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
