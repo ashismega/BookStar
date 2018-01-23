@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,16 +26,18 @@ public class BookProfile extends javax.swing.JFrame {
     File ratingReview = new File("rateReview.txt");
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
-    private static String bookID;
+    private static String bookInfo;
     private static Student user;
+    
     /**
      * Creates new form BookProfile
      */
-    public BookProfile(String bookID, Student user) {
-        this.bookID = bookID;
+    public BookProfile(String bookInfo, Student user) {
+        this.bookInfo=bookInfo;
         this.user = user;
         initComponents();
         textAreaUpdate();
+        jLabel7.setText("Name"+ bookInfo);
     }
 
     /**
@@ -77,14 +80,12 @@ public class BookProfile extends javax.swing.JFrame {
 
         jLabel6.setText("Review:");
 
-        jTextField2.setText("jTextField2");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
             }
         });
 
-        jTextField3.setText("jTextField3");
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -134,11 +135,11 @@ public class BookProfile extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField2))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -187,28 +188,18 @@ public class BookProfile extends javax.swing.JFrame {
 //submit review button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         PrintWriter p = null;
+        textAreaUpdate();
         String delimiter = "~";
         try {
             p = new PrintWriter(new FileWriter(ratingReview,true));
             //add student id below
             //bookid,date,studentID,rating,review
-            p.println(bookID+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
+            p.println(bookInfo+delimiter+dtf.format(now)+delimiter+user.getStudentNumber()+delimiter+jTextField2.getText()+delimiter+jTextField3.getText());
             p.close();
         } catch (IOException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        String s = "q";
-         byte[] bytes = s.getBytes();
-        try {
-            FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir"));
-            fos.write(bytes);
-            fos.close();
-        } catch (IOException ex) {
-            System.out.println("fuck");
-        }
-        
+        textAreaUpdate();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 //rating number
@@ -225,21 +216,28 @@ public class BookProfile extends javax.swing.JFrame {
         this.setVisible(false);
         new UserPageScreen(this.user).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
     private void textAreaUpdate(){
-        Scanner s;
+        Scanner s = null;
+        String total="";
         try{
-            System.out.println("Scanning"); 
             s = new Scanner(ratingReview);
             while(s.hasNext()){
                 String line = s.nextLine();
                 String[] lineArr = line.split("~");
-                if(lineArr[0].equals(bookID)){
-                    jTextArea1.append("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]);
-                    System.out.println("EQUALS");
+                if(lineArr[0].equals(bookInfo)){
+                    System.out.println("HI");
+                    total +=("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]+"\n");
+                    
                 }
             }
         }catch(FileNotFoundException ex){}
+        if (s != null) {
+            s.close();
+        }
+        jTextArea1.setText(total);
     }
+    
     /**
      * @param args the command line arguments
      */
@@ -266,12 +264,11 @@ public class BookProfile extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(BookProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BookProfile(bookID, user).setVisible(true);
-                
+                new BookProfile(bookInfo, user).setVisible(true);
             }
         });
     }
