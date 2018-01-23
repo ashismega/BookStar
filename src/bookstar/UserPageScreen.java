@@ -274,7 +274,8 @@ public class UserPageScreen extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(800, 650));
+        setMinimumSize(new java.awt.Dimension(800, 730));
+        setPreferredSize(new java.awt.Dimension(800, 730));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -302,8 +303,8 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Your Recommendations");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, 28));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 780, 10));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, -1, 28));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 780, 10));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Book1");
@@ -323,7 +324,7 @@ public class UserPageScreen extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 160, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, 160, -1));
 
         jButton4.setText("View Book");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -331,7 +332,7 @@ public class UserPageScreen extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 170, -1));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, 170, -1));
 
         jButton5.setText("View Book");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -339,22 +340,22 @@ public class UserPageScreen extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 300, 170, -1));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 320, 170, -1));
 
         jLabel7.setText("Friend1");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, -1, -1));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, -1, -1));
 
         jLabel8.setText("Friend2");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 560, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 630, -1, -1));
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 160, 180));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 180, 200));
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, 170, 180));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 190, 200));
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 110, 170, 180));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 110, 190, 200));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

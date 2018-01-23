@@ -126,7 +126,8 @@ public class BookProfile extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(800, 650));
+        setMinimumSize(new java.awt.Dimension(800, 730));
+        setPreferredSize(new java.awt.Dimension(800, 730));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
