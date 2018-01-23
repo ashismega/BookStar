@@ -264,7 +264,7 @@ public class BookProfile extends javax.swing.JFrame {
         PrintWriter p = null;
         textAreaUpdate();
         String delimiter = "~";
-        if(jTextField3.getText()!=""){
+        if(jTextField3.getText().isEmpty()==false){
             try {
                 p = new PrintWriter(new FileWriter(ratingReview, true));
                 //add student id below
