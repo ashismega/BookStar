@@ -313,7 +313,8 @@ public class UserPageScreen extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(600, 500));
+        setMinimumSize(new java.awt.Dimension(800, 760));
+        setPreferredSize(new java.awt.Dimension(800, 760));
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -420,16 +421,16 @@ public class UserPageScreen extends javax.swing.JFrame {
         jLabel13.setText("Recommended1a");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 160, -1));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton2.setText("View Book");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 690, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 690, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Recommended2a");
         getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 490, 150, -1));
 
-        jButton6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton6.setText("View Book");
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 690, -1, -1));
 
@@ -438,18 +439,18 @@ public class UserPageScreen extends javax.swing.JFrame {
         jLabel15.setText("Recommended1b");
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 490, 160, -1));
 
-        jButton7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton7.setText("View Book");
-        getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 690, -1, -1));
+        getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 690, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("Recommended2b");
         getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 490, 160, -1));
 
-        jButton8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton8.setText("View Book");
-        getContentPane().add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 690, -1, -1));
+        getContentPane().add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 690, -1, -1));
         getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 510, 130, 170));
         getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 510, 130, 170));
         getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 510, 130, 170));
