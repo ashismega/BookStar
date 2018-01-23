@@ -401,6 +401,7 @@ public class UserPageScreen extends javax.swing.JFrame {
             new BookProfile(searchBook(sortedAverage[1][0]), s).setVisible(true);
             this.setVisible(false);
         } catch (ArrayIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -410,15 +411,17 @@ public class UserPageScreen extends javax.swing.JFrame {
             new BookProfile(searchBook(sortedAverage[0][0]), s).setVisible(true);
             this.setVisible(false);
         } catch (ArrayIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         try {
-            new BookProfile(searchBook(sortedAverage[3][0]), s).setVisible(true);
+            new BookProfile(searchBook(sortedAverage[2][0]), s).setVisible(true);
             this.setVisible(false);
         } catch (ArrayIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
