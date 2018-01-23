@@ -33,10 +33,16 @@ public class UserPageScreen extends javax.swing.JFrame {
     public UserPageScreen(Student s) {
         this.s = s;
         initComponents();
-
-        jLabel4.setText(sortedAverage[0][0]);
-        jLabel5.setText(sortedAverage[1][0]);
-        jLabel6.setText(sortedAverage[2][0]);
+        try{
+            jLabel4.setText(sortedAverage[0][0]);
+            jLabel5.setText(sortedAverage[1][0]);
+            jLabel6.setText(sortedAverage[2][0]);
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            jLabel4.setText("NO BOOKS RATED");
+            jLabel5.setText("NO BOOKS RATED");
+            jLabel6.setText("NO BOOKS RATED");
+        }
 
     }
 
@@ -151,6 +157,8 @@ public class UserPageScreen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error", "Search Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -339,17 +347,33 @@ public class UserPageScreen extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        searchBook(sortedAverage[1][0]);
+        try{
+            searchBook(sortedAverage[1][0]);
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            JOptionPane.showMessageDialog(this, "NO BOOKS RATED", "Book Rating", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        searchBook(sortedAverage[0][0]);
+          try{
+            searchBook(sortedAverage[0][0]);
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            JOptionPane.showMessageDialog(this, "NO BOOKS RATED", "Book Rating", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        searchBook(sortedAverage[3][0]);
+          try{
+            searchBook(sortedAverage[3][0]);
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            JOptionPane.showMessageDialog(this, "NO BOOKS RATED", "Book Rating", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
