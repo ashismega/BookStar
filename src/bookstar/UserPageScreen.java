@@ -208,39 +208,39 @@ public class UserPageScreen extends javax.swing.JFrame {
     
     public String[] friends(String[] reviews){
         if(reviews == null){
-            System.out.println("broke at user2");
+          
             return null;
         }
         Map<String, String[]> map = new HashMap<>();
-        System.out.println("case1");
+        
         for(int i=0;i<reviews.length;i++){
-            System.out.println("case2");
+           
             
             String[] record = reviews[i].split("~");
-            System.out.println("case3");
+            
             String book = record[0];
             int review = Integer.parseInt(record[1]);
             
             try {
                 Scanner sc = new Scanner(ratingReview);
-                System.out.println("case4");
+                
                 while(sc.hasNext()){
                    
                     String tempS = sc.nextLine();
                     String[] tempRecord = tempS.split("~");
-                    System.out.println("case5");
+                  
                     if(tempRecord[0].equals(book)){
                         if( !(s.getStudentNumber().equals(tempRecord[2])) ){
-                            System.out.println("case6");
+                           
                             try{
-                                System.out.println("case7");
+                              
                                 String[] vals = map.get(tempRecord[2]);
                                 vals[0] = ( (review*Integer.parseInt(tempRecord[3])) + Integer.parseInt(vals[0]) ) + "";
                                 vals[1] = vals[1] + "," + book;
                                 
                             }
                             catch(NullPointerException ex){
-                                System.out.println("case8");
+                                
                                 String[] vals = {review*Integer.parseInt(tempRecord[3]) + "",  "~" +book };
                                 map.put(tempRecord[2], vals);
                                 
@@ -249,7 +249,7 @@ public class UserPageScreen extends javax.swing.JFrame {
                     }
                 }
             } catch (IOException ex) {
-                System.out.println("case9");
+                
                 JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
             }  
         }
@@ -261,14 +261,11 @@ public class UserPageScreen extends javax.swing.JFrame {
         for (int i = 0; i<map.size(); i++){
             result[i] = key[i];
             for (int j = 0; j<map.size(); j++){
-                    result[i] += value[i][j];
-            }
+                    result[i] += "~" + value[i][j];
+                    
+            }      
         }
-                
-        
-        
-        
-        
+  
         return result;
     }
     
