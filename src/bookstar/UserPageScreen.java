@@ -7,6 +7,7 @@
 package bookstar;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class UserPageScreen extends javax.swing.JFrame {
 
     //Sorted Ratings
     String sortedAverage[][] = sortbyRating(arraylistToArray(averageData(fileToArrayList("rateReview.txt"))));
-
+    File ratingReview = new File("rateReview.txt");
     /**
      * Creates new form UserPageScreen
      *
@@ -151,7 +152,28 @@ public class UserPageScreen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error", "Search Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
+    public String[] searchUserRatings(){
+        Scanner scan = null;
+        ArrayList userRatings = new ArrayList();
+        try {
+            scan = new Scanner(ratingReview);
+            while (scan.hasNext()) {
+                String line = scan.nextLine();
+                String[] lineArr = line.split("~");
+                if(lineArr[2].equals(s.getStudentNumber())){
+                    String bookRate = (lineArr[0]+"~"+lineArr[3]);
+                    userRatings.add(bookRate);
+                }
+            }
+        } catch (FileNotFoundException ex) {
+        }
+        if (scan != null) {
+            scan.close();
+        }
+        String[] array = (String[])userRatings.toArray();
+        return array;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
