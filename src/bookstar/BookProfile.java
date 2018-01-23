@@ -347,7 +347,6 @@ public class BookProfile extends javax.swing.JFrame {
                 String line = s.nextLine();
                 String[] lineArr = line.split("~");
                 if(lineArr[0].equals(bookInfo[0])){
-                    System.out.println("HI");
                     total +=("User: "+lineArr[2]+", Star Rating: "+lineArr[3]+", Review:"+lineArr[4]+"\n");
                     
                 }
