@@ -58,7 +58,7 @@ public class BookProfile extends javax.swing.JFrame {
         jTextField8.setText(bookInfo[9]);
         jTextField9.setText(bookInfo[8]);
         jTextField10.setText(bookInfo[11]);
-        jTextField11.setText(bookInfo[5]);
+        jTextArea2.setText(bookInfo[5]);
 
         jLabel14.setIcon(new ImageIcon(addImage(bookInfo[10])));
     }
@@ -120,7 +120,8 @@ public class BookProfile extends javax.swing.JFrame {
         jTextField8 = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
         jTextField10 = new javax.swing.JTextField();
-        jTextField11 = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
 
         jLabel1.setText("jLabel1");
 
@@ -138,24 +139,24 @@ public class BookProfile extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 95, 377, 233));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 95, 377, 270));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Add your own review");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 364, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 410, -1, -1));
 
         jLabel5.setText("Rating:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 395, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 440, -1, -1));
 
         jLabel6.setText("Review:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 433, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 480, -1, -1));
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 430, 320, 176));
+        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 476, 320, 200));
 
         jButton1.setText("Submit");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -163,7 +164,7 @@ public class BookProfile extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 610, 117, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 690, 117, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -210,7 +211,7 @@ public class BookProfile extends javax.swing.JFrame {
         getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 577, 114, -1));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(396, 66, 12, 570));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(396, 66, 12, 640));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 791, 10));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
@@ -219,7 +220,7 @@ public class BookProfile extends javax.swing.JFrame {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(467, 392, 66, -1));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 440, 66, -1));
 
         jTextField1.setEditable(false);
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 270, 239, -1));
@@ -248,8 +249,13 @@ public class BookProfile extends javax.swing.JFrame {
         jTextField10.setEditable(false);
         getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 574, 242, -1));
 
-        jTextField11.setEditable(false);
-        getContentPane().add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 612, 242, -1));
+        jTextArea2.setEditable(false);
+        jTextArea2.setColumns(20);
+        jTextArea2.setLineWrap(true);
+        jTextArea2.setRows(5);
+        jScrollPane2.setViewportView(jTextArea2);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 610, 250, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -365,12 +371,13 @@ public class BookProfile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
