@@ -22,6 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,21 +46,22 @@ public class UserPageScreen extends javax.swing.JFrame {
     public UserPageScreen(Student s) {
         this.s = s;
         initComponents();
-        try {
-            jLabel4.setText(sortedAverage[0][0]);
-            jLabel5.setText(sortedAverage[1][0]);
-            jLabel6.setText(sortedAverage[2][0]);
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            jLabel4.setText("NO RATED BOOKS");
-            jLabel5.setText("NO RATED BOOKS");
-            jLabel6.setText("NO RATED BOOKS");
-        }
 
-       // searchBook(sortedAverage[0][0])[10];
-        
-        jLabel9.setIcon(new ImageIcon(addImage(searchBook(sortedAverage[0][0])[10])));
-        jLabel10.setIcon(new ImageIcon(addImage(searchBook(sortedAverage[1][0])[10])));
-        jLabel11.setIcon(new ImageIcon(addImage(searchBook(sortedAverage[2][0])[10])));
+        topRatedBooks(jLabel4, jLabel9, jButton3, 0);
+        topRatedBooks(jLabel5, jLabel10, jButton4, 1);
+        topRatedBooks(jLabel6, jLabel11, jButton5, 2);
+    }
+
+    public void topRatedBooks(JLabel title, JLabel image, JButton button, int num) {
+        try {
+            title.setText(sortedAverage[num][0]);
+            image.setIcon(new ImageIcon(addImage(searchBook(sortedAverage[num][0])[10])));
+            button.setVisible(true);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            title.setText("NO RATED BOOKS");
+            image.setText("NO RATED BOOKS");
+            button.setEnabled(false);
+        }
     }
 
     public Image addImage(String imageLink) {
