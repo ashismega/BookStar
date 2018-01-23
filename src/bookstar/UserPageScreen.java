@@ -31,6 +31,7 @@ public class UserPageScreen extends javax.swing.JFrame {
         this.s = s;
         initComponents();
 
+        //All books and the ratings 
         ArrayList<ArrayList<String>> full = fileToArrayList("rateReview.txt");
         System.out.println(Arrays.deepToString(arraylistToArray(full)));
 
@@ -39,6 +40,9 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         String sortedAverage[][] = sortbyRating(arraylistToArray(unsortedAverage));
         System.out.println(Arrays.deepToString(sortedAverage));
+        jLabel4.setText(sortedAverage[0][0]);
+        jLabel5.setText(sortedAverage[1][0]);
+        jLabel6.setText(sortedAverage[2][0]);
 
     }
 
