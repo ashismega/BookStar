@@ -12,7 +12,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -174,6 +178,45 @@ public class UserPageScreen extends javax.swing.JFrame {
         String[] array = (String[])userRatings.toArray();
         return array;
     }
+    
+    public String[] topFriends(String[] reviews){
+        Map<String, String[]> map = new HashMap<>();
+        for(int i=0;i!=reviews.length-1;i++){
+            String[] record = reviews[i].split("~");
+            String book = record[0];
+            int review = Integer.parseInt(record[1]);
+        
+            try {
+                Scanner sc = new Scanner(ratingReview);
+                while(sc.hasNext()){
+                    String tempS = sc.nextLine();
+                    String[] tempRecord = tempS.split("~");
+                    if(tempRecord[0].equals(book)){
+                        if( !(s.getStudentNumber().equals(tempRecord[3])) ){
+                            try{
+                                String[] vals = map.get(tempRecord[3]);
+                                vals[0] = ( (review*Integer.parseInt(tempRecord[3])) + Integer.parseInt(vals[0]) ) + "";
+                                vals[1] = vals[1] + "~" + book;
+                            }
+                            catch(NullPointerException ex){
+                                String[] vals = {review*Integer.parseInt(tempRecord[3]) + "", book };
+                                map.put(tempRecord[3], vals);
+                            }
+                        }
+                    }
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
+            }
+                
+           
+            
+        }
+        
+        return null;
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
