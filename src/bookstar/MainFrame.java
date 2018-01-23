@@ -174,7 +174,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jLabel9.setText("BOOKSTAR");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
