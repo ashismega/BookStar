@@ -223,7 +223,7 @@ public class BookProfile extends javax.swing.JFrame {
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 440, 66, -1));
 
         jTextField1.setEditable(false);
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 270, 239, -1));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 239, -1));
 
         jTextField2.setEditable(false);
         getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 308, 240, -1));
@@ -244,7 +244,7 @@ public class BookProfile extends javax.swing.JFrame {
         getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 498, 240, -1));
 
         jTextField9.setEditable(false);
-        getContentPane().add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 536, 239, -1));
+        getContentPane().add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(146, 536, 240, -1));
 
         jTextField10.setEditable(false);
         getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 574, 242, -1));
