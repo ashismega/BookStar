@@ -9,6 +9,8 @@ package bookstar;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
@@ -28,8 +30,13 @@ public class UserPageScreen extends javax.swing.JFrame {
     public UserPageScreen(Student s) {
         this.s = s;
         initComponents();
-        String a[][] = fileToArray();
-        System.out.println("hi");
+        String fileData[][] = fileToArray("rateReview.txt");
+
+        String unsortedaverages[][] = highestRated(fileData);
+        System.out.println(Arrays.deepToString(unsortedaverages));
+
+        String sortedaverages[][] = sortbyRating(unsortedaverages);
+        System.out.println(Arrays.deepToString(sortedaverages));
     }
 
     /**
@@ -38,11 +45,11 @@ public class UserPageScreen extends javax.swing.JFrame {
      *
      * @return The array with each line the file being an element in the array.
      */
-    public String[][] fileToArray() {
+    public String[][] fileToArray(String fileName) {
         //Temporary arraylist for holding the book title and rating
         ArrayList<ArrayList<String>> temp = new ArrayList();
         //File with the review's of the books
-        File ratingReview = new File("rateReview.txt");
+        File ratingReview = new File(fileName);
 
         Scanner sc = null;
         //Name of Book
@@ -65,23 +72,7 @@ public class UserPageScreen extends javax.swing.JFrame {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
         }
-        System.out.println(temp.get(1).size());
         return arraylistToArray(temp);
-    }
-
-    public void duplicates(ArrayList<ArrayList<String>> temp) {
-
-        String[][] ratingAverages = new String[2][temp.get(1).size()];
-
-        for (int i = 0; i < temp.get(0).size(); i++) {
-
-            int numDuplicates = 1;
-            if (temp.get(0).get(i).equals(temp.get(0).get(i + 1))) {
-                numDuplicates++;
-                //int average = temp.get(1).get(i)+temp.get(1).get(i + 1));
-            }
-        }
-
     }
 
     public String[][] arraylistToArray(ArrayList<ArrayList<String>> temp) {
@@ -94,6 +85,55 @@ public class UserPageScreen extends javax.swing.JFrame {
             }
         }
         return a;
+    }
+
+    public String[][] highestRated(String[][] data) {
+
+        ArrayList<ArrayList<String>> temp = new ArrayList();
+
+        //Name of Book
+        temp.add(new ArrayList<String>());
+        //Average Rating of Book
+        temp.add(new ArrayList<String>());
+
+        for (int i = 0; i < data[0].length; i++) {
+            if (!(temp.get(0).contains(data[0][i]))) {
+                temp.get(0).add(data[0][i]);
+                temp.get(1).add(Double.toString(averageBookRating(data, data[0][i])));
+            }
+        }
+        return arraylistToArray(temp);
+    }
+
+    /**
+     * Given the file data and the title of a book, determine the average rating
+     * of that book.
+     *
+     * @param data
+     * @param title
+     * @return
+     */
+    public double averageBookRating(String[][] data, String title) {
+        int numRating = 0;
+        int totalRating = 0;
+        for (int i = 0; i < data[0].length; i++) {
+            if (data[0][i].equals(title)) {
+                numRating++;
+                totalRating += Integer.parseInt(data[1][i]);
+            }
+        }
+        return totalRating / numRating;
+    }
+
+    public String[][] sortbyRating (String[][] unsorted){
+        Arrays.sort(unsorted, new Comparator<String[]>() {
+            @Override
+            public int compare(final String[] first, final String[] second) {
+                return Double.valueOf(second[1]).compareTo(Double.valueOf(first[1]));
+            }
+        });
+        String[][]sorted = Arrays.copyOf(unsorted, unsorted.length);
+        return sorted;
     }
 
     /**
