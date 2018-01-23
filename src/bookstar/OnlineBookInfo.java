@@ -163,5 +163,4 @@ public class OnlineBookInfo {
         //Return the extracted information
         return information;
     }
-
 }
