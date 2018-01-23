@@ -264,14 +264,16 @@ public class BookProfile extends javax.swing.JFrame {
         PrintWriter p = null;
         textAreaUpdate();
         String delimiter = "~";
-        try {
-            p = new PrintWriter(new FileWriter(ratingReview, true));
-            //add student id below
-            //bookid,date,studentID,rating,review
-            p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
-            p.close();
-        } catch (IOException ex) {
-            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+        if(jTextField3.getText().isEmpty()==false){
+            try {
+                p = new PrintWriter(new FileWriter(ratingReview, true));
+                //add student id below
+                //bookid,date,studentID,rating,review
+                    p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
+                p.close();
+            } catch (IOException ex) {
+                Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         textAreaUpdate();
     }//GEN-LAST:event_jButton1ActionPerformed
