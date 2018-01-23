@@ -44,35 +44,36 @@ public class BookProfile extends javax.swing.JFrame {
         initComponents();
         textAreaUpdate();
 
+        //Title
         jLabel7.setText(bookInfo[0]);
-        //jLabel11.setText("Subtitle: "+ bookInfo[1]);
-        jLabel8.setText("Authors: " + bookInfo[2]);
-        jLabel4.setText("Publisher: " + bookInfo[3]);
-        jLabel9.setText("Published Date: " + bookInfo[4]);
-        jLabel10.setText("Description: " + bookInfo[5]);
-        jLabel15.setText("ISBN_13: " + bookInfo[6]);
-        jLabel16.setText("ISBN_10: " + bookInfo[7]);
-        jLabel12.setText("Page Count: " + bookInfo[8]);
-        jLabel13.setText("Categories: " + bookInfo[9]);
+        //Image
         //jLabel14.setText("Image: " + bookInfo[10]);
-        jLabel17.setText("Google Books Rating: " + bookInfo[11]);
 
-//        jTextField1.setText(bookInfo[10]);
-        jTextArea1.setCaretPosition(0);
-        addImage(bookInfo[10]);
+        jTextField1.setText(bookInfo[1]);
+        jTextField2.setText(bookInfo[2]);
+        jTextField4.setText(bookInfo[3]);
+        jTextField5.setText(bookInfo[4]);
+        jTextField6.setText(bookInfo[7]);
+        jTextField7.setText(bookInfo[6]);
+        jTextField8.setText(bookInfo[9]);
+        jTextField9.setText(bookInfo[8]);
+        jTextField10.setText(bookInfo[11]);
+        jTextField11.setText(bookInfo[5]);
 
+        jLabel14.setIcon(new ImageIcon(addImage(bookInfo[10])));
     }
 
-    public void addImage(String imageLink) {
+    public Image addImage(String imageLink) {
         URL url;
         try {
             url = new URL(imageLink);
-            Image image = ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
-            jLabel14.setIcon(new ImageIcon(image));
+            return ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
         } catch (MalformedURLException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         } catch (IOException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 
@@ -124,7 +125,7 @@ public class BookProfile extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(600, 500));
+        setMinimumSize(new java.awt.Dimension(800, 650));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -154,7 +155,7 @@ public class BookProfile extends javax.swing.JFrame {
                 jTextField3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(463, 433, 338, 176));
+        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 430, 320, 176));
 
         jButton1.setText("Submit");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -162,12 +163,12 @@ public class BookProfile extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(684, 615, 117, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 610, 117, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Title:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 76, 270, 40));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 370, 40));
 
         jLabel8.setText("Author:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 311, 84, -1));
@@ -197,7 +198,7 @@ public class BookProfile extends javax.swing.JFrame {
 
         jLabel13.setText("Categories:");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 501, 71, -1));
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 116, 180, 150));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 160, 150));
 
         jLabel15.setText("ISBN_13:");
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 463, 71, -1));
@@ -209,7 +210,7 @@ public class BookProfile extends javax.swing.JFrame {
         getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 577, 114, -1));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(396, 66, 12, 577));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(396, 66, 12, 570));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 791, 10));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
@@ -220,34 +221,34 @@ public class BookProfile extends javax.swing.JFrame {
         });
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(467, 392, 66, -1));
 
-        jTextField1.setText("jTextField1");
+        jTextField1.setEditable(false);
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 270, 239, -1));
 
-        jTextField2.setText("jTextField2");
+        jTextField2.setEditable(false);
         getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 308, 240, -1));
 
-        jTextField4.setText("jTextField4");
+        jTextField4.setEditable(false);
         getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 346, 240, -1));
 
-        jTextField5.setText("jTextField5");
+        jTextField5.setEditable(false);
         getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 384, 240, -1));
 
-        jTextField6.setText("jTextField6");
+        jTextField6.setEditable(false);
         getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 422, 240, -1));
 
-        jTextField7.setText("jTextField7");
+        jTextField7.setEditable(false);
         getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 460, 240, -1));
 
-        jTextField8.setText("jTextField8");
+        jTextField8.setEditable(false);
         getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 498, 240, -1));
 
-        jTextField9.setText("jTextField9");
+        jTextField9.setEditable(false);
         getContentPane().add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 536, 239, -1));
 
-        jTextField10.setText("jTextField10");
+        jTextField10.setEditable(false);
         getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 574, 242, -1));
 
-        jTextField11.setText("jTextField11");
+        jTextField11.setEditable(false);
         getContentPane().add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 612, 242, -1));
 
         pack();
@@ -257,14 +258,16 @@ public class BookProfile extends javax.swing.JFrame {
         PrintWriter p = null;
         textAreaUpdate();
         String delimiter = "~";
-        try {
-            p = new PrintWriter(new FileWriter(ratingReview, true));
-            //add student id below
-            //bookid,date,studentID,rating,review
-            p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
-            p.close();
-        } catch (IOException ex) {
-            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+        if(jTextField3.getText()!=""){
+            try {
+                p = new PrintWriter(new FileWriter(ratingReview, true));
+                //add student id below
+                //bookid,date,studentID,rating,review
+                    p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
+                p.close();
+            } catch (IOException ex) {
+                Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         textAreaUpdate();
     }//GEN-LAST:event_jButton1ActionPerformed
