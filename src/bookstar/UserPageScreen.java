@@ -30,6 +30,7 @@ public class UserPageScreen extends javax.swing.JFrame {
     //Sorted Ratings
     String sortedAverage[][] = sortbyRating(arraylistToArray(averageData(fileToArrayList("rateReview.txt"))));
     File ratingReview = new File("rateReview.txt");
+
     /**
      * Creates new form UserPageScreen
      *
@@ -38,11 +39,11 @@ public class UserPageScreen extends javax.swing.JFrame {
     public UserPageScreen(Student s) {
         this.s = s;
         initComponents();
-
+        try{
         jLabel4.setText(sortedAverage[0][0]);
         jLabel5.setText(sortedAverage[1][0]);
         jLabel6.setText(sortedAverage[2][0]);
-
+        }catch(ArrayIndexOutOfBoundsException ex){}
     }
 
     /**
@@ -146,18 +147,18 @@ public class UserPageScreen extends javax.swing.JFrame {
         return sorted;
     }
 
-    public void searchBook(String title) {
+    public String[] searchBook(String title) {
         try {
             OnlineBookInfo o = new OnlineBookInfo();
             o.search = title;
-            new BookProfile(o.bookInformation(o.bookHTML(o.pageHTML(o.createLink()))), s).setVisible(true);
-            this.setVisible(false);
+            return o.bookInformation(o.bookHTML(o.pageHTML(o.createLink())));
         } catch (NullPointerException ex) {
             JOptionPane.showMessageDialog(this, "Error", "Search Error", JOptionPane.ERROR_MESSAGE);
+            return null;
         }
     }
-    
-    public String[] searchUserRatings(){
+
+    public String[] searchUserRatings() {
         Scanner scan = null;
         ArrayList userRatings = new ArrayList();
         try {
@@ -165,8 +166,8 @@ public class UserPageScreen extends javax.swing.JFrame {
             while (scan.hasNext()) {
                 String line = scan.nextLine();
                 String[] lineArr = line.split("~");
-                if(lineArr[2].equals(s.getStudentNumber())){
-                    String bookRate = (lineArr[0]+"~"+lineArr[3]);
+                if (lineArr[2].equals(s.getStudentNumber())) {
+                    String bookRate = (lineArr[0] + "~" + lineArr[3]);
                     userRatings.add(bookRate);
                 }
             }
@@ -175,7 +176,7 @@ public class UserPageScreen extends javax.swing.JFrame {
         if (scan != null) {
             scan.close();
         }
-        String[] array = (String[])userRatings.toArray();
+        String[] array = (String[]) userRatings.toArray();
         return array;
     }
     
@@ -387,15 +388,8 @@ public class UserPageScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         //For the Barcode
 
-        // CHANGE LATER
-        try {
-            OnlineBookInfo o = new OnlineBookInfo();
-            o.search = jTextField1.getText();
-            new BookProfile(o.bookInformation(o.bookHTML(o.pageHTML(o.createLink()))), s).setVisible(true);
-            this.setVisible(false);
-        } catch (NullPointerException ex) {
-            JOptionPane.showMessageDialog(this, "NOT A BARCODE", "Barcode error", JOptionPane.ERROR_MESSAGE);
-        }
+        new BookProfile(searchBook(jTextField1.getText()), s).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -404,17 +398,26 @@ public class UserPageScreen extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        searchBook(sortedAverage[1][0]);
+        try{
+        new BookProfile(searchBook(sortedAverage[1][0]), s).setVisible(true);
+        this.setVisible(false);
+        }catch(ArrayIndexOutOfBoundsException ex){}
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        searchBook(sortedAverage[0][0]);
+        try{
+        new BookProfile(searchBook(sortedAverage[0][0]), s).setVisible(true);
+        this.setVisible(false);
+        }catch(ArrayIndexOutOfBoundsException ex){}
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        searchBook(sortedAverage[3][0]);
+        try{
+        new BookProfile(searchBook(sortedAverage[3][0]), s).setVisible(true);
+        this.setVisible(false);
+        }catch(ArrayIndexOutOfBoundsException ex){}
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
