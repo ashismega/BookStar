@@ -213,7 +213,7 @@ public class UserPageScreen extends javax.swing.JFrame {
            
             
         }
-        
+        System.out.println(map.values());
         return null;
     }
     
