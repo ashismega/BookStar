@@ -42,7 +42,7 @@ public class BookProfile extends javax.swing.JFrame {
         this.bookInfo = bookInfo;
         this.user = user;
         initComponents();
-        textAreaUpdate();
+       // textAreaUpdate();
 
         jLabel7.setText(bookInfo[0]);
         //jLabel11.setText("Subtitle: "+ bookInfo[1]);
