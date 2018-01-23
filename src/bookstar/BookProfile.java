@@ -5,11 +5,14 @@
  */
 package bookstar;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 /////////////////////////import java.time.LocalDateTime;
 /////////////////////////import java.time.format.DateTimeFormatter;
@@ -18,6 +21,8 @@ import java.util.Calendar;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
 /**
@@ -58,6 +63,20 @@ public class BookProfile extends javax.swing.JFrame {
     
    jTextField1.setText(bookInfo[10]);
 jTextArea1.setCaretPosition(0);
+
+     URL url;
+        try {
+            url = new URL("http://i.imgur.com/xiVXrCD.jpg");
+            
+            Image image = ImageIO.read(url);
+            jLabel14.setIcon(new ImageIcon(image));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
+ 
 
     }
 
