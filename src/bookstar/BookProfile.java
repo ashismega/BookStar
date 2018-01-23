@@ -8,23 +8,18 @@ package bookstar;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-/////////////////////////import java.time.LocalDateTime;
-/////////////////////////import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
 
 /**
  *
@@ -33,8 +28,6 @@ import javax.swing.SwingConstants;
 public class BookProfile extends javax.swing.JFrame {
 
     File ratingReview = new File("rateReview.txt");
-    /////////////////////////DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    /////////////////////////LocalDateTime now = LocalDateTime.now();
     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
     private static String[] bookInfo;
     private static Student user;
