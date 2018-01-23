@@ -48,7 +48,6 @@ public class BookProfile extends javax.swing.JFrame {
         jLabel7.setText(bookInfo[0]);
         //Image
         //jLabel14.setText("Image: " + bookInfo[10]);
-        addImage(bookInfo[10]);
 
         jTextField1.setText(bookInfo[1]);
         jTextField2.setText(bookInfo[2]);
@@ -61,18 +60,20 @@ public class BookProfile extends javax.swing.JFrame {
         jTextField10.setText(bookInfo[11]);
         jTextField11.setText(bookInfo[5]);
 
+        jLabel14.setIcon(new ImageIcon(addImage(bookInfo[10])));
     }
 
-    public void addImage(String imageLink) {
+    public Image addImage(String imageLink) {
         URL url;
         try {
             url = new URL(imageLink);
-            Image image = ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
-            jLabel14.setIcon(new ImageIcon(image));
+            return ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
         } catch (MalformedURLException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         } catch (IOException ex) {
             Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 
