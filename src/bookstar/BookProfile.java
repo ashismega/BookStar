@@ -26,11 +26,13 @@ import javax.swing.JOptionPane;
  * @author 072671415
  */
 public class BookProfile extends javax.swing.JFrame {
-
+    //Accessing rateReview text file
     File ratingReview = new File("rateReview.txt");
+    //display current time in a string
     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
     //The information for the book profile
     private static String[] bookInfo;
+    //Student class user
     private static Student user;
 
     /**

@@ -360,14 +360,13 @@ public class MainFrame extends javax.swing.JFrame {
 
     /**
      * Checks if a Student number is all numbers and contains no letters.
-     *
-     * @param sNumber The student number to be checked
-     * @return true if the student number is all numbers false if the student
-     * number contains letters
-     */
-    public boolean checkValidSNumber(String sNumber) {
-        for (int i = 0; i < sNumber.length(); i++) {
-            if (!Character.isDigit(sNumber.charAt(i))) {
+     * @param sNumber The student number to be checked 
+     * @return true if the student number is all numbers
+     *          false if the student number contains letters
+     */         
+    public boolean checkValidSNumber (String sNumber) {
+        for(int i = 0; i<sNumber.length();i++){
+            if (!Character.isDigit(sNumber.charAt(i))){
                 JOptionPane.showMessageDialog(this, "INVALID STUDENT NUMBER ID", "Student ID Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
