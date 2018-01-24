@@ -45,10 +45,10 @@ public class UserPageScreen extends javax.swing.JFrame {
         initComponents();
             String string = "";
            
-            String[] ee = friendsCalc();
-            for (int i = 0; i!=ee.length; i++){
-                System.out.println(1);
-                string += ee[i] + "\n";       
+            String[] top = topFriends();
+            for (int i = 0; i<top.length; i++){
+                string += top[i] + "\n"; 
+                
             }
            System.out.println(string);
             
@@ -275,7 +275,7 @@ public class UserPageScreen extends javax.swing.JFrame {
      *
      * @return String array of reviews made by user
      */
-    public String[] searchUserRatings() {
+    private String[] searchUserRatings() {
         //initialize Scanner and Arraylist
         Scanner scan = null;
         ArrayList userRatings = new ArrayList();
@@ -317,12 +317,31 @@ public class UserPageScreen extends javax.swing.JFrame {
     }
     
     public String[] topFriends(){
+        
+            
         String[] s = friendsCalc();
-        Arrays.sort(s);
-        return s;
+        if(s.length<2){
+            return null;
+        }
+        int one = 0;
+        int two = 0;
+        String[] top = {"",""};
+        for (String val : s) {
+            String[] temp = val.split("~");
+            if(Integer.parseInt(temp[1])>one){
+                top[0] = val;
+                one = Integer.parseInt(temp[1]);
+            }
+            else if(Integer.parseInt(temp[1])>two){
+                top[1] = val;
+                two = Integer.parseInt(temp[1]);
+            }
+        }
+        
+        return top;
     }
             
-    public String[] friendsCalc(){
+    private String[] friendsCalc(){
         String[] reviews = searchUserRatings();
         
         if(reviews == null){
@@ -331,7 +350,7 @@ public class UserPageScreen extends javax.swing.JFrame {
         }
         Map<String, String[]> map = new HashMap<>();
 
-        for (int i = 0; i < reviews.length; i++) {
+        for (int i = 0; i != reviews.length; i++) {
 
             String[] record = reviews[i].split("~");
 
@@ -375,18 +394,19 @@ public class UserPageScreen extends javax.swing.JFrame {
         String[][] value = map.values().toArray(new String[0][0]);
         String[] result = new String[map.size()];
         for (int i = 0; i < map.size(); i++) {
-            result[i] = key[i];
-            for (int j = 0; j < map.size(); j++) {
-                result[i] += "~" + value[i][j];
-
+            result[i] = key[i] + "~";
+            for (int j = 0; j < 2; j++) {
+                result[i] += value[i][j];
+                
             }
         }
+        
         
         return result;
     }
 
     /**
-     * Once book is found, enable the screen to display the book's profile.
+     * Once book is found, enable the screen to display the books profile.
      *
      * @param title The title of the book.
      */
