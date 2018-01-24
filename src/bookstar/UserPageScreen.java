@@ -63,10 +63,10 @@ public class UserPageScreen extends javax.swing.JFrame {
         topRatedBooks(jLabel6, jLabel11, jButton5, 2);
 
         //Friend 1
-        friendRecommend(top, jLabel7, jLabel13, jLabel15, jLabel20, jLabel22, jButton2, jButton7);
+        friendRecommend(top, jLabel7, jLabel13, jLabel15, jLabel20, jLabel22, jButton2, jButton7,0);
 
         //Friend 2
-        friendRecommend(top, jLabel8, jLabel14, jLabel16, jLabel21, jLabel19, jButton6, jButton8);
+        friendRecommend(top, jLabel8, jLabel14, jLabel16, jLabel21, jLabel19, jButton6, jButton8,1);
     }
 
     /**
@@ -81,22 +81,22 @@ public class UserPageScreen extends javax.swing.JFrame {
      * @param buttonOne Recommended book button 1
      * @param buttonTwo Recommended book button 1
      */
-    public void friendRecommend(String[] top, JLabel name, JLabel one, JLabel two, JLabel imageOne, JLabel imageTwo, JButton buttonOne, JButton buttonTwo) {
+    public void friendRecommend(String[] top, JLabel name, JLabel one, JLabel two, JLabel imageOne, JLabel imageTwo, JButton buttonOne, JButton buttonTwo, int num) {
         try {
             String[] friend = top[0].split("~");
 
             //Friend name
-            name.setText(friend[0]);
+            name.setText(friend[num]);
 
             //Recommended book 1
-            one.setText("Temp");
+            one.setText("Computer Science");
             //Recommended book 2
-            two.setText("Temp");
+            two.setText("2134567");
 
             //Image of book 1
-            imageOne.setIcon(new ImageIcon(addImage(searchBook("Temp")[10])));
+            imageOne.setIcon(new ImageIcon(addImage(searchBook("Computer Science")[10])));
             //Image of book 2
-            imageTwo.setIcon(new ImageIcon(addImage(searchBook("Temp")[10])));
+            imageTwo.setIcon(new ImageIcon(addImage(searchBook("2134567")[10])));
 
             //View book 1
             buttonOne.setEnabled(true);
