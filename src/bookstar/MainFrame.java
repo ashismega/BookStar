@@ -231,6 +231,10 @@ public class MainFrame extends javax.swing.JFrame {
         pw.println(newUser.getStudentNumber() + delimiter + encrypt(newUser.getPassword()) + delimiter + newUser.getFirstName() + delimiter + newUser.getLastName());
         //Closes PrintWriter
         pw.close();
+        jTextField1.setText("");
+        jPasswordField2.setText("");
+        jTextField3.setText("");
+        jTextField5.setText("");
         System.out.println("You have Successfully created your Account!");
 
 
