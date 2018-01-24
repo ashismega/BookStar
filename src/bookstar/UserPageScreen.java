@@ -142,14 +142,23 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         return totalRating / numRating;
     }
-
+    
+    /**
+     * Sort a 2-D string array by its rating, rows store booktitle, columns store
+     * rating, sort rating by greatest to least
+     * @param unsorted  Unsorted 2-D String array of reviews
+     * @return a sorted 2-D String Array
+     */
     public String[][] sortbyRating(String[][] unsorted) {
+        //sort array using Comparator class
         Arrays.sort(unsorted, new Comparator<String[]>() {
             @Override
+            //implemented method for comparator
             public int compare(final String[] first, final String[] second) {
                 return Double.valueOf(second[1]).compareTo(Double.valueOf(first[1]));
             }
         });
+        //to 2-D String Array
         String[][] sorted = Arrays.copyOf(unsorted, unsorted.length);
         return sorted;
     }
@@ -164,18 +173,28 @@ public class UserPageScreen extends javax.swing.JFrame {
             return null;
         }
     }
-
+    
+    /**
+     * Find all reviews made by the user
+     * @return  String array of reviews made by user
+     */
     public String[] searchUserRatings() {
+        //initialize Scanner and Arraylist
         Scanner scan = null;
         ArrayList userRatings = new ArrayList();
         try {
+            //scan reviews file
             scan = new Scanner(ratingReview);
+            //while there are more reviews
             while (scan.hasNext()) {
+                //take the next line and delimit it
                 String line = scan.nextLine();
                 String[] lineArr = line.split("~");
-
+                //if the student id in reviews is the same as current id
                 if (lineArr[2].equals(s.getStudentNumber())) {
+                    //put the book title and rating into a string
                     String bookRate = (lineArr[0] + "~" + lineArr[3]);
+                    //add it into an arraylist
                     userRatings.add(bookRate);
                 }
 
@@ -185,8 +204,8 @@ public class UserPageScreen extends javax.swing.JFrame {
         if (scan != null) {
             scan.close();
         }
-
-        Object[] array = userRatings.toArray();
+        //output string array of user ratings
+        Object[] array =  userRatings.toArray();
         String[] a = new String[array.length];
 
         for (int i = 0; i < array.length; i++) {

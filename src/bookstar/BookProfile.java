@@ -282,12 +282,17 @@ public class BookProfile extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//submit review button
+
+    /**
+     * Submit Review button
+     * @param evt parameter for button
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //initialize printwriter
         PrintWriter p = null;
-        textAreaUpdate();
         String delimiter = "~";
-        if (jTextField3.getText().isEmpty() == false) {
+        //if the textfield is empty don't write to the file
+        if(jTextField3.getText().isEmpty()==false){
             try {
                 p = new PrintWriter(new FileWriter(ratingReview, true));
                 //add student id below
@@ -298,7 +303,12 @@ public class BookProfile extends javax.swing.JFrame {
                 Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        //update the text area
         textAreaUpdate();
+        //clear textfield when submitted
+        jTextField3.setText("");
+        //reset rating
+        jComboBox1.setSelectedIndex(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 //review box
@@ -315,25 +325,35 @@ public class BookProfile extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
-
+    
+    /**
+     * update the text area with reviews of the book
+     */
     private void textAreaUpdate() {
+        //initialize scanner
         Scanner s = null;
         String total = "";
         try {
+            //scan reviews file
             s = new Scanner(ratingReview);
+            //while there are more reviews
             while (s.hasNext()) {
+                //take the line and delimit it
                 String line = s.nextLine();
                 String[] lineArr = line.split("~");
+                //if title in the reviews is the same as the title of the book
                 if (lineArr[0].equals(bookInfo[0])) {
+                    //add a line of string for user id, rating, and review
                     total += ("User: " + lineArr[2] + ", Star Rating: " + lineArr[3] + ", Review:" + lineArr[4] + "\n");
-
                 }
             }
         } catch (FileNotFoundException ex) {
         }
+        //close scanner
         if (s != null) {
             s.close();
         }
+        //set the text area to print reviews
         jTextArea1.setText(total);
     }
 
