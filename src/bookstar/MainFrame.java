@@ -203,7 +203,7 @@ public class MainFrame extends javax.swing.JFrame {
         //Initializes PrintWriter
         PrintWriter pw = null;
         //Checks if a student number only uses numbers, if invalid exit method and ask to use a valid student number
-        if (checkValidSNumber(jTextField1.getText().trim()) == false){
+        if (checkValidSNumber(jTextField1.getText().trim()) == false) {
             return;
         }
         //Checks if any credentials are missing, if any are missing exit method and ask to fill out all credentials
@@ -252,10 +252,11 @@ public class MainFrame extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-     /**
-     * Checks if all account credentials are filled in. 
-     * If any credentials are blank or missing, return false, otherwise return 
-     * true. Used to check if any account credentials are properly filled in.
+    /**
+     * Checks if all account credentials are filled in. If any credentials are
+     * blank or missing, return false, otherwise return true. Used to check if
+     * any account credentials are properly filled in.
+     *
      * @param username The username of the account
      * @param password The password of the account
      * @param Fname The first name of the account
@@ -341,35 +342,39 @@ public class MainFrame extends javax.swing.JFrame {
         //Return true if the created password is valid
         return true;
     }
+
     /**
      * Checks if a Student number long enough in length.
+     *
      * @param sNumber The student number to be checked
-     * @return true if student number is valid in length
-     *          false if student number is not sufficient in length
+     * @return true if student number is valid in length false if student number
+     * is not sufficient in length
      */
     public boolean checkSNumber(String sNumber) {
         if (sNumber.length() != 9 && sNumber.length() != 10) {
-            JOptionPane.showMessageDialog(this, "INVALID STUDENT NUMBER ID", "Student ID Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "INVALID STUDENT NUMBER LENGTH", "Student ID Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
     }
-    
+
     /**
      * Checks if a Student number is all numbers and contains no letters.
-     * @param sNumber The student number to be checked 
-     * @return true if the student number is all numbers
-     *          false if the student number contains letters
-     */         
-    public boolean checkValidSNumber (String sNumber) {
-        for(int i = 0; i<sNumber.length();i++){
-            if (sNumber.charAt(i)<0 || sNumber.charAt(i)>9){
+     *
+     * @param sNumber The student number to be checked
+     * @return true if the student number is all numbers false if the student
+     * number contains letters
+     */
+    public boolean checkValidSNumber(String sNumber) {
+        for (int i = 0; i < sNumber.length(); i++) {
+            if (!Character.isDigit(sNumber.charAt(i))) {
                 JOptionPane.showMessageDialog(this, "INVALID STUDENT NUMBER ID", "Student ID Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
         return true;
     }
+
     /**
      * Encrypts a password(String) using the SHA-256 algorithm (one way
      * encryption). Returns the newly encrypted password. Used for password
