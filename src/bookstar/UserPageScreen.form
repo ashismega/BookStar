@@ -276,7 +276,7 @@
     <Component class="javax.swing.JLabel" name="jLabel12">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="36" style="1"/>
+          <Font name="Tahoma" size="40" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="BOOKSTAR"/>
       </Properties>
@@ -430,7 +430,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="30" y="10" width="-1" height="-1"/>
+          <AbsoluteConstraints x="20" y="8" width="80" height="70"/>
         </Constraint>
       </Constraints>
     </Component>
