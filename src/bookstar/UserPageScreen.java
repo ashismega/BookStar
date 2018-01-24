@@ -10,7 +10,6 @@ import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,8 +17,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,37 +40,76 @@ public class UserPageScreen extends javax.swing.JFrame {
      *
      * @param s Student logged in
      */
-     public UserPageScreen(Student s) {
-         this.s = s;
-         initComponents();
- 
-         topRatedBooks(jLabel4, jLabel9, jButton3, 0);
-         topRatedBooks(jLabel5, jLabel10, jButton4, 1);
-         topRatedBooks(jLabel6, jLabel11, jButton5, 2);
-     }
+    public UserPageScreen(Student s) {
+        this.s = s;
+        initComponents();
+            String string = "";
+           
+            String[] ee = friendsCalc();
+            for (int i = 0; i!=ee.length; i++){
+                System.out.println(1);
+                string += ee[i] + "\n";       
+            }
+           System.out.println(string);
+            
+        
+        
+        try{
+        jLabel4.setText(sortedAverage[0][0]);
+        jLabel5.setText(sortedAverage[1][0]);
+        jLabel6.setText(sortedAverage[2][0]);
+        }catch(ArrayIndexOutOfBoundsException ex){}
 
+        //Top rated book 1
+        topRatedBooks(jLabel4, jLabel9, jButton3, 0);
+        //Top rated book 2
+        topRatedBooks(jLabel5, jLabel10, jButton4, 1);
+        //Top rated book 3
+        topRatedBooks(jLabel6, jLabel11, jButton5, 2);
+    }
+
+    /**
+     * Update icons and title of jLabels to the top book.
+     *
+     * @param title The jLabel to add the title to.
+     * @param image The jLabel to add the image to.
+     * @param button The button to view the book.
+     * @param num The standing of the book.
+     */
     public void topRatedBooks(JLabel title, JLabel image, JButton button, int num) {
         try {
+            //Book title
             title.setText(sortedAverage[num][0]);
+            //Book image
             image.setIcon(new ImageIcon(addImage(searchBook(sortedAverage[num][0])[10])));
+            //Enable button
             button.setVisible(true);
         } catch (ArrayIndexOutOfBoundsException ex) {
+            //No book title
             title.setText("NO RATED BOOKS");
+            //No book image
             image.setText("NO RATED BOOKS");
+            //Disable the button
             button.setEnabled(false);
         }
     }
 
+    /**
+     * Given the link of the book image, return the Image of the book.
+     *
+     * @param imageLink The link of the image.
+     * @return Book image.
+     */
     public Image addImage(String imageLink) {
         URL url;
         try {
+            //Url of book image
             url = new URL(imageLink);
+            //Image of the url
             return ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
         } catch (IOException ex) {
-            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+            //Error with obtaining the image
+            System.out.println("Image search error");
             return null;
         }
     }
@@ -82,6 +118,7 @@ public class UserPageScreen extends javax.swing.JFrame {
      * Read and file and create an array where each line in the file is an
      * element in the array.
      *
+     * @param fileName The file name.
      * @return The array with each line the file being an element in the array.
      */
     public ArrayList<ArrayList<String>> fileToArrayList(String fileName) {
@@ -114,20 +151,35 @@ public class UserPageScreen extends javax.swing.JFrame {
         return temp;
     }
 
+    /**
+     * Given a 2D arraylist, convert it to a 2Darray.
+     *
+     * @param temp The arraylist to convert.
+     * @return The converted 2D array
+     */
     public String[][] arraylistToArray(ArrayList<ArrayList<String>> temp) {
-        /////CHANGE THE NAME OF THE LETTER A
-        String[][] a = new String[temp.get(1).size()][2];
+        //Store the data
+        String[][] info = new String[temp.get(1).size()][2];
 
+        //Store the arraylist data into the array
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < temp.get(1).size(); j++) {
-                a[j][i] = temp.get(i).get(j);
+                info[j][i] = temp.get(i).get(j);
             }
         }
-        return a;
+        return info;
     }
 
+    /**
+     * Given the a list of ratings and book titles, determine the average
+     * ratings of duplicate books.
+     *
+     * @param allData All the data to average.
+     * @return The averaged data.
+     */
     public ArrayList<ArrayList<String>> averageData(ArrayList<ArrayList<String>> allData) {
 
+        //Unsorted books from the file
         ArrayList<ArrayList<String>> unsortedAveraged = new ArrayList();
 
         //Name of Book
@@ -135,15 +187,16 @@ public class UserPageScreen extends javax.swing.JFrame {
         //Average Rating of Book
         unsortedAveraged.add(new ArrayList<String>());
 
+        //Loop through each book in the given arraylist
         for (int i = 0; i < allData.get(0).size(); i++) {
+            //Check if the book title already exists
             if (!(unsortedAveraged.get(0).contains(allData.get(0).get(i)))) {
                 //Add title
                 unsortedAveraged.get(0).add(allData.get(0).get(i));
-                //add the rating
+                //Add the average
                 unsortedAveraged.get(1).add(Double.toString(averageBookRating(allData, allData.get(0).get(i))));
             }
         }
-
         return unsortedAveraged;
     }
 
@@ -151,20 +204,26 @@ public class UserPageScreen extends javax.swing.JFrame {
      * Given the file data and the title of a book, determine the average rating
      * of that book.
      *
-     * @param unsortedAveraged
-     * @param title
-     * @return
+     * @param unsortedAveraged The full unsorted average data of books with
+     * titles and ratings.
+     * @param title The book title.
+     * @return The average rating of the given book title.
      */
     public double averageBookRating(ArrayList<ArrayList<String>> unsortedAveraged, String title) {
+        //Number of ratings of that book
         double numRating = 0;
+        //Total ratings of that book
         double totalRating = 0;
+        //Calculate the number of ratings and the total rating sum
         for (int i = 0; i < unsortedAveraged.get(0).size(); i++) {
             if (unsortedAveraged.get(0).get(i).equals(title)) {
+                //Add to the number of ratings
                 numRating++;
+                //Add the rating of the book
                 totalRating += Integer.parseInt(unsortedAveraged.get(1).get(i));
             }
         }
-
+        //Average rating
         return totalRating / numRating;
     }
 
@@ -189,12 +248,23 @@ public class UserPageScreen extends javax.swing.JFrame {
         return sorted;
     }
 
+    /**
+     * Given a book title, search and obtain the book's information from google
+     * books.
+     *
+     * @param title The title of the book.
+     * @return The books information
+     */
     public String[] searchBook(String title) {
         try {
+            //Geting book information from google books helper class
             OnlineBookInfo o = new OnlineBookInfo();
+            //Title to search
             o.search = title;
+            //The books information
             return o.bookInformation(o.bookHTML(o.pageHTML(o.createLink())));
         } catch (NullPointerException ex) {
+            //Book not found
             JOptionPane.showMessageDialog(this, "Error", "Search Error", JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -245,10 +315,18 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         return a;
     }
-
-    public String[] friends(String[] reviews) {
-        if (reviews == null) {
-
+    
+    public String[] topFriends(){
+        String[] s = friendsCalc();
+        Arrays.sort(s);
+        return s;
+    }
+            
+    public String[] friendsCalc(){
+        String[] reviews = searchUserRatings();
+        
+        if(reviews == null){
+          
             return null;
         }
         Map<String, String[]> map = new HashMap<>();
@@ -303,8 +381,25 @@ public class UserPageScreen extends javax.swing.JFrame {
 
             }
         }
-
+        
         return result;
+    }
+
+    /**
+     * Once book is found, enable the screen to display the book's profile.
+     *
+     * @param title The title of the book.
+     */
+    public void bookProfileEnable(String title) {
+        try {
+            //Set the book's profile to visible
+            new BookProfile(searchBook(title), s).setVisible(true);
+            //Set this screen visible to false
+            this.setVisible(false);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            //Error when searching for the book
+            JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -504,10 +599,8 @@ public class UserPageScreen extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-        //For the Barcode
-
-        new BookProfile(searchBook(jTextField1.getText()), s).setVisible(true);
-        this.setVisible(false);
+        //Search using search bar
+        bookProfileEnable(jTextField1.getText());
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -516,32 +609,20 @@ public class UserPageScreen extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        try {
-            new BookProfile(searchBook(sortedAverage[1][0]), s).setVisible(true);
-            this.setVisible(false);
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
-        }
+        //Search by the second highest rated books
+        bookProfileEnable(sortedAverage[1][0]);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        try {
-            new BookProfile(searchBook(sortedAverage[0][0]), s).setVisible(true);
-            this.setVisible(false);
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
-        }
+        //Search by the first highest rated books
+        bookProfileEnable(sortedAverage[0][0]);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        try {
-            new BookProfile(searchBook(sortedAverage[2][0]), s).setVisible(true);
-            this.setVisible(false);
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
-        }
+        //Search by the third highest rated books
+        bookProfileEnable(sortedAverage[2][0]);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
