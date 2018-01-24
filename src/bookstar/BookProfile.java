@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -44,11 +43,8 @@ public class BookProfile extends javax.swing.JFrame {
         initComponents();
         textAreaUpdate();
 
-        //Title
+        //Book information
         jLabel7.setText(bookInfo[0]);
-        //Image
-        //jLabel14.setText("Image: " + bookInfo[10]);
-
         jTextField1.setText(bookInfo[1]);
         jTextField2.setText(bookInfo[2]);
         jTextField4.setText(bookInfo[3]);
@@ -61,15 +57,24 @@ public class BookProfile extends javax.swing.JFrame {
         jTextArea2.setText(bookInfo[5]);
 
         try {
+            //Image of the book
             jLabel14.setIcon(new ImageIcon(addImage(bookInfo[10])));
         } catch (IOException ex) {
+            //No image found
             jLabel14.setText("No Image Found");
         }
     }
 
+    /**
+     * Given the link of the image determine the Image of the book.
+     *
+     * @param imageLink The image link
+     * @return The image of the book
+     * @throws IOException Image failed to load
+     */
     public Image addImage(String imageLink) throws IOException {
         URL url = new URL(imageLink);
-            return ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
+        return ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
     }
 
     /**
@@ -277,23 +282,33 @@ public class BookProfile extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//submit review button
+
+    /**
+     * Submit Review button
+     * @param evt parameter for button
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //initialize printwriter
         PrintWriter p = null;
-        textAreaUpdate();
         String delimiter = "~";
+        //if the textfield is empty don't write to the file
         if(jTextField3.getText().isEmpty()==false){
             try {
                 p = new PrintWriter(new FileWriter(ratingReview, true));
                 //add student id below
                 //bookid,date,studentID,rating,review
-                    p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
+                p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
                 p.close();
             } catch (IOException ex) {
                 Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        //update the text area
         textAreaUpdate();
+        //clear textfield when submitted
+        jTextField3.setText("");
+        //reset rating
+        jComboBox1.setSelectedIndex(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 //review box
@@ -310,25 +325,35 @@ public class BookProfile extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
-
+    
+    /**
+     * update the text area with reviews of the book
+     */
     private void textAreaUpdate() {
+        //initialize scanner
         Scanner s = null;
         String total = "";
         try {
+            //scan reviews file
             s = new Scanner(ratingReview);
+            //while there are more reviews
             while (s.hasNext()) {
+                //take the line and delimit it
                 String line = s.nextLine();
                 String[] lineArr = line.split("~");
+                //if title in the reviews is the same as the title of the book
                 if (lineArr[0].equals(bookInfo[0])) {
+                    //add a line of string for user id, rating, and review
                     total += ("User: " + lineArr[2] + ", Star Rating: " + lineArr[3] + ", Review:" + lineArr[4] + "\n");
-
                 }
             }
         } catch (FileNotFoundException ex) {
         }
+        //close scanner
         if (s != null) {
             s.close();
         }
+        //set the text area to print reviews
         jTextArea1.setText(total);
     }
 
