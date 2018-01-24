@@ -24,8 +24,7 @@ public class Student {
         firstName = fName;
         lastName = lName;
         studentNumber = sNumber;
-        password = pass;
-        
+        password = pass;        
     }
     
     
