@@ -43,6 +43,22 @@ public class UserPageScreen extends javax.swing.JFrame {
     public UserPageScreen(Student s) {
         this.s = s;
         initComponents();
+            String string = "";
+           
+            String[] ee = friendsCalc();
+            for (int i = 0; i!=ee.length; i++){
+                System.out.println(1);
+                string += ee[i] + "\n";       
+            }
+           System.out.println(string);
+            
+        
+        
+        try{
+        jLabel4.setText(sortedAverage[0][0]);
+        jLabel5.setText(sortedAverage[1][0]);
+        jLabel6.setText(sortedAverage[2][0]);
+        }catch(ArrayIndexOutOfBoundsException ex){}
 
         //Top rated book 1
         topRatedBooks(jLabel4, jLabel9, jButton3, 0);
@@ -299,10 +315,18 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         return a;
     }
-
-    public String[] friends(String[] reviews) {
-        if (reviews == null) {
-
+    
+    public String[] topFriends(){
+        String[] s = friendsCalc();
+        Arrays.sort(s);
+        return s;
+    }
+            
+    public String[] friendsCalc(){
+        String[] reviews = searchUserRatings();
+        
+        if(reviews == null){
+          
             return null;
         }
         Map<String, String[]> map = new HashMap<>();
@@ -357,7 +381,7 @@ public class UserPageScreen extends javax.swing.JFrame {
 
             }
         }
-
+        
         return result;
     }
 
