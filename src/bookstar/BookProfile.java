@@ -43,11 +43,8 @@ public class BookProfile extends javax.swing.JFrame {
         initComponents();
         textAreaUpdate();
 
-        //Title
+        //Book information
         jLabel7.setText(bookInfo[0]);
-        //Image
-        //jLabel14.setText("Image: " + bookInfo[10]);
-
         jTextField1.setText(bookInfo[1]);
         jTextField2.setText(bookInfo[2]);
         jTextField4.setText(bookInfo[3]);
@@ -60,15 +57,24 @@ public class BookProfile extends javax.swing.JFrame {
         jTextArea2.setText(bookInfo[5]);
 
         try {
+            //Image of the book
             jLabel14.setIcon(new ImageIcon(addImage(bookInfo[10])));
         } catch (IOException ex) {
+            //No image found
             jLabel14.setText("No Image Found");
         }
     }
 
+    /**
+     * Given the link of the image determine the Image of the book.
+     *
+     * @param imageLink The image link
+     * @return The image of the book
+     * @throws IOException Image failed to load
+     */
     public Image addImage(String imageLink) throws IOException {
         URL url = new URL(imageLink);
-            return ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
+        return ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
     }
 
     /**
@@ -281,12 +287,12 @@ public class BookProfile extends javax.swing.JFrame {
         PrintWriter p = null;
         textAreaUpdate();
         String delimiter = "~";
-        if(jTextField3.getText().isEmpty()==false){
+        if (jTextField3.getText().isEmpty() == false) {
             try {
                 p = new PrintWriter(new FileWriter(ratingReview, true));
                 //add student id below
                 //bookid,date,studentID,rating,review
-                    p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
+                p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
                 p.close();
             } catch (IOException ex) {
                 Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
