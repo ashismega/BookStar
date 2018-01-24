@@ -146,7 +146,7 @@ public class UserPageScreen extends javax.swing.JFrame {
             sc.close();
 
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "File Error", "File Error", JOptionPane.ERROR_MESSAGE);
         }
         return temp;
     }
@@ -297,6 +297,7 @@ public class UserPageScreen extends javax.swing.JFrame {
 
             }
         } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
         }
         if (scan != null) {
             scan.close();
@@ -590,7 +591,7 @@ public class UserPageScreen extends javax.swing.JFrame {
         getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 510, 130, 170));
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bookstar/images/logo.png"))); // NOI18N
-        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 80, 80));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
