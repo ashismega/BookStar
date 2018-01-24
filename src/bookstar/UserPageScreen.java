@@ -41,10 +41,11 @@ public class UserPageScreen extends javax.swing.JFrame {
         this.s = s;
         initComponents();
             String string = "";
-            String[] ee = friends(searchUserRatings());
-            for (int i = 0; i<ee.length; i++){
-                string += ee[i] + "\n";
-
+           
+            String[] ee = friendsCalc();
+            for (int i = 0; i!=ee.length; i++){
+                System.out.println(1);
+                string += ee[i] + "\n";       
             }
            System.out.println(string);
             
@@ -206,7 +207,15 @@ public class UserPageScreen extends javax.swing.JFrame {
         return a;
     }
     
-    public String[] friends(String[] reviews){
+    public String[] topFriends(){
+        String[] s = friendsCalc();
+        Arrays.sort(s);
+        return s;
+    }
+            
+    public String[] friendsCalc(){
+        String[] reviews = searchUserRatings();
+        
         if(reviews == null){
           
             return null;
@@ -265,7 +274,7 @@ public class UserPageScreen extends javax.swing.JFrame {
                     
             }      
         }
-  
+        
         return result;
     }
     
@@ -285,7 +294,6 @@ public class UserPageScreen extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -316,6 +324,7 @@ public class UserPageScreen extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(800, 760));
         setPreferredSize(new java.awt.Dimension(800, 760));
         setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Search:");
@@ -568,6 +577,9 @@ public class UserPageScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
