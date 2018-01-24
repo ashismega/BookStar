@@ -146,7 +146,7 @@ public class UserPageScreen extends javax.swing.JFrame {
             sc.close();
 
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "File Error", "File Error", JOptionPane.ERROR_MESSAGE);
         }
         return temp;
     }
