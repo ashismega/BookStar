@@ -83,6 +83,11 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, 340, -1));
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 340, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -174,10 +179,10 @@ public class MainFrame extends javax.swing.JFrame {
         while (s.hasNextLine()) {
             String info = s.nextLine();
             String[] studentInfo = info.split("~");
-            if (jTextField4.getText().equals(studentInfo[0]) && encrypt(jPasswordField1.getText()).equals(studentInfo[1])) {
-                System.out.println("Hello " + jTextField4.getText() + " Welcome Back");
+            if (jTextField4.getText().trim().equals(studentInfo[0]) && encrypt(jPasswordField1.getText().trim()).equals(studentInfo[1])) {
+                System.out.println("Hello " + jTextField4.getText().trim() + " Welcome Back");
                 //Do I need to create a new Object?
-                Student newUser = new Student(jTextField4.getText(), jPasswordField1.getText(), studentInfo[2], studentInfo[3]);
+                Student newUser = new Student(jTextField4.getText().trim(), jPasswordField1.getText().trim(), studentInfo[2], studentInfo[3]);
                 this.setVisible(false);
                 new UserPageScreen(newUser).setVisible(true);
                 //Close scanner if not null
@@ -197,20 +202,24 @@ public class MainFrame extends javax.swing.JFrame {
         String delimiter = "~";
         //Initializes PrintWriter
         PrintWriter pw = null;
+        //Checks if a student number only uses numbers, if invalid exit method and ask to use a valid student number
+        if (checkValidSNumber(jTextField1.getText().trim()) == false){
+            return;
+        }
         //Checks if any credentials are missing, if any are missing exit method and ask to fill out all credentials
-        if (checkCredentials(jTextField1.getText(), jPasswordField2.getText(), jTextField3.getText(), jTextField5.getText()) == false) {
+        if (checkCredentials(jTextField1.getText().trim(), jPasswordField2.getText().trim(), jTextField3.getText().trim(), jTextField5.getText().trim()) == false) {
             return;
         }
         //Checks if a username is taken, if taken exit method and ask to use a different username 
-        if (checkDupAccount(jTextField1.getText()) == false) {
+        if (checkDupAccount(jTextField1.getText().trim()) == false) {
             return;
         }
         //Checks if a password is valid, if invalid exit method and ask to use a valid password
-        if (checkPass(jPasswordField2.getText()) == false) {
+        if (checkPass(jPasswordField2.getText().trim()) == false) {
             return;
         }
-        //Checks if a student number is valid, if invalid exit method and ask to use a valid student number
-        if (checkSNumber(jTextField1.getText()) == false) {
+        //Checks if a student number is valid in length, if invalid exit method and ask to use a valid student number
+        if (checkSNumber(jTextField1.getText().trim()) == false) {
             return;
         }
         //Try to create a PrintWriter
@@ -226,15 +235,23 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         //Create a new instance of the user class
-        Student newUser = new Student(jTextField1.getText(), jPasswordField2.getText(), jTextField3.getText(), jTextField5.getText());
+        Student newUser = new Student(jTextField1.getText().trim(), jPasswordField2.getText().trim(), jTextField3.getText().trim(), jTextField5.getText().trim());
         //Writes to the file the information associated with the newUser
         pw.println(newUser.getStudentNumber() + delimiter + encrypt(newUser.getPassword()) + delimiter + newUser.getFirstName() + delimiter + newUser.getLastName());
         //Closes PrintWriter
         pw.close();
+        jTextField1.setText("");
+        jPasswordField2.setText("");
+        jTextField3.setText("");
+        jTextField5.setText("");
         System.out.println("You have Successfully created your Account!");
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
      /**
      * Checks if all account credentials are filled in. 
      * If any credentials are blank or missing, return false, otherwise return 
@@ -325,10 +342,10 @@ public class MainFrame extends javax.swing.JFrame {
         return true;
     }
     /**
-     * Checks if a Student number has already been taken in the file.
+     * Checks if a Student number long enough in length.
      * @param sNumber The student number to be checked
-     * @return true if student number is valid
-     *          false if student number is already taken
+     * @return true if student number is valid in length
+     *          false if student number is not sufficient in length
      */
     public boolean checkSNumber(String sNumber) {
         if (sNumber.length() != 9 && sNumber.length() != 10) {
@@ -337,7 +354,22 @@ public class MainFrame extends javax.swing.JFrame {
         }
         return true;
     }
-
+    
+    /**
+     * Checks if a Student number is all numbers and contains no letters.
+     * @param sNumber The student number to be checked 
+     * @return true if the student number is all numbers
+     *          false if the student number contains letters
+     */         
+    public boolean checkValidSNumber (String sNumber) {
+        for(int i = 0; i<sNumber.length();i++){
+            if (sNumber.charAt(i)<0 || sNumber.charAt(i)>9){
+                JOptionPane.showMessageDialog(this, "INVALID STUDENT NUMBER ID", "Student ID Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        return true;
+    }
     /**
      * Encrypts a password(String) using the SHA-256 algorithm (one way
      * encryption). Returns the newly encrypted password. Used for password

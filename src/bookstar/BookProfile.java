@@ -286,7 +286,8 @@ public class BookProfile extends javax.swing.JFrame {
         PrintWriter p = null;
         String delimiter = "~";
         //if the textfield is empty don't write to the file
-        if(jTextField3.getText().isEmpty()==false){
+        
+        if(jTextField3.getText().trim().isEmpty()==false){
             try {
                 p = new PrintWriter(new FileWriter(ratingReview, true));
                 //add student id below

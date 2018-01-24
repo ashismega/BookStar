@@ -43,22 +43,10 @@ public class UserPageScreen extends javax.swing.JFrame {
     public UserPageScreen(Student s) {
         this.s = s;
         initComponents();
-            String string = "";
-           
-            String[] top = topFriends();
-            for (int i = 0; i<top.length; i++){
-                string += top[i] + "\n"; 
-                
-            }
-           System.out.println(string);
-            
-        
-        
-        try{
-        jLabel4.setText(sortedAverage[0][0]);
-        jLabel5.setText(sortedAverage[1][0]);
-        jLabel6.setText(sortedAverage[2][0]);
-        }catch(ArrayIndexOutOfBoundsException ex){}
+        String string = "";
+
+        String[] top = suggestedBooks();  
+        try {       
 
         //Top rated book 1
         topRatedBooks(jLabel4, jLabel9, jButton3, 0);
@@ -66,6 +54,94 @@ public class UserPageScreen extends javax.swing.JFrame {
         topRatedBooks(jLabel5, jLabel10, jButton4, 1);
         //Top rated book 3
         topRatedBooks(jLabel6, jLabel11, jButton5, 2);
+
+        //Friend 1
+        friendRecommend(top, jLabel7, jLabel13, jLabel15, jLabel20, jLabel22, jButton2, jButton7,0);
+
+        //Friend 2
+        friendRecommend(top, jLabel8, jLabel14, jLabel16, jLabel21, jLabel19, jButton6, jButton8,3);
+        } catch (NullPointerException ex) {
+            
+        }
+    }
+
+    /**
+     * Update jLabels related to recommended friends and books.
+     *
+     * @param top The standing of the friend.
+     * @param name ID of the friend
+     * @param one Recommended book 1
+     * @param two Recommended book 2
+     * @param imageOne Recommended book image 1
+     * @param imageTwo Recommended book image 2
+     * @param buttonOne Recommended book button 1
+     * @param buttonTwo Recommended book button 1
+     */
+    public void friendRecommend(String[] top, JLabel name, JLabel one, JLabel two, JLabel imageOne, JLabel imageTwo, JButton buttonOne, JButton buttonTwo, int num) {
+        try {
+            
+            for(int i=0; i<top.length; i++){
+                if(top[i].equals("")){
+                    top[i] = null;
+                }
+            }
+            
+            try{
+                //Friend name
+                name.setText(top[num]);
+            }
+            catch(NullPointerException ex){
+                name.setText("NO FRIEND");
+            }
+            
+            try{
+                //Recommended book 1
+                one.setText(top[1+num]);
+                //Image of book 1
+                imageOne.setIcon(new ImageIcon(addImage(searchBook(top[1+num])[10])));
+                //View book 1
+                buttonOne.setEnabled(true);
+            }
+            catch(NullPointerException ex){
+                one.setText("NO BOOK AVAILABLE");
+                buttonOne.setEnabled(false);
+            }
+            
+            try{
+                //Recommended book 2
+                two.setText(top[2+num]);
+                //Image of book 2
+                imageTwo.setIcon(new ImageIcon(addImage(searchBook(top[2+num])[10])));
+                //View book 2
+                buttonTwo.setEnabled(true);
+            }
+            catch(NullPointerException ex){
+                two.setText("NO BOOK AVAILABLE");
+                buttonTwo.setEnabled(false);
+            }
+
+            
+            
+        } catch (NullPointerException ex) {
+            //Friend name
+            name.setText("NO FRIEND");
+
+            //Recommended book 1
+            one.setText("NO BOOK");
+            //Recommended book 2
+            two.setText("NO BOOK");
+
+            //Image of book 1
+            imageOne.setText("NO BOOK");
+            //Image of book 2
+            imageTwo.setText("NO BOOK");
+
+            //View book 1
+            buttonOne.setEnabled(false);
+            //View book 2
+            buttonTwo.setEnabled(false);
+            
+        }
     }
 
     /**
@@ -83,7 +159,7 @@ public class UserPageScreen extends javax.swing.JFrame {
             //Book image
             image.setIcon(new ImageIcon(addImage(searchBook(sortedAverage[num][0])[10])));
             //Enable button
-            button.setVisible(true);
+            button.setEnabled(true);
         } catch (ArrayIndexOutOfBoundsException ex) {
             //No book title
             title.setText("NO RATED BOOKS");
@@ -264,8 +340,6 @@ public class UserPageScreen extends javax.swing.JFrame {
             //The books information
             return o.bookInformation(o.bookHTML(o.pageHTML(o.createLink())));
         } catch (NullPointerException ex) {
-            //Book not found
-            JOptionPane.showMessageDialog(this, "Error", "Search Error", JOptionPane.ERROR_MESSAGE);
             return null;
         }
     }
@@ -317,36 +391,167 @@ public class UserPageScreen extends javax.swing.JFrame {
         return a;
     }
     
-    public String[] topFriends(){
+    private String[] searchUserRatings(String s) {
+        //initialize Scanner and Arraylist
+        Scanner scan = null;
+        ArrayList userRatings = new ArrayList();
+        try {
+            //scan reviews file
+            scan = new Scanner(ratingReview);
+            //while there are more reviews
+            while (scan.hasNext()) {
+                //take the next line and delimit it
+                String line = scan.nextLine();
+                String[] lineArr = line.split("~");
+                //if the student id in reviews is the same as current id
+                if (lineArr[2].equals(s)) {
+                    //put the book title and rating into a string
+                    String bookRate = (lineArr[0] + "~" + lineArr[3]);
+                    //add it into an arraylist
+                    userRatings.add(bookRate);
+                }
+
+            }
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
+        }
+        if (scan != null) {
+            scan.close();
+        }
+        //output string array of user ratings
+        Object[] array = userRatings.toArray();
+        String[] a = new String[array.length];
+
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] instanceof String) {
+                a[i] = (String) array[i];
+
+            }
+
+        }
+
+        return a;
+    }
+    
+    public String[] suggestedBooks(){
+        String[] top = topFriends();
         
-            
-        String[] s = friendsCalc();
-        if(s.length<2){
+        String[] first;
+        String[] second;
+        String[] firstRatings;
+        String[] secondRatings;
+        try{
+            first = top[0].split("~");
+            second = top[1].split("~");
+            firstRatings = searchUserRatings(first[0]);
+            secondRatings = searchUserRatings(second[0]);
+        }
+        catch(NullPointerException ex){
             return null;
         }
+        
+          
+        
+        
+        int oneA = 0;
+        int twoA = 0;
+        
+        int oneB = 0;
+        int twoB = 0;
+        
+        String oneBA = "";
+        String twoBA = "";
+        
+        String oneBB = "";
+        String twoBB = "";
+        
+        for(String val: firstRatings){
+            String[] data = val.split("~");
+            String[] firstBooks = first[2].split(",");
+            for(String books: firstBooks){
+                if( !(books.equals(data[0])) ){
+                    if(oneA < Integer.parseInt(data[1])){
+                        oneA = Integer.parseInt(data[1]);
+                        oneBA = data[0];
+                    }
+                    else if(twoA < Integer.parseInt(data[1])){
+                        twoA = Integer.parseInt(data[1]);
+                        twoBA = data[0];
+                    }
+                }
+            }
+            
+        }
+        boolean good = false;
+        for(String val: secondRatings){
+            String[] data = val.split("~");
+            String[] secondBooks = second[2].split(",");
+            for(String books: secondBooks){
+                if( !(books.equals(data[0])) ){
+                    break;
+                }
+                good = true;
+            }
+            if(good){
+                if(oneB < Integer.parseInt(data[1])){
+                    oneB = Integer.parseInt(data[1]);
+                    oneBB = data[0];
+                }
+                else if(twoB < Integer.parseInt(data[1])){
+                    twoB = Integer.parseInt(data[1]);
+                    twoBB = data[0];
+                } 
+            }
+
+            
+        }
+        
+        String[] suggested = {first[0], oneBA, twoBA, second[0], oneBB, twoBB};
+        
+        
+        return suggested;
+    }
+    
+    private String[] topFriends(){
+        
+        
+        String[] s = friendsCalc();
         int one = 0;
         int two = 0;
-        String[] top = {"",""};
+        String[] top = {"", ""};
+        if (s.length < 2) {
+            return null;
+        }
+        else if(s.length==2){
+            top[0] = s[0];
+            top[1] = s[1];
+            return top;
+        }
+        
+        
+        
         for (String val : s) {
             String[] temp = val.split("~");
-            if(Integer.parseInt(temp[1])>one){
+            if ( (Integer.parseInt(temp[1]) > one) ) {
                 top[0] = val;
                 one = Integer.parseInt(temp[1]);
-            }
-            else if(Integer.parseInt(temp[1])>two){
+            } else if (Integer.parseInt(temp[1]) > two) {
                 top[1] = val;
                 two = Integer.parseInt(temp[1]);
             }
-        }
-        
+            else{
+                System.out.println(Integer.parseInt(temp[1]) + "T");
+                System.out.println(two + "T");
+            }
+        }  
         return top;
     }
-            
-    private String[] friendsCalc(){
+
+    private String[] friendsCalc() {
         String[] reviews = searchUserRatings();
-        
-        if(reviews == null){
-          
+
+        if (reviews == null) {
+
             return null;
         }
         Map<String, String[]> map = new HashMap<>();
@@ -398,11 +603,10 @@ public class UserPageScreen extends javax.swing.JFrame {
             result[i] = key[i] + "~";
             for (int j = 0; j < 2; j++) {
                 result[i] += value[i][j];
-                
+
             }
         }
-        
-        
+
         return result;
     }
 
@@ -412,14 +616,18 @@ public class UserPageScreen extends javax.swing.JFrame {
      * @param title The title of the book.
      */
     public void bookProfileEnable(String title) {
+        
         try {
             //Set the book's profile to visible
-            new BookProfile(searchBook(title), s).setVisible(true);
+            new BookProfile(searchBook(title.trim()), s).setVisible(true);
             //Set this screen visible to false
             this.setVisible(false);
         } catch (ArrayIndexOutOfBoundsException ex) {
             //Error when searching for the book
             JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
+        }
+        catch(NullPointerException ex){
+
         }
     }
 
@@ -467,7 +675,6 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 760));
-        setPreferredSize(new java.awt.Dimension(800, 760));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -577,6 +784,11 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton2.setText("View Book");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 690, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
@@ -586,6 +798,11 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         jButton6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton6.setText("View Book");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 690, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
@@ -595,6 +812,11 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         jButton7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton7.setText("View Book");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 690, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
@@ -604,10 +826,23 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         jButton8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton8.setText("View Book");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 690, -1, -1));
+
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 510, 130, 170));
+
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 510, 130, 170));
+
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 510, 130, 170));
+
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 510, 130, 170));
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bookstar/images/logo.png"))); // NOI18N
@@ -630,25 +865,61 @@ public class UserPageScreen extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        //1a
+        bookProfileEnable(jLabel13.getText());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         //Search by the second highest rated books
-        bookProfileEnable(sortedAverage[1][0]);
+        try{
+            bookProfileEnable(sortedAverage[1][0]);
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            
+        }
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         //Search by the first highest rated books
-        bookProfileEnable(sortedAverage[0][0]);
+        try{
+            bookProfileEnable(sortedAverage[0][0]);
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         //Search by the third highest rated books
-        bookProfileEnable(sortedAverage[2][0]);
+        try{
+            bookProfileEnable(sortedAverage[2][0]);
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        //1b
+        bookProfileEnable(jLabel15.getText());
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        //2a
+        bookProfileEnable(jLabel14.getText());
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        //2b
+        bookProfileEnable(jLabel16.getText());
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
