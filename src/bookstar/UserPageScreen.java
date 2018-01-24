@@ -46,14 +46,15 @@ public class UserPageScreen extends javax.swing.JFrame {
             String string = "";
            
             String[] top = topFriends();
+            try{
             for (int i = 0; i<top.length; i++){
                 string += top[i] + "\n"; 
                 
             }
-           System.out.println(string);
+            System.out.println(string);
+            }catch(NullPointerException ex){}
             
-        
-        
+
         try{
         jLabel4.setText(sortedAverage[0][0]);
         jLabel5.setText(sortedAverage[1][0]);
