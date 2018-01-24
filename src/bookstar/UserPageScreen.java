@@ -6,15 +6,24 @@
  */
 package bookstar;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,22 +43,38 @@ public class UserPageScreen extends javax.swing.JFrame {
      *
      * @param s Student logged in
      */
-    public UserPageScreen(Student s) {
-        this.s = s;
-        initComponents();
-        String string = "";
-        String[] ee = friends(searchUserRatings());
-        for (int i = 0; i < ee.length; i++) {
-            string += ee[i] + "\n";
+     public UserPageScreen(Student s) {
+         this.s = s;
+         initComponents();
+ 
+         topRatedBooks(jLabel4, jLabel9, jButton3, 0);
+         topRatedBooks(jLabel5, jLabel10, jButton4, 1);
+         topRatedBooks(jLabel6, jLabel11, jButton5, 2);
+     }
 
-        }
-        System.out.println(string);
-
+    public void topRatedBooks(JLabel title, JLabel image, JButton button, int num) {
         try {
-            jLabel4.setText(sortedAverage[0][0]);
-            jLabel5.setText(sortedAverage[1][0]);
-            jLabel6.setText(sortedAverage[2][0]);
+            title.setText(sortedAverage[num][0]);
+            image.setIcon(new ImageIcon(addImage(searchBook(sortedAverage[num][0])[10])));
+            button.setVisible(true);
         } catch (ArrayIndexOutOfBoundsException ex) {
+            title.setText("NO RATED BOOKS");
+            image.setText("NO RATED BOOKS");
+            button.setEnabled(false);
+        }
+    }
+
+    public Image addImage(String imageLink) {
+        URL url;
+        try {
+            url = new URL(imageLink);
+            return ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } catch (IOException ex) {
+            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 
@@ -142,11 +167,12 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         return totalRating / numRating;
     }
-    
+
     /**
-     * Sort a 2-D string array by its rating, rows store booktitle, columns store
-     * rating, sort rating by greatest to least
-     * @param unsorted  Unsorted 2-D String array of reviews
+     * Sort a 2-D string array by its rating, rows store booktitle, columns
+     * store rating, sort rating by greatest to least
+     *
+     * @param unsorted Unsorted 2-D String array of reviews
      * @return a sorted 2-D String Array
      */
     public String[][] sortbyRating(String[][] unsorted) {
@@ -173,10 +199,11 @@ public class UserPageScreen extends javax.swing.JFrame {
             return null;
         }
     }
-    
+
     /**
      * Find all reviews made by the user
-     * @return  String array of reviews made by user
+     *
+     * @return String array of reviews made by user
      */
     public String[] searchUserRatings() {
         //initialize Scanner and Arraylist
@@ -205,7 +232,7 @@ public class UserPageScreen extends javax.swing.JFrame {
             scan.close();
         }
         //output string array of user ratings
-        Object[] array =  userRatings.toArray();
+        Object[] array = userRatings.toArray();
         String[] a = new String[array.length];
 
         for (int i = 0; i < array.length; i++) {
