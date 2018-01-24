@@ -8,3 +8,4 @@ Red Rising~20180123_155424~073903999~5~Test review
 Red Rising~20180123_163221~aaaaaaaaa~1~Test Review
 Mega Man~20180123_165459~aaaaaaaaa~5~loved it
 Mega Man~20180123_165553~073903999~4~decent i suppose
+Recent Advances in Parallel Virtual Machine and Message Passing Interface~20180124_111557~aaaaaaaaa~5~good
