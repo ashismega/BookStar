@@ -45,15 +45,8 @@ public class UserPageScreen extends javax.swing.JFrame {
         initComponents();
         String string = "";
 
-        String[] top = topFriends();
-        try {
-            for (int i = 0; i < top.length; i++) {
-                string += top[i] + "\n";
-
-            }
-            System.out.println(string);
-        } catch (NullPointerException ex) {
-        }
+        String[] top = suggestedBooks();  
+        try {       
 
         //Top rated book 1
         topRatedBooks(jLabel4, jLabel9, jButton3, 0);
@@ -66,7 +59,10 @@ public class UserPageScreen extends javax.swing.JFrame {
         friendRecommend(top, jLabel7, jLabel13, jLabel15, jLabel20, jLabel22, jButton2, jButton7,0);
 
         //Friend 2
-        friendRecommend(top, jLabel8, jLabel14, jLabel16, jLabel21, jLabel19, jButton6, jButton8,1);
+        friendRecommend(top, jLabel8, jLabel14, jLabel16, jLabel21, jLabel19, jButton6, jButton8,3);
+        } catch (NullPointerException ex) {
+            
+        }
     }
 
     /**
@@ -84,19 +80,23 @@ public class UserPageScreen extends javax.swing.JFrame {
     public void friendRecommend(String[] top, JLabel name, JLabel one, JLabel two, JLabel imageOne, JLabel imageTwo, JButton buttonOne, JButton buttonTwo, int num) {
         try {
             String[] friend = top[0].split("~");
-
+            for(int i=0; i<top.length; i++){
+                if(top[i].equals("")){
+                    top[i] = "NOT AVAILABLE";
+                }
+            }
             //Friend name
             name.setText(friend[num]);
 
             //Recommended book 1
-            one.setText("Computer Science");
+            one.setText(top[1+num]);
             //Recommended book 2
-            two.setText("2134567");
+            two.setText(top[2+num]);
 
             //Image of book 1
-            imageOne.setIcon(new ImageIcon(addImage(searchBook("Computer Science")[10])));
+            imageOne.setIcon(new ImageIcon(addImage(searchBook(top[1+num])[10])));
             //Image of book 2
-            imageTwo.setIcon(new ImageIcon(addImage(searchBook("2134567")[10])));
+            imageTwo.setIcon(new ImageIcon(addImage(searchBook(top[2+num])[10])));
 
             //View book 1
             buttonOne.setEnabled(true);
@@ -120,6 +120,7 @@ public class UserPageScreen extends javax.swing.JFrame {
             buttonOne.setEnabled(false);
             //View book 2
             buttonTwo.setEnabled(false);
+            System.out.println("BROKEN");
         }
     }
 
@@ -416,12 +417,23 @@ public class UserPageScreen extends javax.swing.JFrame {
     
     public String[] suggestedBooks(){
         String[] top = topFriends();
-        String[] first = top[0].split("~");
-  
-        String[] second = top[1].split("~");
+        
+        String[] first;
+        String[] second;
+        String[] firstRatings;
+        String[] secondRatings;
+        try{
+            first = top[0].split("~");
+            second = top[1].split("~");
+            firstRatings = searchUserRatings(first[0]);
+            secondRatings = searchUserRatings(second[0]);
+        }
+        catch(NullPointerException ex){
+            return null;
+        }
+        
           
-        String[] firstRatings = searchUserRatings(first[0]);
-        String[] secondRatings = searchUserRatings(second[0]);
+        
         
         int oneA = 0;
         int twoA = 0;
@@ -452,44 +464,57 @@ public class UserPageScreen extends javax.swing.JFrame {
             }
             
         }
-        
+        boolean good = false;
         for(String val: secondRatings){
             String[] data = val.split("~");
             String[] secondBooks = second[2].split(",");
             for(String books: secondBooks){
                 if( !(books.equals(data[0])) ){
-                    if(oneB < Integer.parseInt(data[1])){
-                        oneB = Integer.parseInt(data[1]);
-                        oneBB = data[0];
-                    }
-                    else if(twoB < Integer.parseInt(data[1])){
-                        twoB = Integer.parseInt(data[1]);
-                        twoBB = data[0];
-                    }
+                    break;
                 }
+                good = true;
             }
+            if(good){
+                if(oneB < Integer.parseInt(data[1])){
+                    oneB = Integer.parseInt(data[1]);
+                    oneBB = data[0];
+                }
+                else if(twoB < Integer.parseInt(data[1])){
+                    twoB = Integer.parseInt(data[1]);
+                    twoBB = data[0];
+                } 
+            }
+
             
         }
         
-        String[] suggested = {top[0], oneBA, twoBA, top[1], oneBB, twoBB};
+        String[] suggested = {first[0], oneBA, twoBA, second[0], oneBB, twoBB};
         
         
         return suggested;
     }
-    public String[] topFriends(){
+    
+    private String[] topFriends(){
         
         
         String[] s = friendsCalc();
-        if (s.length < 2) {
-            return null;
-        }
-        
         int one = 0;
         int two = 0;
         String[] top = {"", ""};
+        if (s.length < 2) {
+            return null;
+        }
+        else if(s.length==2){
+            top[0] = s[0];
+            top[1] = s[1];
+            return top;
+        }
+        
+        
+        
         for (String val : s) {
             String[] temp = val.split("~");
-            if (Integer.parseInt(temp[1]) > one) {
+            if ( (Integer.parseInt(temp[1]) > one) ) {
                 top[0] = val;
                 one = Integer.parseInt(temp[1]);
             } else if (Integer.parseInt(temp[1]) > two) {
@@ -817,19 +842,35 @@ public class UserPageScreen extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         //Search by the second highest rated books
-        bookProfileEnable(sortedAverage[1][0]);
+        try{
+            bookProfileEnable(sortedAverage[1][0]);
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            
+        }
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         //Search by the first highest rated books
-        bookProfileEnable(sortedAverage[0][0]);
+        try{
+            bookProfileEnable(sortedAverage[0][0]);
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         //Search by the third highest rated books
-        bookProfileEnable(sortedAverage[2][0]);
+        try{
+            bookProfileEnable(sortedAverage[2][0]);
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
