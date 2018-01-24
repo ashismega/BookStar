@@ -297,6 +297,7 @@ public class UserPageScreen extends javax.swing.JFrame {
 
             }
         } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
         }
         if (scan != null) {
             scan.close();

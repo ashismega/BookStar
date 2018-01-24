@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -291,7 +292,7 @@ public class BookProfile extends javax.swing.JFrame {
                 p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
                 p.close();
             } catch (IOException ex) {
-                Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         //update the text area
@@ -334,6 +335,7 @@ public class BookProfile extends javax.swing.JFrame {
                 }
             }
         } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
         }
         //close scanner
         if (s != null) {
