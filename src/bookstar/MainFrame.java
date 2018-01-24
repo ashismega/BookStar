@@ -179,10 +179,10 @@ public class MainFrame extends javax.swing.JFrame {
         while (s.hasNextLine()) {
             String info = s.nextLine();
             String[] studentInfo = info.split("~");
-            if (jTextField4.getText().equals(studentInfo[0]) && encrypt(jPasswordField1.getText()).equals(studentInfo[1])) {
-                System.out.println("Hello " + jTextField4.getText() + " Welcome Back");
+            if (jTextField4.getText().trim().equals(studentInfo[0]) && encrypt(jPasswordField1.getText().trim()).equals(studentInfo[1])) {
+                System.out.println("Hello " + jTextField4.getText().trim() + " Welcome Back");
                 //Do I need to create a new Object?
-                Student newUser = new Student(jTextField4.getText(), jPasswordField1.getText(), studentInfo[2], studentInfo[3]);
+                Student newUser = new Student(jTextField4.getText().trim(), jPasswordField1.getText().trim(), studentInfo[2], studentInfo[3]);
                 this.setVisible(false);
                 new UserPageScreen(newUser).setVisible(true);
                 //Close scanner if not null
@@ -203,23 +203,23 @@ public class MainFrame extends javax.swing.JFrame {
         //Initializes PrintWriter
         PrintWriter pw = null;
         //Checks if a student number only uses numbers, if invalid exit method and ask to use a valid student number
-        if (checkValidSNumber(jTextField1.getText()) == false){
+        if (checkValidSNumber(jTextField1.getText().trim()) == false){
             return;
         }
         //Checks if any credentials are missing, if any are missing exit method and ask to fill out all credentials
-        if (checkCredentials(jTextField1.getText(), jPasswordField2.getText(), jTextField3.getText(), jTextField5.getText()) == false) {
+        if (checkCredentials(jTextField1.getText().trim(), jPasswordField2.getText().trim(), jTextField3.getText().trim(), jTextField5.getText().trim()) == false) {
             return;
         }
         //Checks if a username is taken, if taken exit method and ask to use a different username 
-        if (checkDupAccount(jTextField1.getText()) == false) {
+        if (checkDupAccount(jTextField1.getText().trim()) == false) {
             return;
         }
         //Checks if a password is valid, if invalid exit method and ask to use a valid password
-        if (checkPass(jPasswordField2.getText()) == false) {
+        if (checkPass(jPasswordField2.getText().trim()) == false) {
             return;
         }
         //Checks if a student number is valid in length, if invalid exit method and ask to use a valid student number
-        if (checkSNumber(jTextField1.getText()) == false) {
+        if (checkSNumber(jTextField1.getText().trim()) == false) {
             return;
         }
         //Try to create a PrintWriter
@@ -235,7 +235,7 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         //Create a new instance of the user class
-        Student newUser = new Student(jTextField1.getText(), jPasswordField2.getText(), jTextField3.getText(), jTextField5.getText());
+        Student newUser = new Student(jTextField1.getText().trim(), jPasswordField2.getText().trim(), jTextField3.getText().trim(), jTextField5.getText().trim());
         //Writes to the file the information associated with the newUser
         pw.println(newUser.getStudentNumber() + delimiter + encrypt(newUser.getPassword()) + delimiter + newUser.getFirstName() + delimiter + newUser.getLastName());
         //Closes PrintWriter

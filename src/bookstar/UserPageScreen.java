@@ -79,29 +79,49 @@ public class UserPageScreen extends javax.swing.JFrame {
      */
     public void friendRecommend(String[] top, JLabel name, JLabel one, JLabel two, JLabel imageOne, JLabel imageTwo, JButton buttonOne, JButton buttonTwo, int num) {
         try {
-            String[] friend = top[0].split("~");
+            
             for(int i=0; i<top.length; i++){
                 if(top[i].equals("")){
-                    top[i] = "NOT AVAILABLE";
+                    top[i] = null;
                 }
             }
-            //Friend name
-            name.setText(friend[0]);
+            
+            try{
+                //Friend name
+                name.setText(top[num]);
+            }
+            catch(NullPointerException ex){
+                name.setText("NO FRIEND");
+            }
+            
+            try{
+                //Recommended book 1
+                one.setText(top[1+num]);
+                //Image of book 1
+                imageOne.setIcon(new ImageIcon(addImage(searchBook(top[1+num])[10])));
+                //View book 1
+                buttonOne.setEnabled(true);
+            }
+            catch(NullPointerException ex){
+                one.setText("NO BOOK AVAILABLE");
+                buttonOne.setEnabled(false);
+            }
+            
+            try{
+                //Recommended book 2
+                two.setText(top[2+num]);
+                //Image of book 2
+                imageTwo.setIcon(new ImageIcon(addImage(searchBook(top[2+num])[10])));
+                //View book 2
+                buttonTwo.setEnabled(true);
+            }
+            catch(NullPointerException ex){
+                two.setText("NO BOOK AVAILABLE");
+                buttonTwo.setEnabled(false);
+            }
 
-            //Recommended book 1
-            one.setText(top[1+num]);
-            //Recommended book 2
-            two.setText(top[2+num]);
-
-            //Image of book 1
-            imageOne.setIcon(new ImageIcon(addImage(searchBook(top[1+num])[10])));
-            //Image of book 2
-            imageTwo.setIcon(new ImageIcon(addImage(searchBook(top[2+num])[10])));
-
-            //View book 1
-            buttonOne.setEnabled(true);
-            //View book 2
-            buttonTwo.setEnabled(true);
+            
+            
         } catch (NullPointerException ex) {
             //Friend name
             name.setText("NO FRIEND");
@@ -120,7 +140,7 @@ public class UserPageScreen extends javax.swing.JFrame {
             buttonOne.setEnabled(false);
             //View book 2
             buttonTwo.setEnabled(false);
-            System.out.println("BROKEN");
+            
         }
     }
 
@@ -320,8 +340,6 @@ public class UserPageScreen extends javax.swing.JFrame {
             //The books information
             return o.bookInformation(o.bookHTML(o.pageHTML(o.createLink())));
         } catch (NullPointerException ex) {
-            //Book not found
-            JOptionPane.showMessageDialog(this, "Error", "Search Error", JOptionPane.ERROR_MESSAGE);
             return null;
         }
     }
@@ -598,14 +616,18 @@ public class UserPageScreen extends javax.swing.JFrame {
      * @param title The title of the book.
      */
     public void bookProfileEnable(String title) {
+        
         try {
             //Set the book's profile to visible
-            new BookProfile(searchBook(title), s).setVisible(true);
+            new BookProfile(searchBook(title.trim()), s).setVisible(true);
             //Set this screen visible to false
             this.setVisible(false);
         } catch (ArrayIndexOutOfBoundsException ex) {
             //Error when searching for the book
             JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
+        }
+        catch(NullPointerException ex){
+
         }
     }
 
