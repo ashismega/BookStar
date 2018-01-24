@@ -21,12 +21,19 @@ public class OnlineBookInfo {
 
     String search;
 
+    /**
+     * Create a google book's link from the book searched.
+     * @return Google book's link
+     */
     public String createLink() {
+        //Split the given search text by spaces
         String[] words = search.split(" ");
         String term = "";
+        //Create the link with the searched text with plus signs
         for (int i = 0; i < words.length; i++) {
             term += words[i] + "+";
         }
+        //The full google book's link
         return "https://www.googleapis.com/books/v1/volumes?q=" + term.substring(0, term.length() - 1);
     }
 

@@ -6,18 +6,24 @@
  */
 package bookstar;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,24 +43,39 @@ public class UserPageScreen extends javax.swing.JFrame {
      *
      * @param s Student logged in
      */
-    public UserPageScreen(Student s) {
-        this.s = s;
-        initComponents();
-            String string = "";
-            String[] ee = friends(searchUserRatings());
-            for (int i = 0; i<ee.length; i++){
-                string += ee[i] + "\n";
+     public UserPageScreen(Student s) {
+         this.s = s;
+         initComponents();
+ 
+         topRatedBooks(jLabel4, jLabel9, jButton3, 0);
+         topRatedBooks(jLabel5, jLabel10, jButton4, 1);
+         topRatedBooks(jLabel6, jLabel11, jButton5, 2);
+     }
 
-            }
-           System.out.println(string);
-            
-        
-        
-        try{
-        jLabel4.setText(sortedAverage[0][0]);
-        jLabel5.setText(sortedAverage[1][0]);
-        jLabel6.setText(sortedAverage[2][0]);
-        }catch(ArrayIndexOutOfBoundsException ex){}
+    public void topRatedBooks(JLabel title, JLabel image, JButton button, int num) {
+        try {
+            title.setText(sortedAverage[num][0]);
+            image.setIcon(new ImageIcon(addImage(searchBook(sortedAverage[num][0])[10])));
+            button.setVisible(true);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            title.setText("NO RATED BOOKS");
+            image.setText("NO RATED BOOKS");
+            button.setEnabled(false);
+        }
+    }
+
+    public Image addImage(String imageLink) {
+        URL url;
+        try {
+            url = new URL(imageLink);
+            return ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } catch (IOException ex) {
+            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     /**
@@ -146,11 +167,12 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         return totalRating / numRating;
     }
-    
+
     /**
-     * Sort a 2-D string array by its rating, rows store booktitle, columns store
-     * rating, sort rating by greatest to least
-     * @param unsorted  Unsorted 2-D String array of reviews
+     * Sort a 2-D string array by its rating, rows store booktitle, columns
+     * store rating, sort rating by greatest to least
+     *
+     * @param unsorted Unsorted 2-D String array of reviews
      * @return a sorted 2-D String Array
      */
     public String[][] sortbyRating(String[][] unsorted) {
@@ -177,10 +199,11 @@ public class UserPageScreen extends javax.swing.JFrame {
             return null;
         }
     }
-    
+
     /**
      * Find all reviews made by the user
-     * @return  String array of reviews made by user
+     *
+     * @return String array of reviews made by user
      */
     public String[] searchUserRatings() {
         //initialize Scanner and Arraylist
@@ -201,7 +224,7 @@ public class UserPageScreen extends javax.swing.JFrame {
                     //add it into an arraylist
                     userRatings.add(bookRate);
                 }
-               
+
             }
         } catch (FileNotFoundException ex) {
         }
@@ -209,85 +232,81 @@ public class UserPageScreen extends javax.swing.JFrame {
             scan.close();
         }
         //output string array of user ratings
-        Object[] array =  userRatings.toArray();
+        Object[] array = userRatings.toArray();
         String[] a = new String[array.length];
-        
-        for(int i = 0; i<array.length;i++){
-            if(array[i] instanceof String){
-               a[i] = (String)array[i];
-                
+
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] instanceof String) {
+                a[i] = (String) array[i];
+
             }
-            
+
         }
-        
-        
+
         return a;
     }
-    
-    public String[] friends(String[] reviews){
-        if(reviews == null){
-          
+
+    public String[] friends(String[] reviews) {
+        if (reviews == null) {
+
             return null;
         }
         Map<String, String[]> map = new HashMap<>();
-        
-        for(int i=0;i<reviews.length;i++){
-           
-            
+
+        for (int i = 0; i < reviews.length; i++) {
+
             String[] record = reviews[i].split("~");
-            
+
             String book = record[0];
             int review = Integer.parseInt(record[1]);
-            
+
             try {
                 Scanner sc = new Scanner(ratingReview);
-                
-                while(sc.hasNext()){
-                   
+
+                while (sc.hasNext()) {
+
                     String tempS = sc.nextLine();
                     String[] tempRecord = tempS.split("~");
-                  
-                    if(tempRecord[0].equals(book)){
-                        if( !(s.getStudentNumber().equals(tempRecord[2])) ){
-                           
-                            try{
-                              
+
+                    if (tempRecord[0].equals(book)) {
+                        if (!(s.getStudentNumber().equals(tempRecord[2]))) {
+
+                            try {
+
                                 String[] vals = map.get(tempRecord[2]);
-                                vals[0] = ( (review*Integer.parseInt(tempRecord[3])) + Integer.parseInt(vals[0]) ) + "";
+                                vals[0] = ((review * Integer.parseInt(tempRecord[3])) + Integer.parseInt(vals[0])) + "";
                                 vals[1] = vals[1] + "," + book;
-                                
-                            }
-                            catch(NullPointerException ex){
-                                
-                                String[] vals = {review*Integer.parseInt(tempRecord[3]) + "",  "~" +book };
+
+                            } catch (NullPointerException ex) {
+
+                                String[] vals = {review * Integer.parseInt(tempRecord[3]) + "", "~" + book};
                                 map.put(tempRecord[2], vals);
-                                
+
                             }
                         }
                     }
                 }
             } catch (IOException ex) {
-                
+
                 JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
-            }  
+            }
         }
-            
+
         String[] key = map.keySet().toArray(new String[0]);
-        
+
         String[][] value = map.values().toArray(new String[0][0]);
         String[] result = new String[map.size()];
-        for (int i = 0; i<map.size(); i++){
+        for (int i = 0; i < map.size(); i++) {
             result[i] = key[i];
-            for (int j = 0; j<map.size(); j++){
-                    result[i] += "~" + value[i][j];
-                    
-            }      
+            for (int j = 0; j < map.size(); j++) {
+                result[i] += "~" + value[i][j];
+
+            }
         }
-  
+
         return result;
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
