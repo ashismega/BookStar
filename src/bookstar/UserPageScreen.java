@@ -6,24 +6,18 @@
  */
 package bookstar;
 
-import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -46,36 +40,21 @@ public class UserPageScreen extends javax.swing.JFrame {
     public UserPageScreen(Student s) {
         this.s = s;
         initComponents();
+            String string = "";
+            String[] ee = friends(searchUserRatings());
+            for (int i = 0; i<ee.length; i++){
+                string += ee[i] + "\n";
 
-        topRatedBooks(jLabel4, jLabel9, jButton3, 0);
-        topRatedBooks(jLabel5, jLabel10, jButton4, 1);
-        topRatedBooks(jLabel6, jLabel11, jButton5, 2);
-    }
-
-    public void topRatedBooks(JLabel title, JLabel image, JButton button, int num) {
-        try {
-            title.setText(sortedAverage[num][0]);
-            image.setIcon(new ImageIcon(addImage(searchBook(sortedAverage[num][0])[10])));
-            button.setVisible(true);
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            title.setText("NO RATED BOOKS");
-            image.setText("NO RATED BOOKS");
-            button.setEnabled(false);
-        }
-    }
-
-    public Image addImage(String imageLink) {
-        URL url;
-        try {
-            url = new URL(imageLink);
-            return ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        } catch (IOException ex) {
-            Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+            }
+           System.out.println(string);
+            
+        
+        
+        try{
+        jLabel4.setText(sortedAverage[0][0]);
+        jLabel5.setText(sortedAverage[1][0]);
+        jLabel6.setText(sortedAverage[2][0]);
+        }catch(ArrayIndexOutOfBoundsException ex){}
     }
 
     /**
@@ -222,6 +201,7 @@ public class UserPageScreen extends javax.swing.JFrame {
                     //add it into an arraylist
                     userRatings.add(bookRate);
                 }
+               
             }
         } catch (FileNotFoundException ex) {
         }
@@ -231,42 +211,86 @@ public class UserPageScreen extends javax.swing.JFrame {
         //output string array of user ratings
         String[] array = (String[]) userRatings.toArray();
         return array;
+        
+        Object[] array =  userRatings.toArray();
+        String[] a = new String[array.length];
+        
+        for(int i = 0; i<array.length;i++){
+            if(array[i] instanceof String){
+               a[i] = (String)array[i];
+                
+            }
+            
+        }
+        
+        
+        return a;
     }
-
-    public String[] topFriends(String[] reviews) {
+    
+    public String[] friends(String[] reviews){
+        if(reviews == null){
+          
+            return null;
+        }
         Map<String, String[]> map = new HashMap<>();
-        for (int i = 0; i != reviews.length - 1; i++) {
+        
+        for(int i=0;i<reviews.length;i++){
+           
+            
             String[] record = reviews[i].split("~");
+            
             String book = record[0];
             int review = Integer.parseInt(record[1]);
-
+            
             try {
                 Scanner sc = new Scanner(ratingReview);
-                while (sc.hasNext()) {
+                
+                while(sc.hasNext()){
+                   
                     String tempS = sc.nextLine();
                     String[] tempRecord = tempS.split("~");
-                    if (tempRecord[0].equals(book)) {
-                        if (!(s.getStudentNumber().equals(tempRecord[3]))) {
-                            try {
-                                String[] vals = map.get(tempRecord[3]);
-                                vals[0] = ((review * Integer.parseInt(tempRecord[3])) + Integer.parseInt(vals[0])) + "";
-                                vals[1] = vals[1] + "~" + book;
-                            } catch (NullPointerException ex) {
-                                String[] vals = {review * Integer.parseInt(tempRecord[3]) + "", book};
-                                map.put(tempRecord[3], vals);
+                  
+                    if(tempRecord[0].equals(book)){
+                        if( !(s.getStudentNumber().equals(tempRecord[2])) ){
+                           
+                            try{
+                              
+                                String[] vals = map.get(tempRecord[2]);
+                                vals[0] = ( (review*Integer.parseInt(tempRecord[3])) + Integer.parseInt(vals[0]) ) + "";
+                                vals[1] = vals[1] + "," + book;
+                                
+                            }
+                            catch(NullPointerException ex){
+                                
+                                String[] vals = {review*Integer.parseInt(tempRecord[3]) + "",  "~" +book };
+                                map.put(tempRecord[2], vals);
+                                
                             }
                         }
                     }
                 }
             } catch (IOException ex) {
+                
                 JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
-            }
-
+            }  
         }
-        System.out.println(map.values());
-        return null;
+            
+        String[] key = map.keySet().toArray(new String[0]);
+        
+        String[][] value = map.values().toArray(new String[0][0]);
+        String[] result = new String[map.size()];
+        for (int i = 0; i<map.size(); i++){
+            result[i] = key[i];
+            for (int j = 0; j<map.size(); j++){
+                    result[i] += "~" + value[i][j];
+                    
+            }      
+        }
+  
+        return result;
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -282,6 +306,7 @@ public class UserPageScreen extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -312,7 +337,6 @@ public class UserPageScreen extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(800, 760));
         setPreferredSize(new java.awt.Dimension(800, 760));
         setResizable(false);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Search:");
@@ -470,6 +494,10 @@ public class UserPageScreen extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         try {
@@ -561,9 +589,6 @@ public class UserPageScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
