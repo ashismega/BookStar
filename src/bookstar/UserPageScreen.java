@@ -89,14 +89,14 @@ public class UserPageScreen extends javax.swing.JFrame {
             name.setText(friend[0]);
 
             //Recommended book 1
-            one.setText(null);
+            one.setText("Temp");
             //Recommended book 2
-            two.setText(null);
+            two.setText("Temp");
 
             //Image of book 1
-            imageOne.setIcon(new ImageIcon(addImage(searchBook(friend[0])[10])));
+            imageOne.setIcon(new ImageIcon(addImage(searchBook("Temp")[10])));
             //Image of book 2
-            imageTwo.setIcon(new ImageIcon(addImage(searchBook(friend[0])[10])));
+            imageTwo.setIcon(new ImageIcon(addImage(searchBook("Temp")[10])));
 
             //View book 1
             buttonOne.setEnabled(true);
