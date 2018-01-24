@@ -83,10 +83,10 @@ public class UserPageScreen extends javax.swing.JFrame {
      */
     public void friendRecommend(String[] top, JLabel name, JLabel one, JLabel two, JLabel imageOne, JLabel imageTwo, JButton buttonOne, JButton buttonTwo, int num) {
         try {
-            String[] friend = top[0].split("~");
+            String[] friend = top[num].split("~");
 
             //Friend name
-            name.setText(friend[num]);
+            name.setText(friend[0]);
 
             //Recommended book 1
             one.setText("Computer Science");
@@ -102,7 +102,7 @@ public class UserPageScreen extends javax.swing.JFrame {
             buttonOne.setEnabled(true);
             //View book 2
             buttonTwo.setEnabled(true);
-        } catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (NullPointerException ex) {
             //Friend name
             name.setText("NO FRIEND");
 
@@ -676,9 +676,17 @@ public class UserPageScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 690, -1, -1));
+
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 510, 130, 170));
+
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 510, 130, 170));
+
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 510, 130, 170));
+
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 510, 130, 170));
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bookstar/images/logo.png"))); // NOI18N
