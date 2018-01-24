@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,6 +29,7 @@ public class BookProfile extends javax.swing.JFrame {
 
     File ratingReview = new File("rateReview.txt");
     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+    //The information for the book profile
     private static String[] bookInfo;
     private static Student user;
 
@@ -157,11 +159,6 @@ public class BookProfile extends javax.swing.JFrame {
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 460, -1, -1));
 
         jTextField3.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
         getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 460, 320, 200));
 
         jButton1.setText("Submit");
@@ -234,11 +231,6 @@ public class BookProfile extends javax.swing.JFrame {
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 66, -1));
 
         jTextField1.setEditable(false);
@@ -278,14 +270,14 @@ public class BookProfile extends javax.swing.JFrame {
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel18.setText("BOOKSTAR");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, -1));
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 4, -1, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
      * Submit Review button
-     * @param evt parameter for button
+     * @param evt Action event
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //initialize printwriter
@@ -300,7 +292,7 @@ public class BookProfile extends javax.swing.JFrame {
                 p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
                 p.close();
             } catch (IOException ex) {
-                Logger.getLogger(BookProfile.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         //update the text area
@@ -311,20 +303,15 @@ public class BookProfile extends javax.swing.JFrame {
         jComboBox1.setSelectedIndex(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-//review box
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-//main menu button
+    /**
+     * Back to main menu
+     * @param evt  Action event
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         new UserPageScreen(this.user).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
     
     /**
      * update the text area with reviews of the book
@@ -348,6 +335,7 @@ public class BookProfile extends javax.swing.JFrame {
                 }
             }
         } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
         }
         //close scanner
         if (s != null) {
