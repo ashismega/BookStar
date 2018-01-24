@@ -279,7 +279,7 @@ public class BookProfile extends javax.swing.JFrame {
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel18.setText("BOOKSTAR");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, -1));
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 4, -1, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
