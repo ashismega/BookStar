@@ -43,23 +43,17 @@ public class UserPageScreen extends javax.swing.JFrame {
     public UserPageScreen(Student s) {
         this.s = s;
         initComponents();
-            String string = "";
-           
-            String[] top = topFriends();
-            try{
-            for (int i = 0; i<top.length; i++){
-                string += top[i] + "\n"; 
-                
+        String string = "";
+
+        String[] top = topFriends();
+        try {
+            for (int i = 0; i < top.length; i++) {
+                string += top[i] + "\n";
+
             }
             System.out.println(string);
-            }catch(NullPointerException ex){}
-            
-
-        try{
-        jLabel4.setText(sortedAverage[0][0]);
-        jLabel5.setText(sortedAverage[1][0]);
-        jLabel6.setText(sortedAverage[2][0]);
-        }catch(ArrayIndexOutOfBoundsException ex){}
+        } catch (NullPointerException ex) {
+        }
 
         //Top rated book 1
         topRatedBooks(jLabel4, jLabel9, jButton3, 0);
@@ -67,6 +61,66 @@ public class UserPageScreen extends javax.swing.JFrame {
         topRatedBooks(jLabel5, jLabel10, jButton4, 1);
         //Top rated book 3
         topRatedBooks(jLabel6, jLabel11, jButton5, 2);
+
+        //Friend 1
+        friendRecommend(top, jLabel7, jLabel13, jLabel15, jLabel20, jLabel22, jButton2, jButton7,0);
+
+        //Friend 2
+        friendRecommend(top, jLabel8, jLabel14, jLabel16, jLabel21, jLabel19, jButton6, jButton8,1);
+    }
+
+    /**
+     * Update jLabels related to recommended friends and books.
+     *
+     * @param top The standing of the friend.
+     * @param name ID of the friend
+     * @param one Recommended book 1
+     * @param two Recommended book 2
+     * @param imageOne Recommended book image 1
+     * @param imageTwo Recommended book image 2
+     * @param buttonOne Recommended book button 1
+     * @param buttonTwo Recommended book button 1
+     */
+    public void friendRecommend(String[] top, JLabel name, JLabel one, JLabel two, JLabel imageOne, JLabel imageTwo, JButton buttonOne, JButton buttonTwo, int num) {
+        try {
+            String[] friend = top[0].split("~");
+
+            //Friend name
+            name.setText(friend[num]);
+
+            //Recommended book 1
+            one.setText("Computer Science");
+            //Recommended book 2
+            two.setText("2134567");
+
+            //Image of book 1
+            imageOne.setIcon(new ImageIcon(addImage(searchBook("Computer Science")[10])));
+            //Image of book 2
+            imageTwo.setIcon(new ImageIcon(addImage(searchBook("2134567")[10])));
+
+            //View book 1
+            buttonOne.setEnabled(true);
+            //View book 2
+            buttonTwo.setEnabled(true);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            //Friend name
+            name.setText("NO FRIEND");
+
+            //Recommended book 1
+            one.setText("NO BOOK");
+            //Recommended book 2
+            two.setText("NO BOOK");
+
+            //Image of book 1
+            imageOne.setText("NO BOOK");
+            //Image of book 2
+            imageTwo.setText("NO BOOK");
+
+            //View book 1
+            buttonOne.setEnabled(false);
+            //View book 2
+            buttonTwo.setEnabled(false);
+        }
     }
 
     /**
@@ -84,7 +138,7 @@ public class UserPageScreen extends javax.swing.JFrame {
             //Book image
             image.setIcon(new ImageIcon(addImage(searchBook(sortedAverage[num][0])[10])));
             //Enable button
-            button.setVisible(true);
+            button.setEnabled(true);
         } catch (ArrayIndexOutOfBoundsException ex) {
             //No book title
             title.setText("NO RATED BOOKS");
@@ -426,20 +480,19 @@ public class UserPageScreen extends javax.swing.JFrame {
         
         
         String[] s = friendsCalc();
-        if(s.length<2){
+        if (s.length < 2) {
             return null;
         }
         
         int one = 0;
         int two = 0;
-        String[] top = {"",""};
+        String[] top = {"", ""};
         for (String val : s) {
             String[] temp = val.split("~");
-            if(Integer.parseInt(temp[1])>one){
+            if (Integer.parseInt(temp[1]) > one) {
                 top[0] = val;
                 one = Integer.parseInt(temp[1]);
-            }
-            else if(Integer.parseInt(temp[1])>two){
+            } else if (Integer.parseInt(temp[1]) > two) {
                 top[1] = val;
                 two = Integer.parseInt(temp[1]);
             }
@@ -450,12 +503,12 @@ public class UserPageScreen extends javax.swing.JFrame {
         }  
         return top;
     }
-            
-    private String[] friendsCalc(){
+
+    private String[] friendsCalc() {
         String[] reviews = searchUserRatings();
-        
-        if(reviews == null){
-          
+
+        if (reviews == null) {
+
             return null;
         }
         Map<String, String[]> map = new HashMap<>();
@@ -507,11 +560,10 @@ public class UserPageScreen extends javax.swing.JFrame {
             result[i] = key[i] + "~";
             for (int j = 0; j < 2; j++) {
                 result[i] += value[i][j];
-                
+
             }
         }
-        
-        
+
         return result;
     }
 
@@ -576,7 +628,6 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 760));
-        setPreferredSize(new java.awt.Dimension(800, 760));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -686,6 +737,11 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton2.setText("View Book");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 690, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
@@ -695,6 +751,11 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         jButton6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton6.setText("View Book");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 690, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
@@ -704,6 +765,11 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         jButton7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton7.setText("View Book");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 690, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
@@ -713,6 +779,11 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         jButton8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton8.setText("View Book");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 690, -1, -1));
         getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 510, 130, 170));
         getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 510, 130, 170));
@@ -739,6 +810,8 @@ public class UserPageScreen extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        //1a
+        bookProfileEnable(jLabel13.getText());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -758,6 +831,24 @@ public class UserPageScreen extends javax.swing.JFrame {
         //Search by the third highest rated books
         bookProfileEnable(sortedAverage[2][0]);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        //1b
+        bookProfileEnable(jLabel15.getText());
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        //2a
+        bookProfileEnable(jLabel14.getText());
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        //2b
+        bookProfileEnable(jLabel16.getText());
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments

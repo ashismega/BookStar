@@ -83,6 +83,11 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, 340, -1));
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 340, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -197,6 +202,10 @@ public class MainFrame extends javax.swing.JFrame {
         String delimiter = "~";
         //Initializes PrintWriter
         PrintWriter pw = null;
+        //Checks if a student number only uses numbers, if invalid exit method and ask to use a valid student number
+        if (checkValidSNumber(jTextField1.getText()) == false){
+            return;
+        }
         //Checks if any credentials are missing, if any are missing exit method and ask to fill out all credentials
         if (checkCredentials(jTextField1.getText(), jPasswordField2.getText(), jTextField3.getText(), jTextField5.getText()) == false) {
             return;
@@ -209,7 +218,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (checkPass(jPasswordField2.getText()) == false) {
             return;
         }
-        //Checks if a student number is valid, if invalid exit method and ask to use a valid student number
+        //Checks if a student number is valid in length, if invalid exit method and ask to use a valid student number
         if (checkSNumber(jTextField1.getText()) == false) {
             return;
         }
@@ -239,6 +248,10 @@ public class MainFrame extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
      /**
      * Checks if all account credentials are filled in. 
      * If any credentials are blank or missing, return false, otherwise return 
@@ -329,10 +342,10 @@ public class MainFrame extends javax.swing.JFrame {
         return true;
     }
     /**
-     * Checks if a Student number has already been taken in the file.
+     * Checks if a Student number long enough in length.
      * @param sNumber The student number to be checked
-     * @return true if student number is valid
-     *          false if student number is already taken
+     * @return true if student number is valid in length
+     *          false if student number is not sufficient in length
      */
     public boolean checkSNumber(String sNumber) {
         if (sNumber.length() != 9 && sNumber.length() != 10) {
@@ -341,7 +354,22 @@ public class MainFrame extends javax.swing.JFrame {
         }
         return true;
     }
-
+    
+    /**
+     * Checks if a Student number is all numbers and contains no letters.
+     * @param sNumber The student number to be checked 
+     * @return true if the student number is all numbers
+     *          false if the student number contains letters
+     */         
+    public boolean checkValidSNumber (String sNumber) {
+        for(int i = 0; i<sNumber.length();i++){
+            if (sNumber.charAt(i)<0 || sNumber.charAt(i)>9){
+                JOptionPane.showMessageDialog(this, "INVALID STUDENT NUMBER ID", "Student ID Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        return true;
+    }
     /**
      * Encrypts a password(String) using the SHA-256 algorithm (one way
      * encryption). Returns the newly encrypted password. Used for password
