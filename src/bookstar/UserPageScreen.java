@@ -318,13 +318,118 @@ public class UserPageScreen extends javax.swing.JFrame {
         return a;
     }
     
+    private String[] searchUserRatings(String s) {
+        //initialize Scanner and Arraylist
+        Scanner scan = null;
+        ArrayList userRatings = new ArrayList();
+        try {
+            //scan reviews file
+            scan = new Scanner(ratingReview);
+            //while there are more reviews
+            while (scan.hasNext()) {
+                //take the next line and delimit it
+                String line = scan.nextLine();
+                String[] lineArr = line.split("~");
+                //if the student id in reviews is the same as current id
+                if (lineArr[2].equals(s)) {
+                    //put the book title and rating into a string
+                    String bookRate = (lineArr[0] + "~" + lineArr[3]);
+                    //add it into an arraylist
+                    userRatings.add(bookRate);
+                }
+
+            }
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
+        }
+        if (scan != null) {
+            scan.close();
+        }
+        //output string array of user ratings
+        Object[] array = userRatings.toArray();
+        String[] a = new String[array.length];
+
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] instanceof String) {
+                a[i] = (String) array[i];
+
+            }
+
+        }
+
+        return a;
+    }
+    
+    public String[] suggestedBooks(){
+        String[] top = topFriends();
+        String[] first = top[0].split("~");
+  
+        String[] second = top[1].split("~");
+          
+        String[] firstRatings = searchUserRatings(first[0]);
+        String[] secondRatings = searchUserRatings(second[0]);
+        
+        int oneA = 0;
+        int twoA = 0;
+        
+        int oneB = 0;
+        int twoB = 0;
+        
+        String oneBA = "";
+        String twoBA = "";
+        
+        String oneBB = "";
+        String twoBB = "";
+        
+        for(String val: firstRatings){
+            String[] data = val.split("~");
+            String[] firstBooks = first[2].split(",");
+            for(String books: firstBooks){
+                if( !(books.equals(data[0])) ){
+                    if(oneA < Integer.parseInt(data[1])){
+                        oneA = Integer.parseInt(data[1]);
+                        oneBA = data[0];
+                    }
+                    else if(twoA < Integer.parseInt(data[1])){
+                        twoA = Integer.parseInt(data[1]);
+                        twoBA = data[0];
+                    }
+                }
+            }
+            
+        }
+        
+        for(String val: secondRatings){
+            String[] data = val.split("~");
+            String[] secondBooks = second[2].split(",");
+            for(String books: secondBooks){
+                if( !(books.equals(data[0])) ){
+                    if(oneB < Integer.parseInt(data[1])){
+                        oneB = Integer.parseInt(data[1]);
+                        oneBB = data[0];
+                    }
+                    else if(twoB < Integer.parseInt(data[1])){
+                        twoB = Integer.parseInt(data[1]);
+                        twoBB = data[0];
+                    }
+                }
+            }
+            
+        }
+        
+        String[] suggested = {top[0], oneBA, twoBA, top[1], oneBB, twoBB};
+        
+        
+        return suggested;
+    }
     public String[] topFriends(){
         
-            
+        
         String[] s = friendsCalc();
         if(s.length<2){
             return null;
         }
+        
         int one = 0;
         int two = 0;
         String[] top = {"",""};
@@ -338,8 +443,11 @@ public class UserPageScreen extends javax.swing.JFrame {
                 top[1] = val;
                 two = Integer.parseInt(temp[1]);
             }
-        }
-        
+            else{
+                System.out.println(Integer.parseInt(temp[1]) + "T");
+                System.out.println(two + "T");
+            }
+        }  
         return top;
     }
             

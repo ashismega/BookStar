@@ -1,4 +1,3 @@
-
 Recent Advances in Parallel Virtual Machine and Message Passing Interface~20180122_231416~072671415~1~GreatRed Rising~20180123_145330~123456789~5~Best book I've read in a long time
 Red Rising~20180123_145330~123456789~5~Best book I've read in a long time
 Morning Star~20180123_145734~123456789~5~Even better
@@ -10,7 +9,6 @@ Red Rising~20180123_163221~aaaaaaaaa~1~Test Review
 Mega Man~20180123_165459~aaaaaaaaa~5~loved it
 Mega Man~20180123_165553~073903999~4~decent i suppose
 Recent Advances in Parallel Virtual Machine and Message Passing Interface~20180124_111557~aaaaaaaaa~5~good
-=======
 The Kite Runner~20180123_193814~348676487~4~best book
 The Kite Runner~20180123_193831~348676487~1~aa
 The Magic~20180123_193841~348676487~5~awseom
@@ -28,4 +26,4 @@ The Magic~20180123_194840~073903999~5~decentarurururu
 The Kite Runner~20180123_201130~aaaaaaaaa~5~ok
 The Magic~20180123_201343~bbbbbbbbb~4~ok i suppose
 The Kite Runner~20180124_110515~072660210~5~Best Bok Choy Boi!
-The Magic~20180124_110535~072660210~5~Yeah Yeah!
+The Magic~20180124_110535~072660210~5~Yeah Yeah!The Magic~20180124_112318~aaaaaaaaa~5~test
