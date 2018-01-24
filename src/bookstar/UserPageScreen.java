@@ -209,9 +209,6 @@ public class UserPageScreen extends javax.swing.JFrame {
             scan.close();
         }
         //output string array of user ratings
-        String[] array = (String[]) userRatings.toArray();
-        return array;
-        
         Object[] array =  userRatings.toArray();
         String[] a = new String[array.length];
         
