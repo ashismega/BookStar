@@ -140,7 +140,7 @@ public class MainFrame extends javax.swing.JFrame {
                 jTextField4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 340, -1));
+        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 410, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel8.setText("PASSWORD");
@@ -161,7 +161,7 @@ public class MainFrame extends javax.swing.JFrame {
                 jPasswordField1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 440, 340, -1));
+        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 440, 410, -1));
 
         jPasswordField2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPasswordField2.addActionListener(new java.awt.event.ActionListener() {
