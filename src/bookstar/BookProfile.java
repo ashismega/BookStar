@@ -300,6 +300,10 @@ public class BookProfile extends javax.swing.JFrame {
         }
         //update the text area
         textAreaUpdate();
+        //clear textfield when submitted
+        jTextField3.setText("");
+        //reset rating
+        jComboBox1.setSelectedIndex(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 //review box
