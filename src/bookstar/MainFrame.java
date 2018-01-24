@@ -5,6 +5,7 @@
  */
 package bookstar;
 
+//Imports for the Current Frame
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -21,8 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    //users file is initialized and holds all user accounts in the system
-
+    //students file is initialized and holds all user accounts in the system
     File students = new File("Students.txt");
     //badWords file is initialized to check for invalid passwords
     File badWords = new File("dictbadpass.txt");
@@ -239,10 +239,11 @@ public class MainFrame extends javax.swing.JFrame {
         if (checkDupAccount(jTextField1.getText()) == false) {
             return;
         }
-        //Checks is a password is valid, if invalid exit method and ask to use a valid password
+        //Checks if a password is valid, if invalid exit method and ask to use a valid password
         if (checkPass(jPasswordField2.getText()) == false) {
             return;
         }
+        //Checks if a student number is valid, if invalid exit method and ask to use a valid student number
         if (checkSNumber(jTextField1.getText()) == false) {
             return;
         }
@@ -332,7 +333,7 @@ public class MainFrame extends javax.swing.JFrame {
         //Read through the file and check if the username created by the user matches with any from the file, if there is a match return false
         while (s.hasNextLine()) {
             String info = s.nextLine();
-            String[] userInfo = info.split(",");
+            String[] userInfo = info.split("~");
             if (username.equals(userInfo[0])) {
                 JOptionPane.showMessageDialog(this, "TAKEN USERNAME", "Taken Username Error", JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -380,7 +381,12 @@ public class MainFrame extends javax.swing.JFrame {
         //Return true if the created password is valid
         return true;
     }
-
+    /**
+     * Checks if a Student number has already been taken in the file.
+     * @param sNumber The student number to be checked
+     * @return true if student number is valid
+     *          false if student number is already taken
+     */
     public boolean checkSNumber(String sNumber) {
         if (sNumber.length() != 9 && sNumber.length() != 10) {
             JOptionPane.showMessageDialog(this, "INVALID STUDENT NUMBER ID", "Student ID Error", JOptionPane.ERROR_MESSAGE);
