@@ -26,7 +26,7 @@ public class MainFrame extends javax.swing.JFrame {
     File students = new File("Students.txt");
     //badWords file is initialized to check for invalid passwords
     File badWords = new File("dictbadpass.txt");
-
+    
     /**
      * Creates new instance of MainFrame
      */

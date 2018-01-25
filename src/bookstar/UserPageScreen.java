@@ -220,7 +220,7 @@ public class UserPageScreen extends javax.swing.JFrame {
                 temp.get(1).add(reviewInfo[3]);
             }
             sc.close();
-
+            
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "File Error", "File Error", JOptionPane.ERROR_MESSAGE);
         }
