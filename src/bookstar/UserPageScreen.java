@@ -55,13 +55,27 @@ public class UserPageScreen extends javax.swing.JFrame {
         
             
         
-        
+        try{
         //Top rated book 1
         topRatedBooks(jLabel4, jLabel9, jButton3, 0);
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            
+        }
+        try{
         //Top rated book 2
         topRatedBooks(jLabel5, jLabel10, jButton4, 1);
+        }catch(ArrayIndexOutOfBoundsException ex){
+            
+        }
+        try{
         //Top rated book 3
         topRatedBooks(jLabel6, jLabel11, jButton5, 2);
+        }catch(ArrayIndexOutOfBoundsException ex){
+            
+        }
+        
+        
 
         //Friend 1
         friendRecommend(top, jLabel7, jLabel13, jLabel15, jLabel20, jLabel22, jButton2, jButton7,0);
@@ -159,6 +173,7 @@ public class UserPageScreen extends javax.swing.JFrame {
     public void topRatedBooks(JLabel title, JLabel image, JButton button, int num) {
         try {
             //Book title
+            
             title.setText(sortedAverage[num][0]);
             //Book image
             image.setIcon(new ImageIcon(addImage(searchBook(sortedAverage[num][0])[10])));
@@ -171,6 +186,11 @@ public class UserPageScreen extends javax.swing.JFrame {
             image.setText("NO RATED BOOKS");
             //Disable the button
             button.setEnabled(false);
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            button.setEnabled(false);
+            title.setText("NO RATED BOOKS");
+            image.setText("NO RATED BOOKS");
         }
     }
 

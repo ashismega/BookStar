@@ -292,7 +292,7 @@ public class BookProfile extends javax.swing.JFrame {
                 p = new PrintWriter(new FileWriter(ratingReview, true));
                 //add student id below
                 //bookid,date,studentID,rating,review
-                p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
+                p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText().trim());
                 p.close();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
