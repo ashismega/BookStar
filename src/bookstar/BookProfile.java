@@ -26,13 +26,11 @@ import javax.swing.JOptionPane;
  * @author 072671415
  */
 public class BookProfile extends javax.swing.JFrame {
-    //Accessing rateReview text file
+
     File ratingReview = new File("rateReview.txt");
-    //display current time in a string
     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
     //The information for the book profile
     private static String[] bookInfo;
-    //Student class user
     private static Student user;
 
     /**
@@ -292,7 +290,7 @@ public class BookProfile extends javax.swing.JFrame {
                 p = new PrintWriter(new FileWriter(ratingReview, true));
                 //add student id below
                 //bookid,date,studentID,rating,review
-                p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText().trim());
+                p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
                 p.close();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
