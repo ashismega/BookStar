@@ -215,6 +215,9 @@ public class UserPageScreen extends javax.swing.JFrame {
             //Add each line to the arraylist
             while (sc.hasNextLine()) {
                 String info = sc.nextLine();
+                if(info.toLowerCase().trim().equalsIgnoreCase(info)){
+                   break; 
+                }
                 String[] reviewInfo = info.split("~");
                 temp.get(0).add(reviewInfo[0]);
                 temp.get(1).add(reviewInfo[3]);
@@ -360,6 +363,9 @@ public class UserPageScreen extends javax.swing.JFrame {
             while (scan.hasNext()) {
                 //take the next line and delimit it
                 String line = scan.nextLine();
+                if(line.toLowerCase().trim().equalsIgnoreCase(line)){
+                   break; 
+                }
                 String[] lineArr = line.split("~");
                 //if the student id in reviews is the same as current id
                 if (lineArr[2].equals(s.getStudentNumber())) {
