@@ -363,7 +363,7 @@ public class MainFrame extends javax.swing.JFrame {
      */         
     public boolean checkValidSNumber (String sNumber) {
         for(int i = 0; i<sNumber.length();i++){
-            if (sNumber.charAt(i)<0 && sNumber.charAt(i)<9){
+            if (!Character.isDigit(sNumber.charAt(i))){
                 JOptionPane.showMessageDialog(this, "INVALID STUDENT NUMBER ID", "Student ID Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
