@@ -374,6 +374,9 @@ public class UserPageScreen extends javax.swing.JFrame {
             while (scan.hasNext()) {
                 //take the next line and delimit it
                 String line = scan.nextLine();
+                if(line.toLowerCase().trim().equalsIgnoreCase(line)){
+                   break; 
+                }
                 String[] lineArr = line.split("~");
                 //if the student id in reviews is the same as current id
                 if (lineArr[2].equals(s.getStudentNumber())) {
