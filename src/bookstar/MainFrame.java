@@ -31,6 +31,7 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new instance of MainFrame
      */
     public MainFrame() {
+        
         initComponents();
     }
 
@@ -169,6 +170,7 @@ public class MainFrame extends javax.swing.JFrame {
         //Initializes scanner to scan users file
         Scanner s = null;
         try {
+            students.createNewFile();
             s = new Scanner(students);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
@@ -196,6 +198,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
         // TODO add your handling code here:
         //Check if any credentials are missing(CHECK), if there are any duplicate accounts(CHECK) and if the passwords contains bad words(CHECK)
         //Initializes delimiter
@@ -224,6 +227,9 @@ public class MainFrame extends javax.swing.JFrame {
         }
         //Try to create a PrintWriter
         try {
+            
+            students.createNewFile();
+
             pw = new PrintWriter(new FileWriter(students, true));
         } catch (FileNotFoundException ex) {
             //Exits method if users file is not found
@@ -239,7 +245,10 @@ public class MainFrame extends javax.swing.JFrame {
         //Writes to the file the information associated with the newUser
         pw.println(newUser.getStudentNumber() + delimiter + encrypt(newUser.getPassword()) + delimiter + newUser.getFirstName() + delimiter + newUser.getLastName());
         //Closes PrintWriter
-        pw.close();
+        if(pw!=null){
+            pw.close();
+        }
+        
         jTextField1.setText("");
         jPasswordField2.setText("");
         jTextField3.setText("");
@@ -285,10 +294,14 @@ public class MainFrame extends javax.swing.JFrame {
         //Initializes a scanner to scan users, if file is missing return false and a message
         Scanner s = null;
         try {
+            students.createNewFile();
             s = new Scanner(students);
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
             return false;
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(this, "ERROR WHILE CREATING FILE", "File Error", JOptionPane.ERROR_MESSAGE);
         }
         //Read through the file and check if the username created by the user matches with any from the file, if there is a match return false
         while (s.hasNextLine()) {
@@ -300,7 +313,9 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
         //Closes Scanner
-        s.close();
+        if(s!=null){
+            s.close();
+        }
         //Return true if the username is not taken
         return true;
     }
@@ -320,10 +335,14 @@ public class MainFrame extends javax.swing.JFrame {
         //Initializes a scanner to scan badWords, if file is missing return false and a message
         Scanner s = null;
         try {
+            students.createNewFile();
             s = new Scanner(badWords);
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
             return false;
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(this, "ERROR WHILE CREATING FILE", "File Error", JOptionPane.ERROR_MESSAGE);
         }
         //Read through the file and check if the password created by the user matches with any from the file, if there is a match return false
         while (s.hasNextLine()) {
@@ -337,7 +356,9 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
         //Closes Scanner
-        s.close();
+        if(s!=null){
+            s.close();
+        }
         //Return true if the created password is valid
         return true;
     }

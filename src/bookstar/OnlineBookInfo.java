@@ -47,7 +47,7 @@ public class OnlineBookInfo {
     public String pageHTML(String link) {
         URL url;
         InputStream is = null;
-        BufferedReader br;
+        BufferedReader br = null;
         //Store the html content of the page
         String page = null;
 
@@ -67,13 +67,21 @@ public class OnlineBookInfo {
                 page += read + "\n";
             }
             //Close the inputstream
-            is.close();
+            if(is!=null){
+                is.close();
+            }
+            
+            if(br!=null){
+                br.close();
+            }
+            
 
         } catch (MalformedURLException mue) {
             System.out.println(mue);
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
+        
         //Return the page's HTML content
         return page;
     }

@@ -41,6 +41,13 @@ public class UserPageScreen extends javax.swing.JFrame {
      * @param s Student logged in
      */
     public UserPageScreen(Student s) {
+        try{
+            ratingReview.createNewFile();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
         this.s = s;
         initComponents();
         String string = "";
@@ -198,6 +205,7 @@ public class UserPageScreen extends javax.swing.JFrame {
      * @return The array with each line the file being an element in the array.
      */
     public ArrayList<ArrayList<String>> fileToArrayList(String fileName) {
+        
         //Arraylist for holding the book title and rating
         ArrayList<ArrayList<String>> temp = new ArrayList();
         //File with the review's of the books
@@ -210,16 +218,22 @@ public class UserPageScreen extends javax.swing.JFrame {
         temp.add(new ArrayList<String>());
 
         try {
+            ratingReview.createNewFile();
             //Scanner for reading the file
             sc = new Scanner(ratingReview);
             //Add each line to the arraylist
             while (sc.hasNextLine()) {
                 String info = sc.nextLine();
+                if(info.toLowerCase().trim().equalsIgnoreCase("")){
+                   break; 
+                }
                 String[] reviewInfo = info.split("~");
                 temp.get(0).add(reviewInfo[0]);
                 temp.get(1).add(reviewInfo[3]);
             }
-            sc.close();
+            if (sc != null) {
+                sc.close();
+            }
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "File Error", "File Error", JOptionPane.ERROR_MESSAGE);
@@ -562,9 +576,9 @@ public class UserPageScreen extends javax.swing.JFrame {
 
             String book = record[0];
             int review = Integer.parseInt(record[1]);
-
+            Scanner sc = null;
             try {
-                Scanner sc = new Scanner(ratingReview);
+                sc = new Scanner(ratingReview);
 
                 while (sc.hasNext()) {
 
@@ -589,10 +603,15 @@ public class UserPageScreen extends javax.swing.JFrame {
                         }
                     }
                 }
+                
             } catch (IOException ex) {
 
                 JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
             }
+            if (sc != null) {
+                sc.close();
+            }
+            
         }
 
         String[] key = map.keySet().toArray(new String[0]);

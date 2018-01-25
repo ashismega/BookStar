@@ -15,8 +15,6 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -77,6 +75,7 @@ public class BookProfile extends javax.swing.JFrame {
     public Image addImage(String imageLink) throws IOException {
         URL url = new URL(imageLink);
         return ImageIO.read(url).getScaledInstance(150, 150, Image.SCALE_DEFAULT);
+        
     }
 
     /**
@@ -291,10 +290,13 @@ public class BookProfile extends javax.swing.JFrame {
                 //add student id below
                 //bookid,date,studentID,rating,review
                 p.println(bookInfo[0] + delimiter + timeStamp + delimiter + user.getStudentNumber() + delimiter + jComboBox1.getSelectedItem() + delimiter + jTextField3.getText());
-                p.close();
+                
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "INPUT/OUTPUT EXCEPTION", "Input/Output Error", JOptionPane.ERROR_MESSAGE);
             }
+        }
+        if(p!=null){
+            p.close();
         }
         //update the text area
         textAreaUpdate();
@@ -330,6 +332,7 @@ public class BookProfile extends javax.swing.JFrame {
                 String line = s.nextLine();
                 String[] lineArr = line.split("~");
                 //if title in the reviews is the same as the title of the book
+                //line of code that does not work
                 if (lineArr[0].equals(bookInfo[0])) {
                     //add a line of string for user id, rating, and review
                     total += ("User: " + lineArr[2] + ", Star Rating: " + lineArr[3] + ", Review:" + lineArr[4] + "\n");
