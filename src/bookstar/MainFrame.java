@@ -167,9 +167,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        //Initializes scanner to scan users file
+        //Initializes scanner to scan users file 
         Scanner s = null;
         try {
+            //checks if file exists, and if it doesnt it creates
             students.createNewFile();
             s = new Scanner(students);
         } catch (IOException e) {
@@ -227,7 +228,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         //Try to create a PrintWriter
         try {
-            
+            //checks if file exists, and if it doesnt it creates
             students.createNewFile();
 
             pw = new PrintWriter(new FileWriter(students, true));
@@ -294,13 +295,16 @@ public class MainFrame extends javax.swing.JFrame {
         //Initializes a scanner to scan users, if file is missing return false and a message
         Scanner s = null;
         try {
+            //checks if file exists, and if it doesnt it creates
             students.createNewFile();
             s = new Scanner(students);
         } catch (FileNotFoundException ex) {
+            //shows error message and returns a false if error caught
             JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         catch(IOException ex){
+            //shows error messagge if error caught
             JOptionPane.showMessageDialog(this, "ERROR WHILE CREATING FILE", "File Error", JOptionPane.ERROR_MESSAGE);
         }
         //Read through the file and check if the username created by the user matches with any from the file, if there is a match return false
@@ -335,6 +339,7 @@ public class MainFrame extends javax.swing.JFrame {
         //Initializes a scanner to scan badWords, if file is missing return false and a message
         Scanner s = null;
         try {
+            //checks if file exists, and if it doesnt it creates
             students.createNewFile();
             s = new Scanner(badWords);
         } catch (FileNotFoundException ex) {

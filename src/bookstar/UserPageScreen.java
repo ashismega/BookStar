@@ -42,6 +42,7 @@ public class UserPageScreen extends javax.swing.JFrame {
      */
     public UserPageScreen(Student s) {
         try{
+            //checks if file exists, and if it doesnt it creates
             ratingReview.createNewFile();
         }
         catch(IOException ex){
@@ -50,8 +51,8 @@ public class UserPageScreen extends javax.swing.JFrame {
         
         this.s = s;
         initComponents();
-        String string = "";
-
+        
+        //attains the suggested books
         String[] top = suggestedBooks();  
         try {       
 
@@ -86,7 +87,7 @@ public class UserPageScreen extends javax.swing.JFrame {
      */
     public void friendRecommend(String[] top, JLabel name, JLabel one, JLabel two, JLabel imageOne, JLabel imageTwo, JButton buttonOne, JButton buttonTwo, int num) {
         try {
-            
+            // if any string is equal to "" it makes it equal to null
             for(int i=0; i<top.length; i++){
                 if(top[i].equals("")){
                     top[i] = null;
@@ -130,6 +131,8 @@ public class UserPageScreen extends javax.swing.JFrame {
             
             
         } catch (NullPointerException ex) {
+            //if null pointer caught makes everything as if no data was available
+            
             //Friend name
             name.setText("NO FRIEND");
 
@@ -359,8 +362,10 @@ public class UserPageScreen extends javax.swing.JFrame {
     }
 
     /**
-     * Find all reviews made by the user
-     *
+     * Searches a for user ratings.
+     * Searches for a users ratings using the
+     * String param "s" taken in.
+     * Returns the users ratings.
      * @return String array of reviews made by user
      */
     private String[] searchUserRatings() {
@@ -374,7 +379,7 @@ public class UserPageScreen extends javax.swing.JFrame {
             while (scan.hasNext()) {
                 //take the next line and delimit it
                 String line = scan.nextLine();
-                if(line.toLowerCase().trim().equalsIgnoreCase(line)){
+                if(line.toLowerCase().trim().equalsIgnoreCase("")){
                    break; 
                 }
                 String[] lineArr = line.split("~");
@@ -390,9 +395,11 @@ public class UserPageScreen extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
         }
+        //closes the scanner if not null
         if (scan != null) {
             scan.close();
         }
+        
         //output string array of user ratings
         Object[] array = userRatings.toArray();
         String[] a = new String[array.length];
@@ -408,6 +415,14 @@ public class UserPageScreen extends javax.swing.JFrame {
         return a;
     }
     
+    /**
+     * Searches a for user ratings.
+     * Searches for a users ratings using the
+     * String param "s" taken in.
+     * Returns the users ratings.
+     * @param s     the user to search by
+     * @return      the ratings
+     */
     private String[] searchUserRatings(String s) {
         //initialize Scanner and Arraylist
         Scanner scan = null;
@@ -430,15 +445,17 @@ public class UserPageScreen extends javax.swing.JFrame {
 
             }
         } catch (FileNotFoundException ex) {
+            //if the files not found, send out a error message
             JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
         }
+        //close the scanner
         if (scan != null) {
             scan.close();
         }
         //output string array of user ratings
         Object[] array = userRatings.toArray();
         String[] a = new String[array.length];
-
+        
         for (int i = 0; i < array.length; i++) {
             if (array[i] instanceof String) {
                 a[i] = (String) array[i];
@@ -449,156 +466,184 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         return a;
     }
-    
+    /**
+     * Gives suggested books from friends.
+     * Returns suggested books by friends you have
+     * matched with along with friends user id.
+     * @return  String array of user and their suggested books
+     */
     public String[] suggestedBooks(){
+        //gets the top two friends
         String[] top = topFriends();
-        
-        String[] first;
-        String[] second;
-        String[] firstRatings;
-        String[] secondRatings;
-        try{
-            first = top[0].split("~");
-            second = top[1].split("~");
-            firstRatings = searchUserRatings(first[0]);
-            secondRatings = searchUserRatings(second[0]);
-        }
-        catch(NullPointerException ex){
-            return null;
-        }
-        
-          
-        
-        
-        int oneA = 0;
-        int twoA = 0;
-        
-        int oneB = 0;
-        int twoB = 0;
-        
-        String oneBA = "";
-        String twoBA = "";
-        
-        String oneBB = "";
-        String twoBB = "";
-        
-        for(String val: firstRatings){
-            String[] data = val.split("~");
-            String[] firstBooks = first[2].split(",");
-            for(String books: firstBooks){
-                if( !(books.equals(data[0])) ){
-                    if(oneA < Integer.parseInt(data[1])){
-                        oneA = Integer.parseInt(data[1]);
-                        oneBA = data[0];
-                    }
-                    else if(twoA < Integer.parseInt(data[1])){
-                        twoA = Integer.parseInt(data[1]);
-                        twoBA = data[0];
-                    }
+        //initializes a string array that will contain the friends and suggested books
+        String[] suggested = new String[6];
+        //for loop that runs twice, one for each suggested friends, in otherwords runs for 2 friends
+        for(int i=0;i!=2;i++){
+            //string array for the records and ratings of the users friends
+            String[] info; 
+            String[] ratings;
+            
+            try{
+                // splits friend record to get UserID,match score,and book names 
+                info = top[i].split("~");
+                //searches for books and ratings of friend
+                ratings = searchUserRatings(info[0]);
+            }
+            catch(NullPointerException ex){
+                //return null if top or the friends rating or record is equal to null
+                return null;
+            }
+            //keeps track of the top 2 ratings for one person
+            int one = 0;
+            int two = 0;
+            
+            //top two books associated with those ratings
+            String oneB = "";
+            String twoB = "";
+            
+            //if the book name is rated or not
+            boolean good = true;
+            //goes through all rating+bookname of the friend
+            for(String val: ratings){
+                //splits into value into an array
+                String[] data = val.split("~");
+                //sets all the users books into an array
+                String[] recordBooks = info[2].split(",");
+                //goes through each book
+                for(String books: recordBooks){
+                    //ifone book the user rated matches with the book name, break out
+                    if( books.equals(data[0]) ){
+                        good = false;
+                        break;
+                    }   
                 }
+                
+                
+                if(good){
+                    //sees if the rating is higher then a previous book entered
+                    //sets new highest rating and book name if higher
+                    if(one < Integer.parseInt(data[1])){
+                        one = Integer.parseInt(data[1]);
+                        oneB = data[0];
+                    }
+                    //tries again for second book
+                    else if(two < Integer.parseInt(data[1])){
+                        two = Integer.parseInt(data[1]);
+                        twoB = data[0];
+                    } 
+                }   
             }
             
-        }
-        boolean good = false;
-        for(String val: secondRatings){
-            String[] data = val.split("~");
-            String[] secondBooks = second[2].split(",");
-            for(String books: secondBooks){
-                if( !(books.equals(data[0])) ){
-                    break;
-                }
-                good = true;
+            // if suggestable books were found
+            if(oneB.trim().equalsIgnoreCase("")){
+                //since suggested array at index 0 and 3 are userID's and everything else are book names(1,2,4,5)
+                //enters UserID and books
+                suggested[3*i] = info[0];
+                suggested[(3*i)+1] = oneB;
+                suggested[(3*i)+2] = twoB;
             }
-            if(good){
-                if(oneB < Integer.parseInt(data[1])){
-                    oneB = Integer.parseInt(data[1]);
-                    oneBB = data[0];
-                }
-                else if(twoB < Integer.parseInt(data[1])){
-                    twoB = Integer.parseInt(data[1]);
-                    twoBB = data[0];
-                } 
-            }
-
             
-        }
-        
-        String[] suggested = {first[0], oneBA, twoBA, second[0], oneBB, twoBB};
-        
-        
+        }    
         return suggested;
     }
     
+    /**
+     * Grabs the top two friends
+     * @return  String array of top 2 friends
+     */
     private String[] topFriends(){
         
-        
+        //gets top friends
         String[] s = friendsCalc();
+        //variables to keep track of top two match scors
         int one = 0;
         int two = 0;
+        //variables to keep track of the records for the top two
         String[] top = {"", ""};
+        //returns null if amount of friends returns less than 2
         if (s.length < 2) {
             return null;
         }
         else if(s.length==2){
+            //if its equal to 2, just adds both of them to top and returns
             top[0] = s[0];
             top[1] = s[1];
             return top;
         }
         
-        
-        
+        //enhanced forloop that grabs the record of another user each run
         for (String val : s) {
+            //splits the record
             String[] temp = val.split("~");
+            //if the match score is bigger then the current highest
+            //records the user record and sets new highest match score
             if ( (Integer.parseInt(temp[1]) > one) ) {
                 top[0] = val;
                 one = Integer.parseInt(temp[1]);
+            //tries set a second highest if first wasnt higher
             } else if (Integer.parseInt(temp[1]) > two) {
                 top[1] = val;
                 two = Integer.parseInt(temp[1]);
             }
-            else{
-                System.out.println(Integer.parseInt(temp[1]) + "T");
-                System.out.println(two + "T");
-            }
         }  
+        //returns the records of the top 2
         return top;
     }
-
+    /**
+     * Calculates how alike you are to other users.
+     * Calculates how much your reviews match 
+     * up with other users and how similar you are.
+     * @return      String array of calculated users
+     */
     private String[] friendsCalc() {
+        //gets the users reviews
         String[] reviews = searchUserRatings();
-
+        //if the reviews are null return null
         if (reviews == null) {
 
             return null;
         }
+        //create a hashmap
         Map<String, String[]> map = new HashMap<>();
-
+        
+        //loop to go through the reviews
         for (int i = 0; i != reviews.length; i++) {
-
+            //splits one review into record taht contains all data for one review in an array
             String[] record = reviews[i].split("~");
-
+            
+            //book title
             String book = record[0];
+            //review score
             int review = Integer.parseInt(record[1]);
+            //declares and initializes scanner
             Scanner sc = null;
             try {
+                //sets scanner to ratingReview file
                 sc = new Scanner(ratingReview);
-
+                //while there is a next line
                 while (sc.hasNext()) {
-
+                    //string that contains a file record
                     String tempS = sc.nextLine();
+                    //array that holds that record in an array
                     String[] tempRecord = tempS.split("~");
-
-                    if (tempRecord[0].equals(book)) {
+                    
+                    //compares the book titles for each, if equal continues
+                    if ( (tempRecord[0].equals(book)) ) {
+                        //compares student numers, if not equal continues
                         if (!(s.getStudentNumber().equals(tempRecord[2]))) {
-
+                            
+                            //compares two differnt students that rated the same book
+                            //determines match score
                             try {
-
+                                //gets values for the student id listed in temp record
                                 String[] vals = map.get(tempRecord[2]);
+                                //determines match score by multiplying reviews, adds old match score
                                 vals[0] = ((review * Integer.parseInt(tempRecord[3])) + Integer.parseInt(vals[0])) + "";
+                                //adds books matched with
                                 vals[1] = vals[1] + "," + book;
 
                             } catch (NullPointerException ex) {
-
+                                //if key does not exist, creates key and adds value
                                 String[] vals = {review * Integer.parseInt(tempRecord[3]) + "", "~" + book};
                                 map.put(tempRecord[2], vals);
 
@@ -608,19 +653,22 @@ public class UserPageScreen extends javax.swing.JFrame {
                 }
                 
             } catch (IOException ex) {
-
+                
                 JOptionPane.showMessageDialog(this, "Error While Searching", "Search Error", JOptionPane.ERROR_MESSAGE);
             }
+            //close scanner
             if (sc != null) {
                 sc.close();
             }
             
         }
-
+        
+        //converts map to an array that includes the keys, and the values(match score and book titles)
         String[] key = map.keySet().toArray(new String[0]);
 
         String[][] value = map.values().toArray(new String[0][0]);
         String[] result = new String[map.size()];
+        
         for (int i = 0; i < map.size(); i++) {
             result[i] = key[i] + "~";
             for (int j = 0; j < 2; j++) {

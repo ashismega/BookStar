@@ -34,6 +34,7 @@ public class OnlineBookInfo {
             term += words[i] + "+";
         }
         //The full google book's link
+        
         return "https://www.googleapis.com/books/v1/volumes?q=" + term.substring(0, term.length() - 1);
     }
 
@@ -45,7 +46,7 @@ public class OnlineBookInfo {
      * @return page The page's HTML content
      */
     public String pageHTML(String link) {
-        URL url;
+        URL url = null;
         InputStream is = null;
         BufferedReader br = null;
         //Store the html content of the page
@@ -160,6 +161,7 @@ public class OnlineBookInfo {
      */
     public String fieldHTML(String book, String start, String end) {
         //Split the html based on the first part surrounding the required text
+        
         String[] starting;
         starting = book.split(start);
         String[] ending = null;
