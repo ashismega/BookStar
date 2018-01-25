@@ -32,8 +32,9 @@ public class UserPageScreen extends javax.swing.JFrame {
     private static Student s;
 
     //Sorted Ratings
-    String sortedAverage[][] = sortbyRating(arraylistToArray(averageData(fileToArrayList("rateReview.txt"))));
     File ratingReview = new File("rateReview.txt");
+    String sortedAverage[][] = sortbyRating(arraylistToArray(averageData(fileToArrayList(ratingReview))));
+   
 
     /**
      * Creates new form UserPageScreen
@@ -44,10 +45,17 @@ public class UserPageScreen extends javax.swing.JFrame {
         this.s = s;
         initComponents();
         String string = "";
-
-        String[] top = suggestedBooks();  
-        try {       
-
+        String[] top;
+        try{
+           top = suggestedBooks(); 
+        }
+        catch(NullPointerException ex){
+            top = null;
+        }
+        
+            
+        
+        
         //Top rated book 1
         topRatedBooks(jLabel4, jLabel9, jButton3, 0);
         //Top rated book 2
@@ -60,9 +68,7 @@ public class UserPageScreen extends javax.swing.JFrame {
 
         //Friend 2
         friendRecommend(top, jLabel8, jLabel14, jLabel16, jLabel21, jLabel19, jButton6, jButton8,3);
-        } catch (NullPointerException ex) {
-            
-        }
+        
     }
 
     /**
@@ -119,8 +125,6 @@ public class UserPageScreen extends javax.swing.JFrame {
                 two.setText("NO BOOK AVAILABLE");
                 buttonTwo.setEnabled(false);
             }
-
-            
             
         } catch (NullPointerException ex) {
             //Friend name
@@ -160,7 +164,7 @@ public class UserPageScreen extends javax.swing.JFrame {
             image.setIcon(new ImageIcon(addImage(searchBook(sortedAverage[num][0])[10])));
             //Enable button
             button.setEnabled(true);
-        } catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (NullPointerException ex) {
             //No book title
             title.setText("NO RATED BOOKS");
             //No book image
@@ -194,14 +198,14 @@ public class UserPageScreen extends javax.swing.JFrame {
      * Read and file and create an array where each line in the file is an
      * element in the array.
      *
-     * @param fileName The file name.
+     * @param ratingReview The file.
      * @return The array with each line the file being an element in the array.
      */
-    public ArrayList<ArrayList<String>> fileToArrayList(String fileName) {
+    public ArrayList<ArrayList<String>> fileToArrayList(File ratingReview) {
+        
         //Arraylist for holding the book title and rating
         ArrayList<ArrayList<String>> temp = new ArrayList();
         //File with the review's of the books
-        File ratingReview = new File(fileName);
 
         Scanner sc = null;
         //Name of Book
@@ -216,14 +220,21 @@ public class UserPageScreen extends javax.swing.JFrame {
             while (sc.hasNextLine()) {
                 String info = sc.nextLine();
                 String[] reviewInfo = info.split("~");
-                temp.get(0).add(reviewInfo[0]);
-                temp.get(1).add(reviewInfo[3]);
+                try{
+                    temp.get(0).add(reviewInfo[0]);
+                    temp.get(1).add(reviewInfo[3]);
+                }
+                catch(ArrayIndexOutOfBoundsException ex){
+                    return null;
+                }
+                
             }
             sc.close();
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "File Error", "File Error", JOptionPane.ERROR_MESSAGE);
         }
+        
         return temp;
     }
 
@@ -234,6 +245,9 @@ public class UserPageScreen extends javax.swing.JFrame {
      * @return The converted 2D array
      */
     public String[][] arraylistToArray(ArrayList<ArrayList<String>> temp) {
+        if(temp == null){
+            return null;
+        }
         //Store the data
         String[][] info = new String[temp.get(1).size()][2];
 
@@ -254,7 +268,9 @@ public class UserPageScreen extends javax.swing.JFrame {
      * @return The averaged data.
      */
     public ArrayList<ArrayList<String>> averageData(ArrayList<ArrayList<String>> allData) {
-
+        if(allData == null){
+            return null;
+        }
         //Unsorted books from the file
         ArrayList<ArrayList<String>> unsortedAveraged = new ArrayList();
 
@@ -311,6 +327,9 @@ public class UserPageScreen extends javax.swing.JFrame {
      * @return a sorted 2-D String Array
      */
     public String[][] sortbyRating(String[][] unsorted) {
+        if(unsorted == null){
+            return null;
+        }
         //sort array using Comparator class
         Arrays.sort(unsorted, new Comparator<String[]>() {
             @Override
@@ -373,6 +392,9 @@ public class UserPageScreen extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
         }
+        catch(ArrayIndexOutOfBoundsException ex){
+            return null;
+        }
         if (scan != null) {
             scan.close();
         }
@@ -415,6 +437,9 @@ public class UserPageScreen extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "FILE NOT FOUND", "Missing File Error", JOptionPane.ERROR_MESSAGE);
         }
+        catch(ArrayIndexOutOfBoundsException ex){
+            return null;
+        }
         if (scan != null) {
             scan.close();
         }
@@ -449,9 +474,6 @@ public class UserPageScreen extends javax.swing.JFrame {
         catch(NullPointerException ex){
             return null;
         }
-        
-          
-        
         
         int oneA = 0;
         int twoA = 0;
